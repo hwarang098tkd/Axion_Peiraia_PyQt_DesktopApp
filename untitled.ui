@@ -455,8 +455,7 @@
     </property>
     <property name="styleSheet">
      <string notr="true">QPushButton {
-	background-color: '#BC986A';
- 	border: 2px solid gray;
+	background-color: '#1db954';
  	border-radius: 10px;
 }</string>
     </property>
@@ -522,6 +521,9 @@ border-color: beige;
     </property>
     <property name="text">
      <string>Password</string>
+    </property>
+    <property name="echoMode">
+     <enum>QLineEdit::PasswordEchoOnEdit</enum>
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>

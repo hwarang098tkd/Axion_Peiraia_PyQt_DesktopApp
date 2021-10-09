@@ -4,8 +4,9 @@ from PyQt5.QtCore import Qt
 
 import sys
 
+import login_query
 from login_main import Ui_MainWindow
-
+from login_query import *
 
 class LoginWindow(QMainWindow):
     def __init__(self):
@@ -36,7 +37,11 @@ class LoginWindow(QMainWindow):
             widgets.info_lb.setText("no password")
         else:
             widgets.info_lb.setText("")
+            widgets.info_lb.setStyleSheet("color: white")
+            widgets.info_lb.setText(
+                login_query.connection.login_connection(self, widgets.lineEdit.text(), widgets.lineEdit_2.text()))
 
+    #######################################################################################
     def mousePressEvent(self, event):
         if event.button() == Qt.LeftButton:
             self.offset = event.pos()
@@ -52,7 +57,7 @@ class LoginWindow(QMainWindow):
     def mouseReleaseEvent(self, event):
         self.offset = None
         super().mouseReleaseEvent(event)
-
+    #######################################################################################
 
 
 # Create the application object
