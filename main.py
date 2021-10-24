@@ -1,17 +1,20 @@
-from PyQt5 import QtWidgets
 from PyQt5.QtWidgets import QApplication, QMainWindow,QPushButton
-from PyQt5.QtCore import Qt, QRect, QPropertyAnimation, QPoint, QParallelAnimationGroup
-
+from PyQt5.QtCore import Qt, QRect, QPropertyAnimation, QPoint, QParallelAnimationGroup, QDateTime, QDate
 import sys
+
+
 
 import login_query
 from login_main import Ui_MainWindow
+
 
 class LoginWindow(QMainWindow):
     def __init__(self):
         QMainWindow.__init__(self)
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
+        global buttons_style
+        buttons_style = "QToolTip { background-color: black } QPushButton { border-left: 5px solid #88b1b2; border-radius: 13px 0px 0px 13px; background-color: #116466} "
         global widgets
         widgets = self.ui
         global start_pos_x
@@ -42,8 +45,15 @@ class LoginWindow(QMainWindow):
         widgets.minim2_btn.clicked.connect(self.showMinimized)  # doesnt need def(function)
         ####################################################
         self.installEventFilter(self)
+        self.displayTime()
         widgets.toolBar_fm.hide()
+
+
         self.show()
+
+    def displayTime(self):
+        now = QDate.currentDate()
+        widgets.title_date.setText(now.toString(Qt.DefaultLocaleLongDate))
 
     def buttonClick(self):
         # GET BUTTON CLICKED
@@ -54,43 +64,43 @@ class LoginWindow(QMainWindow):
         if btnName == "home_bt":
             widgets.stackedWidget.setCurrentWidget(widgets.home_page)
             resetStyle(self, btnName)
-            btn.setStyleSheet("border-left: 5px solid #88b1b2;border-radius: 13px 0px 0px 13px; background-color: #116466")
+            btn.setStyleSheet(buttons_style)
 
         # SHOW TKD PAGE
         if btnName == "taek_bt":
             widgets.stackedWidget.setCurrentWidget(widgets.taekwondo_page)
             resetStyle(self, btnName)
-            btn.setStyleSheet("border-left: 5px solid #88b1b2;border-radius: 13px 0px 0px 13px; background-color: #116466")
+            btn.setStyleSheet(buttons_style)
 
         # SHOW FENCING PAGE
         if btnName == "fencing_bt":
             widgets.stackedWidget.setCurrentWidget(widgets.fencing_page)
             resetStyle(self, btnName)
-            btn.setStyleSheet("border-left: 5px solid #88b1b2;border-radius: 13px 0px 0px 13px; background-color: #116466")
+            btn.setStyleSheet(buttons_style)
 
         # SHOW OPLOMAXIA PAGE
         if btnName == "oplo_bt":
             widgets.stackedWidget.setCurrentWidget(widgets.oplomaxia_page)
             resetStyle(self, btnName)
-            btn.setStyleSheet("border-left: 5px solid #88b1b2;border-radius: 13px 0px 0px 13px; background-color: #116466")
+            btn.setStyleSheet(buttons_style)
 
         # SHOW ECONOMICS PAGE
         if btnName == "eco_bt":
             widgets.stackedWidget.setCurrentWidget(widgets.econ_page)
             resetStyle(self, btnName)
-            btn.setStyleSheet("border-left: 5px solid #88b1b2;border-radius: 13px 0px 0px 13px; background-color: #116466")
+            btn.setStyleSheet(buttons_style)
 
         # SHOW PRESENTERS PAGE
         if btnName == "prese_bt":
             widgets.stackedWidget.setCurrentWidget(widgets.presenters_page)
             resetStyle(self, btnName)
-            btn.setStyleSheet("border-left: 5px solid #88b1b2;border-radius: 13px 0px 0px 13px; background-color: #116466")
+            btn.setStyleSheet(buttons_style)
 
         # SHOW MEMBERS PAGE
         if btnName == "members_bt":
             widgets.stackedWidget.setCurrentWidget(widgets.menbers_page)
             resetStyle(self, btnName)
-            btn.setStyleSheet("border-left: 5px solid #88b1b2;border-radius: 13px 0px 0px 13px; background-color: #116466")
+            btn.setStyleSheet(buttons_style)
 
         # PRINT BTN NAME
         print(f'Button "{btnName}" pressed!')
@@ -114,6 +124,25 @@ class LoginWindow(QMainWindow):
 
             widgets.info_lb.setText(result)
             if result == "Connection established":
+                # MEMBERS STATS
+                members_array = login_query.connection.login_members_stats(self, widgets.user_tb.text(), widgets.pass_tb.text())
+                widgets.sum_members.setText(str(members_array[0]))
+                widgets.sum_tkd.setText(str(members_array[1]))
+                widgets.sum_fencing.setText(str(members_array[2]))
+                widgets.sum_oplo.setText(str(members_array[3]))
+                # PRESENTERS STATS
+                prese_array = login_query.connection.login_presents_stats(self, widgets.user_tb.text(), widgets.pass_tb.text())
+                widgets.sum_pres.setText(str(prese_array[0]))
+                widgets.sum_tkd_pre.setText(str(prese_array[1]))
+                widgets.sum_fencing_pre.setText(str(prese_array[2]))
+                widgets.sum_oplo_pre.setText(str(prese_array[3]))
+                # ECONOMICS STATS
+                econ_array = login_query.connection.login_economics_stats(self, widgets.user_tb.text(), widgets.pass_tb.text())
+                widgets.sum_eco_lb.setText(str(econ_array[0]))
+                widgets.tkd_eco_lb.setText(str(econ_array[1]))
+                widgets.fencing_eco_lb.setText(str(econ_array[2]))
+                widgets.oplo_eco_lb.setText(str(econ_array[3]))
+                widgets.expe_eco_lb.setText(str(econ_array[4]))
 
                 #Re-COLOR MAIN TOOLBAR
                 widgets.maintoolbar_fm.setStyleSheet("background-color: \'#0d5051\';")
@@ -122,7 +151,7 @@ class LoginWindow(QMainWindow):
 
                 animation_time = 300
                 end_height = 800
-                end_width = 1300
+                end_width = 1050
                 # ANIMATION WINDOW
                 self.main_window = QPropertyAnimation(self, b'geometry')
                 self.main_window.setDuration(animation_time + 200)
@@ -194,6 +223,7 @@ def resetStyle(self, btnName):
         if w.objectName() != btnName:
             w.setStyleSheet("")
     print("resetStyle")
+
 
 # Create the application object
 if __name__ == "__main__":
