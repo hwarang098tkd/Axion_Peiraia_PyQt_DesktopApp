@@ -1,11 +1,9 @@
-from PyQt5.QtWidgets import QApplication, QMainWindow,QPushButton
+from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton
 from PyQt5.QtCore import Qt, QRect, QPropertyAnimation, QPoint, QParallelAnimationGroup, QDateTime, QDate
-import sys
-
-
-
-import login_query
 from login_main import Ui_MainWindow
+import google_calendar
+import sys
+import login_query
 
 
 class LoginWindow(QMainWindow):
@@ -47,8 +45,6 @@ class LoginWindow(QMainWindow):
         self.installEventFilter(self)
         self.displayTime()
         widgets.toolBar_fm.hide()
-
-
         self.show()
 
     def displayTime(self):
@@ -102,11 +98,7 @@ class LoginWindow(QMainWindow):
             resetStyle(self, btnName)
             btn.setStyleSheet(buttons_style)
 
-        # PRINT BTN NAME
-        print(f'Button "{btnName}" pressed!')
-
     def pressed(self):
-        print("Login Button clicked")
         if (widgets.user_tb.text() == "" or widgets.user_tb.text() == "Username") and (
                 widgets.pass_tb.text() == "" or widgets.pass_tb.text() == "Password"):
             widgets.info_lb.setText("No username and password")
@@ -121,30 +113,14 @@ class LoginWindow(QMainWindow):
             widgets.info_lb.setText("")
             widgets.info_lb.setStyleSheet("color: white")
             result = login_query.connection.login_connection(self, widgets.user_tb.text(), widgets.pass_tb.text())
-
+            self.refresh_calendar()  # refresh calendar
             widgets.info_lb.setText(result)
-            if result == "Connection established":
-                # MEMBERS STATS
-                members_array = login_query.connection.login_members_stats(self, widgets.user_tb.text(), widgets.pass_tb.text())
-                widgets.sum_members.setText(str(members_array[0]))
-                widgets.sum_tkd.setText(str(members_array[1]))
-                widgets.sum_fencing.setText(str(members_array[2]))
-                widgets.sum_oplo.setText(str(members_array[3]))
-                # PRESENTERS STATS
-                prese_array = login_query.connection.login_presents_stats(self, widgets.user_tb.text(), widgets.pass_tb.text())
-                widgets.sum_pres.setText(str(prese_array[0]))
-                widgets.sum_tkd_pre.setText(str(prese_array[1]))
-                widgets.sum_fencing_pre.setText(str(prese_array[2]))
-                widgets.sum_oplo_pre.setText(str(prese_array[3]))
-                # ECONOMICS STATS
-                econ_array = login_query.connection.login_economics_stats(self, widgets.user_tb.text(), widgets.pass_tb.text())
-                widgets.sum_eco_lb.setText(str(econ_array[0]))
-                widgets.tkd_eco_lb.setText(str(econ_array[1]))
-                widgets.fencing_eco_lb.setText(str(econ_array[2]))
-                widgets.oplo_eco_lb.setText(str(econ_array[3]))
-                widgets.expe_eco_lb.setText(str(econ_array[4]))
 
-                #Re-COLOR MAIN TOOLBAR
+            if result == "Connection established":
+                # REFRESH STASTS
+                self.refresh_stats()
+
+                # Re-COLOR MAIN TOOLBAR
                 widgets.maintoolbar_fm.setStyleSheet("background-color: \'#0d5051\';")
                 # Re-COLOR MAIN BOT TOOLBAR
                 widgets.maintoolbarBot_fm.setStyleSheet("background-color: \'#0d5051\';")
@@ -167,8 +143,8 @@ class LoginWindow(QMainWindow):
                 # ANIMATION MAIN BOT TOOLBAR FRAME
                 self.maintoolbarBot_fm = QPropertyAnimation(self.ui.maintoolbarBot_fm, b'geometry')
                 self.maintoolbarBot_fm.setDuration(animation_time)
-                self.maintoolbarBot_fm.setStartValue(QRect(0, 800-35, 1111, 35))
-                self.maintoolbarBot_fm.setEndValue(QRect(0, 800-35, end_width, 35))
+                self.maintoolbarBot_fm.setStartValue(QRect(0, 800 - 35, 1111, 35))
+                self.maintoolbarBot_fm.setEndValue(QRect(0, 800 - 35, end_width, 35))
 
                 # ANIMATION LOGIN FRAME
                 self.basic_fm_1 = QPropertyAnimation(self.ui.login_fm, b'geometry')
@@ -182,7 +158,6 @@ class LoginWindow(QMainWindow):
                 self.basic_fm_2.setStartValue(QRect(0, 0, 300, 369))
                 self.basic_fm_2.setEndValue(QRect(0, 0, end_width, end_height))
 
-
                 # GROUP ANIMATION
                 self.group = QParallelAnimationGroup()
                 self.group.addAnimation(self.main_window)
@@ -194,13 +169,38 @@ class LoginWindow(QMainWindow):
                 ######################################################
                 widgets.toolBar_fm.show()
 
+    def refresh_calendar(self):
+        calendar_list = google_calendar.calendar_data.main(self)
+        print("Calendar List:")
+        print(calendar_list)
+
+    def refresh_stats(self):
+        # MEMBERS STATS
+        members_array = login_query.connection.login_members_stats(self, widgets.user_tb.text(), widgets.pass_tb.text())
+        widgets.sum_members.setText(str(members_array[0]))
+        widgets.sum_tkd.setText(str(members_array[1]))
+        widgets.sum_fencing.setText(str(members_array[2]))
+        widgets.sum_oplo.setText(str(members_array[3]))
+        # PRESENTERS STATS
+        prese_array = login_query.connection.login_presents_stats(self, widgets.user_tb.text(), widgets.pass_tb.text())
+        widgets.sum_pres.setText(str(prese_array[0]))
+        widgets.sum_tkd_pre.setText(str(prese_array[1]))
+        widgets.sum_fencing_pre.setText(str(prese_array[2]))
+        widgets.sum_oplo_pre.setText(str(prese_array[3]))
+        # ECONOMICS STATS
+        econ_array = login_query.connection.login_economics_stats(self, widgets.user_tb.text(), widgets.pass_tb.text())
+        widgets.sum_eco_lb.setText(str(econ_array[0]))
+        widgets.tkd_eco_lb.setText(str(econ_array[1]))
+        widgets.fencing_eco_lb.setText(str(econ_array[2]))
+        widgets.oplo_eco_lb.setText(str(econ_array[3]))
+        widgets.expe_eco_lb.setText(str(econ_array[4]))
+
     def keyPressEvent(self, qKeyEvent):  # αναγνωριζει τα enter και καλει την συναρτηση οταν πατιεται το login button
         print(qKeyEvent.key())
         if qKeyEvent.key() == Qt.Key_Return or qKeyEvent.key() == Qt.Key_Enter:
             self.pressed()
             print('Enter pressed')
 
-    #######################################################################################
     def mousePressEvent(self, event):
         if event.button() == Qt.LeftButton:
             self.offset = event.pos()
@@ -216,7 +216,7 @@ class LoginWindow(QMainWindow):
     def mouseReleaseEvent(self, event):
         self.offset = None
         super().mouseReleaseEvent(event)
-    #######################################################################################
+
 
 def resetStyle(self, btnName):
     for w in self.ui.toolBar_fm.findChildren(QPushButton):
