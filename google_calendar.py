@@ -27,8 +27,8 @@ class calendar_data:
     global SCOPES
     global CLIENT_SECRET_FILE
     global APPLICATION_NAME
-    SCOPES = 'https://www.googleapis.com/auth/calendar.events'
-    CLIENT_SECRET_FILE = 'credentials/client_secret_231080718247-51irsvd4vmi4ji43gop2c3sjt2uururh.apps.googleusercontent.com.json'
+    SCOPES = 'https://www.googleapis.com/auth/calendar'
+    CLIENT_SECRET_FILE = 'credentials/client_secret_231080718247-0hodscrfpqaahdfdnf8cfd7ljel0tkuu.apps.googleusercontent.com.json'
     APPLICATION_NAME = 'AxionPiraeus'
 
 
@@ -63,6 +63,7 @@ class calendar_data:
             2021, 10, 18, 00, 00, 00, 0).isoformat() + 'Z'
         end_date = datetime(2021, 10, 24, 23, 59, 59, 0).isoformat() + 'Z'
         #print(calendar_ids)
+        result_list = []
         for calendar_id in calendar_ids:
             count = 0
             #print('\n----%s:\n' % calendar_id)
@@ -73,7 +74,7 @@ class calendar_data:
                 singleEvents=True,
                 orderBy='startTime').execute()
             events = eventsResult.get('items', [])
-            result_list = []
+
             if not events:
                 print('No upcoming events found.')
             for event in events:
@@ -88,6 +89,8 @@ class calendar_data:
                 result_list.append(list2)
                 #print(start_date, start_time, duration, event['summary'])
             print('Total events for %s is %d' % (calendar_id, count))
+        if not result_list:
+            result_list.append("empty")
         return result_list
 
 def get_credentials():

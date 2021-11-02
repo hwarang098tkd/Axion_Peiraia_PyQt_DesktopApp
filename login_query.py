@@ -7,17 +7,9 @@ class connection:
     global database
     server = 'diaspeiraia2010.hopto.org'
     database = 'Axion'
-    ####################################
-    global username
-    global password
-    username = "axion"
-    password = "h6945441201"
-
-    ####################################
+    # ####################################
     def login_connection(self, username, password):
         try:
-            username = "axion"
-            password = "h6945441201"
             cnxn = pyodbc.connect(
                 'DRIVER={ODBC Driver 17 for SQL Server};SERVER=' + server +
                 ';DATABASE=' + database + ';UID=' + username + ';PWD=' + password +
@@ -34,8 +26,6 @@ class connection:
     def login_members_stats(self, username, password):
         result = []
         try:
-            username = "axion"
-            password = "h6945441201"
             query = '''SELECT Sum_Members = count([ID]) FROM [Data] SELECT Sum_Members_TKD = count([ID]) FROM [Data] 
             where SPORT = 'TAEKWON-DO' SELECT Sum_Members_FENCING = count([ID]) FROM [Data] where SPORT = 'FENCING' 
             SELECT Sum_Members_OPLOMAXIA = count([ID]) FROM [Data] where SPORT = 'OPLOMAXIA' '''
@@ -55,13 +45,50 @@ class connection:
         print(str(msg))
         return result
 
+    def login_members_names(self, username, password, sport):
+        result = []
+        result.append("Επιλέξτε Μέλος")
+        try:
+            if sport != "SPORT":
+                query = "SELECT Concat(LAST_NAME,  ' ' , FIRST_NAME) FROM [Data] where SPORT = '" + sport + "' order by LAST_NAME "
+            else:
+                query = "SELECT Concat(LAST_NAME,  ' ' , FIRST_NAME) FROM [Data] where SPORT = " + sport + " order by LAST_NAME "
+
+            cnxn = pyodbc.connect(
+                'DRIVER={ODBC Driver 17 for SQL Server};SERVER=' + server + ';DATABASE=' + database + ';UID=' + username + ';PWD=' + password + ';Trusted_Connection=no', timeout=10)
+            cursor = cnxn.cursor()
+            cursor.execute(query)
+            rows = cursor.fetchall()
+            for i in rows:
+                result.append(i[0])
+            msg = "Members names: Connection established"
+        except Exception as e:
+            msg = "Members names: Connection failed"
+            print("Error: Members names: " + str(e))
+        print(str(msg))
+        return result
+
+    def member_info(self, username, password, name):
+        result = []
+        try:
+            query = "SELECT * FROM [Data] where '" + name + "' =concat(LAST_NAME, ' ',FIRST_NAME) "
+            cnxn = pyodbc.connect(
+                'DRIVER={ODBC Driver 17 for SQL Server};SERVER=' + server + ';DATABASE=' + database + ';UID=' + username + ';PWD=' + password + ';Trusted_Connection=no', timeout=10)
+            cursor = cnxn.cursor()
+            cursor.execute(query)
+            rows = cursor.fetchall()
+            msg = "member_info: Connection established"
+        except Exception as e:
+            msg = "member_info: Connection failed"
+            print("Error: member_info: " + str(e))
+        print(str(msg))
+        return rows
+
     def login_presents_stats(self, username, password):
         result = []
         try:
             today = date.today()
             d1 = today.strftime("%Y/%m/%d")
-            username = "axion"
-            password = "h6945441201"
             query = '''SELECT SUMPRESE = count([ID])
                 FROM [Axion].[dbo].[PRESENTERS]  where DATENEW=' ''' + d1 + ''' '  
                 SELECT TAEKWONDO = count([ID])
@@ -92,8 +119,6 @@ class connection:
         try:
             today = date.today()
             d1 = today.strftime("%Y/%m/%d")
-            username = "axion"
-            password = "h6945441201"
             query = ''' SELECT  SUM= SUM (CASE WHEN IN_OUT='INCOME' THEN  AMOUNT ELSE AMOUNT*-1 END )
                         FROM [Axion].[dbo].[economics] where month(datenew)=MONTH(getdate()) and year(datenew)=year(getdate()) 
                         SELECT TAEK = SUM (CASE WHEN IN_OUT='INCOME' THEN AMOUNT ELSE 0 END )
