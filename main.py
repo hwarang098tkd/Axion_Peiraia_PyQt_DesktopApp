@@ -1,16 +1,10 @@
 import datetime
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import Qt, QRect, QPropertyAnimation, QParallelAnimationGroup, QDate
-from PyQt5 import QtGui, QtWidgets
-
-import login_main
 from login_main import Ui_MainWindow
 import google_calendar
 import sys
 import login_query
-
-global members_list
-global ids
 
 
 class LoginWindow(QMainWindow):
@@ -58,12 +52,180 @@ class LoginWindow(QMainWindow):
         ####################################################
         widgets.members_cbb.currentIndexChanged.connect(self.list_names_combobox)
         widgets.new_member_btn.clicked.connect(self.new_btn)
+        widgets.add_ref_btn.clicked.connect(self.add_refresh_btn)
+        ####################################################
+        widgets.del_ref_btn.hide()
+        widgets.del_ref_btn.clicked.connect(self.del_refresh_btn)
+        ####################################################
+        self.days_labes_hide()
+        ####################################################
+        sport_list = ["Επιλέξτε", "TAEKWON-DO", "FENCING", "OPLOMAXIA"]
+        widgets.SPORT.addItems(sport_list)
+        widgets.SPORT_1.addItems(sport_list)
         self.installEventFilter(self)
         self.displayTime()
         widgets.toolBar_fm.hide()
         widgets.home_bt.setStyleSheet(buttons_style)
-
         self.show()
+
+    def days_labes_hide(self):
+        item = widgets.days_splitter.children()
+        for frames in item:
+            #print("- - - - - - - - - - - - - - - -")
+            if isinstance(frames, QFrame):
+                frame_name = frames.objectName()
+                #print("Frame: ", frame_name)
+                item2 = frames.children()
+                cut_text = frame_name[:-(len(frame_name) - frame_name.index("_") - 1):]
+                #print("cut_text: ", cut_text)
+                #print("---------------------------")
+                for x in item2:
+                    label_name = x.objectName()
+                    #print("Label: ", label_name)
+                    if label_name.find(cut_text) != -1:
+                        x.hide()
+
+    def del_refresh_btn(self):
+        reply_box = QMessageBox.warning(self, 'Διαγραφή', 'Θέλετε σίγορα να διαγράψετε αυτό το μέλος;',
+                                        QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
+        if reply_box == QMessageBox.Yes:
+            result_del = login_query.connection.login_name_delete(self, widgets.user_tb.text(), widgets.pass_tb.text(),
+                                                                  widgets.LAST_NAME.text(), widgets.FIRST_NAME.text())
+            widgets.add_error_lb.setText(result_del)
+            self.new_btn()
+            self.radio_refresh()
+
+    def reset_edit_lines(self, style):
+        widgets.LAST_NAME.setStyleSheet(style)
+        widgets.FIRST_NAME.setStyleSheet(style)
+        widgets.FATHER_NAME.setStyleSheet(style)
+        widgets.SPORT.setStyleSheet(style)
+
+    def add_refresh_btn(self):
+        last_nanme = widgets.LAST_NAME.text()
+        first_name = widgets.FIRST_NAME.text()
+        father_name = widgets.FATHER_NAME.text()
+        sport = widgets.SPORT.currentText()
+        if widgets.add_ref_btn.text() == "ΚΑΤΑΧΩΡΗΣΗ":
+            error_msg = "Add_member action: "
+            error_color = 'color: "#D1E8E2";\nborder: 2px solid "#501B1D";'
+            widgets.add_error_lb.setStyleSheet('color: rgb(80, 27, 29);')
+            widgets.LAST_NAME.setStyleSheet('color: "#D1E8E2";')
+            widgets.FIRST_NAME.setStyleSheet('color: "#D1E8E2";')
+            widgets.FATHER_NAME.setStyleSheet('color: "#D1E8E2";')
+            widgets.SPORT.setStyleSheet('color: "#D1E8E2";')
+            if last_nanme == "-" or last_nanme == "" or first_name == "-" or first_name == "" or father_name == "-" or father_name == "" or sport == "Επιλέξτε":
+                error_msg = "Καταχωρήστε"
+                if last_nanme == "-" or last_nanme == "":
+                    error_msg = error_msg + ", Επώνυμο "
+                    widgets.LAST_NAME.setStyleSheet(error_color)
+                if first_name == "-" or first_name == "":
+                    error_msg = error_msg + ", Όνομα "
+                    widgets.FIRST_NAME.setStyleSheet(error_color)
+                if father_name == "-" or father_name == "":
+                    error_msg = error_msg + ", Πατρώνυμο "
+                    widgets.FATHER_NAME.setStyleSheet(error_color)
+                if sport == "Επιλέξτε":
+                    error_msg = error_msg + ", Άθλημα "
+                    widgets.SPORT.setStyleSheet(error_color)
+            else:  # παει για ελεγχο διπλογραφης
+                result = login_query.connection.login_name_ifexists(self,
+                                                                    widgets.user_tb.text(),
+                                                                    widgets.pass_tb.text(),
+                                                                    widgets.LAST_NAME.text(),
+                                                                    widgets.FIRST_NAME.text(),
+                                                                    widgets.FATHER_NAME.text())
+                print("Exists result: " + result)
+                if result == "exists":
+                    error_msg = "Υπάρχει μέλος με αυτά τα στοιχεία !!!"
+                elif result == "go_to_add":
+                    error_msg = login_query.connection.login_members_add(self,
+                                                                         widgets.user_tb.text(),
+                                                                         widgets.pass_tb.text(),
+                                                                         widgets.LAST_NAME.text(),
+                                                                         widgets.FIRST_NAME.text(),
+                                                                         widgets.FATHER_NAME.text(),
+                                                                         widgets.MOTHER_NAME.text(),
+                                                                         widgets.BIRTHDATE.text(),
+                                                                         widgets.BIRTH_PLACE.text(),
+                                                                         widgets.NATIONALITY.text(),
+                                                                         widgets.PROFESSION.text(),
+                                                                         widgets.ID_NUMBER.text(),
+                                                                         widgets.ADDRESS_STREET.text(),
+                                                                         widgets.ADDRESS_NUMBER.text(),
+                                                                         widgets.REGION.text(),
+                                                                         widgets.HOME_PHONE.text(),
+                                                                         widgets.MOTHER_PHONE.text(),
+                                                                         widgets.FATHER_PHONE.text(),
+                                                                         widgets.EMAIL.text(),
+                                                                         widgets.SPORT.currentText(),
+                                                                         widgets.DATE_SUBSCRIBE.text(),
+                                                                         widgets.EMERG_PHONE.text(),
+                                                                         widgets.BARCODE.text(),
+                                                                         widgets.CELL_PHONE.text(),
+                                                                         widgets.BARCODE_1.text(),
+                                                                         widgets.SPORT_1.currentText(),
+                                                                         widgets.PAY_DAY.text())
+                    if error_msg == "Επιτυχία καταχώρησης !!!":
+                        widgets.add_error_lb.setStyleSheet('color: "#D9B08C";')
+        elif widgets.add_ref_btn.text() == "ΕΝΗΜΕΡΩΣΗ":
+            widgets.add_error_lb.setText("")
+            error_msg = "Update_member action: "
+            error_color = 'color: "#D1E8E2";\nborder: 2px solid "#501B1D";'
+            widgets.add_error_lb.setStyleSheet('color: rgb(80, 27, 29);')
+            widgets.LAST_NAME.setStyleSheet('color: "#D1E8E2";')
+            widgets.FIRST_NAME.setStyleSheet('color: "#D1E8E2";')
+            widgets.FATHER_NAME.setStyleSheet('color: "#D1E8E2";')
+            widgets.SPORT.setStyleSheet('color: "#D1E8E2";')
+            if last_nanme == "-" or last_nanme == "" or first_name == "-" or first_name == "" or father_name == "-" or father_name == "" or sport == "Επιλέξτε":
+                error_msg = "Καταχωρήστε"
+                if last_nanme == "-" or last_nanme == "":
+                    error_msg = error_msg + ", Επώνυμο "
+                    widgets.LAST_NAME.setStyleSheet(error_color)
+                if first_name == "-" or first_name == "":
+                    error_msg = error_msg + ", Όνομα "
+                    widgets.FIRST_NAME.setStyleSheet(error_color)
+                if father_name == "-" or father_name == "":
+                    error_msg = error_msg + ", Πατρώνυμο "
+                    widgets.FATHER_NAME.setStyleSheet(error_color)
+                if sport == "Επιλέξτε":
+                    error_msg = error_msg + ", Άθλημα "
+                    widgets.SPORT.setStyleSheet(error_color)
+            else:
+                error_msg = login_query.connection.login_members_updare(self,
+                                                                        widgets.user_tb.text(),
+                                                                        widgets.pass_tb.text(),
+                                                                        original_lastName,
+                                                                        original_firstName,
+                                                                        widgets.LAST_NAME.text(),
+                                                                        widgets.FIRST_NAME.text(),
+                                                                        widgets.FATHER_NAME.text(),
+                                                                        widgets.MOTHER_NAME.text(),
+                                                                        widgets.BIRTHDATE.text(),
+                                                                        widgets.BIRTH_PLACE.text(),
+                                                                        widgets.NATIONALITY.text(),
+                                                                        widgets.PROFESSION.text(),
+                                                                        widgets.ID_NUMBER.text(),
+                                                                        widgets.ADDRESS_STREET.text(),
+                                                                        widgets.ADDRESS_NUMBER.text(),
+                                                                        widgets.REGION.text(),
+                                                                        widgets.HOME_PHONE.text(),
+                                                                        widgets.MOTHER_PHONE.text(),
+                                                                        widgets.FATHER_PHONE.text(),
+                                                                        widgets.EMAIL.text(),
+                                                                        widgets.SPORT.currentText(),
+                                                                        widgets.DATE_SUBSCRIBE.text(),
+                                                                        widgets.EMERG_PHONE.text(),
+                                                                        widgets.BARCODE.text(),
+                                                                        widgets.CELL_PHONE.text(),
+                                                                        widgets.BARCODE_1.text(),
+                                                                        widgets.SPORT_1.currentText(),
+                                                                        widgets.PAY_DAY.text())
+                if error_msg == "Επιτυχία ανανέωσης !!!":
+                    widgets.add_error_lb.setStyleSheet('color: "#D9B08C";')
+                    self.list_names_combobox()
+
+        widgets.add_error_lb.setText(error_msg)
 
     def displayTime(self):
         now = QDate.currentDate()
@@ -195,47 +357,74 @@ class LoginWindow(QMainWindow):
         else:
             print("Calendar List:")
             print(calendar_list)
-            print("Each Item:")
-            for item in calendar_list:
-                dayWeek = datetime.datetime.strptime(item[0], '%d-%m-%Y').strftime('%A')
-                print(item[0], dayWeek, item[1], item[2], item[3])
-                if dayWeek == 'Monday':
-                    pass
-                elif dayWeek == 'Tuesday':
-                    pass
-                elif dayWeek == 'Wednesday':
-                    pass
-                elif dayWeek == 'Thursday':
-                    pass
-                elif dayWeek == 'Friday':
-                    print("Friday event added")
-                    # layout1 = QFormLayout()
-                    # layout1.setGeometry(QRect(0, 0, 128, 280))
-                    # spacerr = QSpacerItem(20, 50, QSizePolicy.Minimum, QSizePolicy.Fixed)
-                    # item1 = QLabel(item[3])
-                    # item2 = QLabel(item[1])
-                    # item3 = QLabel(item[0])
-                    # layout1.addItem(spacerr)
-                    # layout1.addWidget(item1)
-                    # layout1.addWidget(item2)
-                    # layout1.addWidget(item3)
-                    #
-                    # widgets.friday_fm.setLayout(layout1)
-                    # item1.setStyleSheet('''color: rgb(0, 0, 0);background-color: '#2c3531';''')
-                    # item2.setStyleSheet('''color: rgb(0, 0, 0);background-color: '#2c3531';''')
-                    # item3.setStyleSheet('''color: rgb(0, 0, 0);background-color: '#2c3531';''')
-                    # item1.setFixedSize(131, 25)
-                    # item2.setFixedSize(131, 25)
-                    # item3.setFixedSize(131, 25)
-                    # item1.setAlignment(Qt.AlignCenter)
-                    # item2.setAlignment(Qt.AlignCenter)
-                    # item3.setAlignment(Qt.AlignCenter)
+            list_labelsDays = []
+            item = widgets.days_splitter.children()
+            for frames in item:  # για ολα τα frames (ΗΜΕΡΕΣ)
+                print("- - - - - - - - - - - - - - - -")
+                if isinstance(frames, QFrame):  # αν ειναι frame
+                    frame_name = frames.objectName()
+                    print("Frame: ", frame_name)
+                    item2 = frames.children()  # ΛΙΣΤΑ: παιρνει ολα τα labes απο τα frames
+                    cut_text = frame_name[:-(len(frame_name) - frame_name.index("_") - 1):]  # μενει απο το ονομα του label η ημερα και το _
+                    cut_text2 = frame_name[:-(len(frame_name) - frame_name.index("_") ):]  # μενει απο το ονομα του label η ημερα χωρις το _
+                    print("cut_text: ", cut_text, " || cut_text2: ", cut_text2)
+                    print("---------------------------")
+                    for x in item2:  # για καθε label στην λιστα γινεται ελεγχος αν ειναι event label
+                        label_name = x.objectName()
 
-                elif dayWeek == 'Saturday':
-                    pass
-                elif dayWeek == 'Saturday':
-                    pass
-            print("##################### END of Calendar event List ##############################")
+                        label_time_start = label_name[-4::]  # αφηνει τα 4 τελευται του ονοματος του label για να κρατησει την ωρα και μονο
+                        if label_name.find(cut_text) != -1:  #αν αυτο το label εχει ονομα ημερας και αφορα event (και οχι τιτλο ή κατι αλλο) τοτε προχωραει για να το φτιαξει
+
+                            for item in calendar_list:  # για καθε event calendar
+                                dayWeek = datetime.datetime.strptime(item[0], '%d-%m-%Y').strftime('%A').lower()
+                                start_tme_str = str(item[1]).replace(":", "")
+                                if dayWeek == cut_text2 and label_time_start == start_tme_str:  # αν ειναι η μερα η ιδια και η ωρα
+                                    x.show()
+                                    print("Label: ", label_name)
+                                    print("Day Events:")
+                                    print(item[0], dayWeek, item[1], item[2], item[3], item[4])
+                                    color_code = ''
+                                    if item[4] == '1':  #levanda
+                                        color_code = 'rgba(121,134,203,'
+                                    elif item[4] == '2':  #faskomilia
+                                        color_code = 'rgba(51,182,121,'
+                                    elif item[4] == '3':  #stafili
+                                        color_code = 'rgba(142,36,170,'
+                                    elif item[4] == '4':  #flamingo
+                                        color_code = 'rgba(230,124,115,'
+                                    elif item[4] == '5':
+                                        color_code = ''
+                                    elif item[4] == '6':  #mandarine
+                                        color_code = 'rgba(244,81,30,'
+                                    elif item[4] == '7':
+                                        color_code = ''
+                                    elif item[4] == '8':  #grafite
+                                        color_code = 'rgba(97,97,97,'
+                                    elif item[4] == '9':
+                                        color_code = ''
+                                    elif item[4] == '10':  #basilikos
+                                        color_code = 'rgba(11,128,67,'
+                                    elif item[4] == '11':  #red
+                                        color_code = 'rgba(213,0,0,'
+                                    traspa_labels = 90
+                                    color_code = color_code + str(traspa_labels) + ")"
+                                    if dayWeek == 'saturday' or dayWeek == 'sunday':
+                                        x.setText(str(item[1]) + " " + str(item[3]))
+                                    else:
+                                        x.setText(" " + str(item[3]))
+
+                                    if str(item[2]) == '2:00:00':
+                                        print('2 hours')
+                                        x.setFixedHeight(x.height()*2)
+                                    elif str(item[2]) == '1:30:00':
+                                        print('1 and a half hour')
+                                        x.setFixedHeight((x.height()/2) + x.height())
+                                    x.setStyleSheet("background-color: " + color_code +";border-left: 3px solid #2c3531;border-radius: 4px; ")
+
+                                    x.setAlignment(Qt.AlignTop)
+                                    print("****************************")
+
+        print("##################### END of Calendar event List ##############################")
 
     def refresh_stats(self):
         # MEMBERS STATS
@@ -268,15 +457,22 @@ class LoginWindow(QMainWindow):
 
     def radio_refresh(self):
         widgets.members_cbb.clear()
-        members_list = login_query.connection.login_members_names(self, widgets.user_tb.text(), widgets.pass_tb.text(),sport_definition(self))
+        members_list = login_query.connection.login_members_names(self, widgets.user_tb.text(), widgets.pass_tb.text(),
+                                                                  sport_definition(self))
         widgets.members_cbb.addItems(members_list)
         self.clear_editlines()
         widgets.add_ref_btn.setText("ΚΑΤΑΧΩΡΗΣΗ")
+        widgets.del_ref_btn.hide()
+        widgets.add_error_lb.setText("")
+        self.reset_edit_lines('color: "#D1E8E2";')
 
     def new_btn(self):
         self.clear_editlines()
         self.reset_combobox()
         widgets.add_ref_btn.setText("ΚΑΤΑΧΩΡΗΣΗ")
+        widgets.del_ref_btn.hide()
+        widgets.add_error_lb.setText("")
+        self.reset_edit_lines('color: "#D1E8E2";')
 
     def reset_combobox(self):
         widgets.members_cbb.setCurrentIndex(0)
@@ -288,16 +484,24 @@ class LoginWindow(QMainWindow):
             list_empty2.append("-")
         list_empty.append(list_empty2)
         self.put_info(list_empty)
+        widgets.SPORT_1.setCurrentIndex(0)
+        widgets.SPORT.setCurrentIndex(0)
 
     def list_names_combobox(self):
+
+        global original_firstName
+        global original_lastName
         name = widgets.members_cbb.currentText()
         info_list = login_query.connection.member_info(self, widgets.user_tb.text(), widgets.pass_tb.text(), name)
         if info_list:
             self.put_info(info_list)
         widgets.add_ref_btn.setText("ΕΝΗΜΕΡΩΣΗ")
+        widgets.add_error_lb.setText("")
+        original_firstName = widgets.FIRST_NAME.text()
+        original_lastName = widgets.LAST_NAME.text()
+        widgets.del_ref_btn.show()
 
     def put_info(self, list):
-        print(list)
         widgets.LAST_NAME.setText(list[0][1])
         widgets.FIRST_NAME.setText(list[0][2])
         widgets.FATHER_NAME.setText(list[0][3])
@@ -314,13 +518,13 @@ class LoginWindow(QMainWindow):
         widgets.MOTHER_PHONE.setText(list[0][14])
         widgets.FATHER_PHONE.setText(list[0][15])
         widgets.EMAIL.setText(list[0][16])
-        widgets.SPORT.setText(list[0][17])
+        widgets.SPORT.setCurrentText(list[0][17])
         widgets.DATE_SUBSCRIBE.setText(list[0][18])
         widgets.EMERG_PHONE.setText(list[0][19])
         widgets.BARCODE.setText(list[0][20])
         widgets.CELL_PHONE.setText(list[0][21])
         widgets.BARCODE_1.setText(list[0][22])
-        widgets.SPORT_1.setText(list[0][23])
+        widgets.SPORT_1.setCurrentText(list[0][23])
         widgets.PAY_DAY.setText(str(list[0][24]))
 
     def keyPressEvent(self, qKeyEvent):  # αναγνωριζει τα enter και καλει την συναρτηση οταν πατιεται το login button
