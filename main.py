@@ -1,6 +1,7 @@
 import datetime
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import Qt, QRect, QPropertyAnimation, QParallelAnimationGroup, QDate
+import PyQt5.QtChart
 from login_main import Ui_MainWindow
 import google_calendar
 import sys
