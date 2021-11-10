@@ -282,3 +282,26 @@ class connection:
             message = "Αποτυχία ανανέωσης"
         print(str(msg))
         return message
+
+    def login_chart_year(self, username, password, year):
+        result = []
+        try:
+            query = '''SELECT Sum_Members = count([ID]) FROM [Data] SELECT Sum_Members_TKD = count([ID]) FROM [Data] 
+            where SPORT = 'TAEKWON-DO' SELECT Sum_Members_FENCING = count([ID]) FROM [Data] where SPORT = 'FENCING' 
+            SELECT Sum_Members_OPLOMAXIA = count([ID]) FROM [Data] where SPORT = 'OPLOMAXIA' '''
+            cnxn = pyodbc.connect(
+                'DRIVER={ODBC Driver 17 for SQL Server};SERVER=' + server + ';DATABASE=' + database + ';UID=' + username + ';PWD=' + password + ';Trusted_Connection=no',
+                timeout=10)
+            cursor = cnxn.cursor()
+            cursor.execute(query)
+            rows = cursor.fetchall()
+            result.append(rows[0][0])
+            while (cursor.nextset()):
+                rows = cursor.fetchall()
+                result.append(rows[0][0])
+            msg = "Members: Connection established"
+        except Exception as e:
+            msg = "Members: Connection failed"
+            print("Error: Members: " + str(e))
+        print(str(msg))
+        return result
