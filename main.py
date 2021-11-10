@@ -1,11 +1,12 @@
 import datetime
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import Qt, QRect, QPropertyAnimation, QParallelAnimationGroup, QDate
-import PyQt5.QtChart
+from PyQt5 import QtChart
 from login_main import Ui_MainWindow
 import google_calendar
 import sys
 import login_query
+from charts import Chart_Window
 
 
 class LoginWindow(QMainWindow):
@@ -14,6 +15,9 @@ class LoginWindow(QMainWindow):
         QMainWindow.__init__(self)
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
+
+
+
         global buttons_style
         buttons_style = "QToolTip { background-color: black } QPushButton { border-left: 5px solid #88b1b2; border-radius: 13px 0px 0px 13px; background-color: #116466} "
         global widgets
@@ -22,6 +26,9 @@ class LoginWindow(QMainWindow):
         start_pos_x = 150
         global start_pro_y
         start_pro_y = 150
+
+
+
 
         self.baseHeight = 369
         self.extendedHeight = 400
@@ -60,6 +67,8 @@ class LoginWindow(QMainWindow):
         ####################################################
         self.days_labes_hide()
         ####################################################
+        self.chart_create()
+        ####################################################
         sport_list = ["Επιλέξτε", "TAEKWON-DO", "FENCING", "OPLOMAXIA"]
         widgets.SPORT.addItems(sport_list)
         widgets.SPORT_1.addItems(sport_list)
@@ -68,6 +77,12 @@ class LoginWindow(QMainWindow):
         widgets.toolBar_fm.hide()
         widgets.home_bt.setStyleSheet(buttons_style)
         self.show()
+
+    def chart_create(self):
+        self.chart_frame = Chart_Window()
+        chart_layout = QHBoxLayout()
+        chart_layout.addWidget(self.chart_frame)
+        widgets.chart_fm.setLayout(chart_layout)
 
     def days_labes_hide(self):
         item = widgets.days_splitter.children()

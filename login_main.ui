@@ -3107,6 +3107,22 @@ border-style: outset;</string>
          <string/>
         </property>
        </widget>
+       <widget class="QFrame" name="chart_fm">
+        <property name="geometry">
+         <rect>
+          <x>330</x>
+          <y>40</y>
+          <width>671</width>
+          <height>451</height>
+         </rect>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+       </widget>
       </widget>
       <widget class="QWidget" name="menbers_page">
        <widget class="QWidget" name="formLayoutWidget_2">
@@ -3115,7 +3131,7 @@ border-style: outset;</string>
           <x>330</x>
           <y>50</y>
           <width>242</width>
-          <height>571</height>
+          <height>664</height>
          </rect>
         </property>
         <layout class="QFormLayout" name="formLayout_3">
