@@ -1,3 +1,5 @@
+import os
+
 import pyodbc
 from datetime import date
 
@@ -283,25 +285,34 @@ class connection:
         print(str(msg))
         return message
 
-    def login_chart_year(self, username, password, year):
-        result = []
+    def login_chart_year_all(self, username, password):
+        result_all = []
+        result_years = []
+        result_eco = []
+        home_dir = os.path.abspath('')
+        sql_query = os.path.join(home_dir, 'sql_queries/all_years_econ.txt')
+        print("Path of query: ", sql_query)
         try:
-            query = '''SELECT Sum_Members = count([ID]) FROM [Data] SELECT Sum_Members_TKD = count([ID]) FROM [Data] 
-            where SPORT = 'TAEKWON-DO' SELECT Sum_Members_FENCING = count([ID]) FROM [Data] where SPORT = 'FENCING' 
-            SELECT Sum_Members_OPLOMAXIA = count([ID]) FROM [Data] where SPORT = 'OPLOMAXIA' '''
+            with open(sql_query, 'r') as file:
+                query = file.read()
+            #print(query)
             cnxn = pyodbc.connect(
                 'DRIVER={ODBC Driver 17 for SQL Server};SERVER=' + server + ';DATABASE=' + database + ';UID=' + username + ';PWD=' + password + ';Trusted_Connection=no',
                 timeout=10)
             cursor = cnxn.cursor()
             cursor.execute(query)
             rows = cursor.fetchall()
-            result.append(rows[0][0])
+            for i in rows:
+                result_years.append(str(i[0]))
+            result_all.append(result_years)
             while (cursor.nextset()):
                 rows = cursor.fetchall()
-                result.append(rows[0][0])
-            msg = "Members: Connection established"
+                result_eco.append(rows[0][0])
+            result_all.append(result_eco)
+            msg = "chart_year_all: Connection established"
         except Exception as e:
-            msg = "Members: Connection failed"
-            print("Error: Members: " + str(e))
+            msg = "chart_year_all: Connection failed"
+            print("Error: chart_year_all: " + str(e))
         print(str(msg))
-        return result
+        print(result_all)
+        return result_all

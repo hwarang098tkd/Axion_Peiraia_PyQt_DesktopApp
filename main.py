@@ -16,8 +16,6 @@ class LoginWindow(QMainWindow):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
 
-
-
         global buttons_style
         buttons_style = "QToolTip { background-color: black } QPushButton { border-left: 5px solid #88b1b2; border-radius: 13px 0px 0px 13px; background-color: #116466} "
         global widgets
@@ -26,9 +24,6 @@ class LoginWindow(QMainWindow):
         start_pos_x = 150
         global start_pro_y
         start_pro_y = 150
-
-
-
 
         self.baseHeight = 369
         self.extendedHeight = 400
@@ -67,7 +62,7 @@ class LoginWindow(QMainWindow):
         ####################################################
         self.days_labes_hide()
         ####################################################
-        self.chart_create()
+
         ####################################################
         sport_list = ["Επιλέξτε", "TAEKWON-DO", "FENCING", "OPLOMAXIA"]
         widgets.SPORT.addItems(sport_list)
@@ -78,8 +73,8 @@ class LoginWindow(QMainWindow):
         widgets.home_bt.setStyleSheet(buttons_style)
         self.show()
 
-    def chart_create(self):
-        self.chart_frame = Chart_Window()
+    def chart_create(self, year):
+        self.chart_frame = Chart_Window.all_years(self, year)
         chart_layout = QHBoxLayout()
         chart_layout.addWidget(self.chart_frame)
         widgets.chart_fm.setLayout(chart_layout)
@@ -315,6 +310,7 @@ class LoginWindow(QMainWindow):
             if result == "Connection established":
                 # REFRESH STASTS
                 self.refresh_stats()
+                self.chart_create("all")
 
                 # Re-COLOR MAIN TOOLBAR
                 widgets.maintoolbar_fm.setStyleSheet("background-color: \'#0d5051\';")
@@ -371,20 +367,20 @@ class LoginWindow(QMainWindow):
             print("No Calendar Events")
             widgets.calendar_error_lb.setText("No Calendar Events")
         else:
-            print("Calendar List:")
-            print(calendar_list)
+            # print("Calendar List:")
+            # print(calendar_list)
             list_labelsDays = []
             item = widgets.days_splitter.children()
             for frames in item:  # για ολα τα frames (ΗΜΕΡΕΣ)
-                print("- - - - - - - - - - - - - - - -")
+                #print("- - - - - - - - - - - - - - - -")
                 if isinstance(frames, QFrame):  # αν ειναι frame
                     frame_name = frames.objectName()
-                    print("Frame: ", frame_name)
+                    #print("Frame: ", frame_name)
                     item2 = frames.children()  # ΛΙΣΤΑ: παιρνει ολα τα labes απο τα frames
                     cut_text = frame_name[:-(len(frame_name) - frame_name.index("_") - 1):]  # μενει απο το ονομα του label η ημερα και το _
                     cut_text2 = frame_name[:-(len(frame_name) - frame_name.index("_") ):]  # μενει απο το ονομα του label η ημερα χωρις το _
-                    print("cut_text: ", cut_text, " || cut_text2: ", cut_text2)
-                    print("---------------------------")
+                    # print("cut_text: ", cut_text, " || cut_text2: ", cut_text2)
+                    # print("---------------------------")
                     for x in item2:  # για καθε label στην λιστα γινεται ελεγχος αν ειναι event label
                         label_name = x.objectName()
 
@@ -396,9 +392,9 @@ class LoginWindow(QMainWindow):
                                 start_tme_str = str(item[1]).replace(":", "")
                                 if dayWeek == cut_text2 and label_time_start == start_tme_str:  # αν ειναι η μερα η ιδια και η ωρα
                                     x.show()
-                                    print("Label: ", label_name)
-                                    print("Day Events:")
-                                    print(item[0], dayWeek, item[1], item[2], item[3], item[4])
+                                    # print("Label: ", label_name)
+                                    # print("Day Events:")
+                                    # print(item[0], dayWeek, item[1], item[2], item[3], item[4])
                                     color_code = ''
                                     if item[4] == '1':  #levanda
                                         color_code = 'rgba(121,134,203,'
@@ -430,15 +426,15 @@ class LoginWindow(QMainWindow):
                                         x.setText(" " + str(item[3]))
 
                                     if str(item[2]) == '2:00:00':
-                                        print('2 hours')
+                                        #print('2 hours')
                                         x.setFixedHeight(x.height()*2)
                                     elif str(item[2]) == '1:30:00':
-                                        print('1 and a half hour')
+                                        #print('1 and a half hour')
                                         x.setFixedHeight((x.height()/2) + x.height())
                                     x.setStyleSheet("background-color: " + color_code +";border-left: 3px solid #2c3531;border-radius: 4px; ")
 
                                     x.setAlignment(Qt.AlignTop)
-                                    print("****************************")
+                                    #print("****************************")
 
         print("##################### END of Calendar event List ##############################")
 
