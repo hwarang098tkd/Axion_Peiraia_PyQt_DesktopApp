@@ -73,11 +73,17 @@ class LoginWindow(QMainWindow):
         widgets.home_bt.setStyleSheet(buttons_style)
         self.show()
 
-    def chart_create(self, year):
-        self.chart_frame = Chart_Window.all_years(self, year)
-        chart_layout = QHBoxLayout()
-        chart_layout.addWidget(self.chart_frame)
-        widgets.chart_fm.setLayout(chart_layout)
+    def chart_all_create(self):
+        self.chart_all_frame = Chart_Window(widgets.user_tb.text(), widgets.pass_tb.text(), "all")
+        chart_all_layout = QHBoxLayout()
+        chart_all_layout.addWidget(self.chart_all_frame)
+        widgets.chart_all_fm.setLayout(chart_all_layout)
+
+    def chart_one_create(self, year):
+        self.chart_one_frame = Chart_Window(widgets.user_tb.text(), widgets.pass_tb.text(),year)
+        chart_one_layout = QHBoxLayout()
+        chart_one_layout.addWidget(self.chart_one_frame)
+        widgets.chart_one_fm.setLayout(chart_one_layout)
 
     def days_labes_hide(self):
         item = widgets.days_splitter.children()
@@ -310,8 +316,11 @@ class LoginWindow(QMainWindow):
             if result == "Connection established":
                 # REFRESH STASTS
                 self.refresh_stats()
-                self.chart_create("all")
+                self.chart_all_create()  # το πρωτο διαγραμμα
 
+                years = login_query.connection.login_list_ofYears(self, widgets.user_tb.text(), widgets.pass_tb.text())
+                widgets.chart_years_ccb.addItems(years)   # μαζι με το απο πανω φτιαχνει την λιστα με τα διαθεσιμα ετη απο τα οικονομικα
+                self.chart_one_create(widgets.chart_years_ccb.currentText())  #
                 # Re-COLOR MAIN TOOLBAR
                 widgets.maintoolbar_fm.setStyleSheet("background-color: \'#0d5051\';")
                 # Re-COLOR MAIN BOT TOOLBAR

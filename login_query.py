@@ -289,10 +289,9 @@ class connection:
         result_all = []
         result_years = []
         result_eco = []
-        home_dir = os.path.abspath('')
-        sql_query = os.path.join(home_dir, 'sql_queries/all_years_econ.txt')
-        print("Path of query: ", sql_query)
         try:
+            home_dir = os.path.abspath('')
+            sql_query = os.path.join(home_dir, 'sql_queries/all_years_econ.txt')
             with open(sql_query, 'r') as file:
                 query = file.read()
             #print(query)
@@ -316,3 +315,58 @@ class connection:
         print(str(msg))
         print(result_all)
         return result_all
+
+    def login_chart_oneYear(self, username, password, year):
+        result_all = []
+        result_month= []
+        result_eco = []
+        try:
+            home_dir = os.path.abspath('')
+            sql_query = os.path.join(home_dir, 'sql_queries/one_year.txt')
+            with open(sql_query, 'r') as file:
+                query = file.read().format(year)
+            print(year)
+            cnxn = pyodbc.connect(
+                'DRIVER={ODBC Driver 17 for SQL Server};SERVER=' + server + ';DATABASE=' + database + ';UID=' + username + ';PWD=' + password + ';Trusted_Connection=no',
+                timeout=10)
+            cursor = cnxn.cursor()
+            cursor.execute(query)
+            rows = cursor.fetchall()
+            for i in rows:
+                result_month.append(str(i[0]))
+
+            result_all.append(result_month)
+
+            while (cursor.nextset()):
+                rows = cursor.fetchall()
+                result_eco.append(rows[0])
+
+            result_all.append(result_eco)
+            msg = "chart_oneYear: Connection established"
+        except Exception as e:
+            msg = "chart_oneYear: Connection failed"
+            print("Error: chart_oneYear: " + str(e))
+        print(str(msg))
+        return result_all
+
+    def login_list_ofYears(self, username, password):
+        result = []
+        try:
+            home_dir = os.path.abspath('')
+            sql_query = os.path.join(home_dir, 'sql_queries/list_ofYears.txt')
+            with open(sql_query, 'r') as file:
+                query = file.read()
+            cnxn = pyodbc.connect(
+                'DRIVER={ODBC Driver 17 for SQL Server};SERVER=' + server + ';DATABASE=' + database + ';UID=' + username + ';PWD=' + password + ';Trusted_Connection=no',
+                timeout=10)
+            cursor = cnxn.cursor()
+            cursor.execute(query)
+            rows = cursor.fetchall()
+            for i in rows:
+                result.append(str(i[0]))
+            msg = "list_ofYears: Connection established"
+        except Exception as e:
+            msg = "list_ofYears: Connection failed"
+            print("Error: list_ofYears: " + str(e))
+        print(str(msg))
+        return result

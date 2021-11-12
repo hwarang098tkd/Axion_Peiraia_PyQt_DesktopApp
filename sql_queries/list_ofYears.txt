@@ -1,0 +1,1 @@
+SELECT DISTINCT DATEPART(yyyy,DATENEW) FROM economics order by YEAR(datenew) desc

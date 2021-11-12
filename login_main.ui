@@ -10,7 +10,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1388</width>
+    <width>1379</width>
     <height>792</height>
    </rect>
   </property>
@@ -2941,10 +2941,10 @@ color: rgb(211, 211, 211);</string>
        <widget class="QWidget" name="horizontalLayoutWidget_2">
         <property name="geometry">
          <rect>
-          <x>60</x>
+          <x>30</x>
           <y>260</y>
-          <width>191</width>
-          <height>41</height>
+          <width>297</width>
+          <height>54</height>
          </rect>
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout_5">
@@ -2995,7 +2995,7 @@ color: rgb(211, 211, 211);</string>
           <x>40</x>
           <y>310</y>
           <width>271</width>
-          <height>41</height>
+          <height>60</height>
          </rect>
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout_7">
@@ -3049,7 +3049,7 @@ border-style: outset;</string>
           <x>40</x>
           <y>360</y>
           <width>271</width>
-          <height>80</height>
+          <height>81</height>
          </rect>
         </property>
         <layout class="QGridLayout" name="gridLayout">
@@ -3107,13 +3107,13 @@ border-style: outset;</string>
          <string/>
         </property>
        </widget>
-       <widget class="QFrame" name="chart_fm">
+       <widget class="QFrame" name="chart_all_fm">
         <property name="geometry">
          <rect>
-          <x>330</x>
-          <y>40</y>
-          <width>671</width>
-          <height>451</height>
+          <x>350</x>
+          <y>0</y>
+          <width>651</width>
+          <height>261</height>
          </rect>
         </property>
         <property name="frameShape">
@@ -3121,6 +3121,62 @@ border-style: outset;</string>
         </property>
         <property name="frameShadow">
          <enum>QFrame::Raised</enum>
+        </property>
+       </widget>
+       <widget class="QFrame" name="chart_one_fm">
+        <property name="geometry">
+         <rect>
+          <x>350</x>
+          <y>310</y>
+          <width>651</width>
+          <height>221</height>
+         </rect>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Raised</enum>
+        </property>
+       </widget>
+       <widget class="QComboBox" name="chart_years_ccb">
+        <property name="geometry">
+         <rect>
+          <x>390</x>
+          <y>270</y>
+          <width>81</width>
+          <height>22</height>
+         </rect>
+        </property>
+        <property name="layoutDirection">
+         <enum>Qt::LeftToRight</enum>
+        </property>
+        <property name="editable">
+         <bool>true</bool>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_49">
+        <property name="geometry">
+         <rect>
+          <x>340</x>
+          <y>272</y>
+          <width>47</width>
+          <height>21</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <pointsize>9</pointsize>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">color:  '#ffcb9a';</string>
+        </property>
+        <property name="text">
+         <string>Έτος:</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignHCenter|Qt::AlignTop</set>
         </property>
        </widget>
       </widget>
@@ -3866,6 +3922,7 @@ border-style: outset;</string>
         <property name="font">
          <font>
           <pointsize>9</pointsize>
+          <weight>75</weight>
           <bold>true</bold>
          </font>
         </property>
@@ -3933,6 +3990,7 @@ border-style: outset;</string>
         <property name="font">
          <font>
           <pointsize>12</pointsize>
+          <weight>75</weight>
           <bold>true</bold>
          </font>
         </property>
