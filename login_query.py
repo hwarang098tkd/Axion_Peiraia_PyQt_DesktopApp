@@ -313,19 +313,21 @@ class connection:
             msg = "chart_year_all: Connection failed"
             print("Error: chart_year_all: " + str(e))
         print(str(msg))
-        print(result_all)
         return result_all
 
     def login_chart_oneYear(self, username, password, year):
+        """
+
+        :rtype: object
+        """
         result_all = []
-        result_month= []
+        result_month = []
         result_eco = []
         try:
             home_dir = os.path.abspath('')
             sql_query = os.path.join(home_dir, 'sql_queries/one_year.txt')
             with open(sql_query, 'r') as file:
                 query = file.read().format(year)
-            print(year)
             cnxn = pyodbc.connect(
                 'DRIVER={ODBC Driver 17 for SQL Server};SERVER=' + server + ';DATABASE=' + database + ';UID=' + username + ';PWD=' + password + ';Trusted_Connection=no',
                 timeout=10)

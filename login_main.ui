@@ -2941,13 +2941,19 @@ color: rgb(211, 211, 211);</string>
        <widget class="QWidget" name="horizontalLayoutWidget_2">
         <property name="geometry">
          <rect>
-          <x>30</x>
+          <x>70</x>
           <y>260</y>
-          <width>297</width>
+          <width>191</width>
           <height>54</height>
          </rect>
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout_5">
+         <property name="spacing">
+          <number>6</number>
+         </property>
+         <property name="sizeConstraint">
+          <enum>QLayout::SetDefaultConstraint</enum>
+         </property>
          <item>
           <widget class="QRadioButton" name="inocme_rb">
            <property name="font">
@@ -3111,16 +3117,16 @@ border-style: outset;</string>
         <property name="geometry">
          <rect>
           <x>350</x>
-          <y>0</y>
+          <y>10</y>
           <width>651</width>
           <height>261</height>
          </rect>
         </property>
         <property name="frameShape">
-         <enum>QFrame::StyledPanel</enum>
+         <enum>QFrame::NoFrame</enum>
         </property>
         <property name="frameShadow">
-         <enum>QFrame::Raised</enum>
+         <enum>QFrame::Plain</enum>
         </property>
        </widget>
        <widget class="QFrame" name="chart_one_fm">
@@ -3132,18 +3138,24 @@ border-style: outset;</string>
           <height>221</height>
          </rect>
         </property>
+        <property name="contextMenuPolicy">
+         <enum>Qt::DefaultContextMenu</enum>
+        </property>
+        <property name="layoutDirection">
+         <enum>Qt::RightToLeft</enum>
+        </property>
         <property name="frameShape">
-         <enum>QFrame::StyledPanel</enum>
+         <enum>QFrame::NoFrame</enum>
         </property>
         <property name="frameShadow">
-         <enum>QFrame::Raised</enum>
+         <enum>QFrame::Plain</enum>
         </property>
        </widget>
        <widget class="QComboBox" name="chart_years_ccb">
         <property name="geometry">
          <rect>
-          <x>390</x>
-          <y>270</y>
+          <x>430</x>
+          <y>278</y>
           <width>81</width>
           <height>22</height>
          </rect>
@@ -3158,8 +3170,8 @@ border-style: outset;</string>
        <widget class="QLabel" name="label_49">
         <property name="geometry">
          <rect>
-          <x>340</x>
-          <y>272</y>
+          <x>380</x>
+          <y>280</y>
           <width>47</width>
           <height>21</height>
          </rect>
@@ -3187,7 +3199,7 @@ border-style: outset;</string>
           <x>330</x>
           <y>50</y>
           <width>242</width>
-          <height>664</height>
+          <height>581</height>
          </rect>
         </property>
         <layout class="QFormLayout" name="formLayout_3">
@@ -3922,7 +3934,6 @@ border-style: outset;</string>
         <property name="font">
          <font>
           <pointsize>9</pointsize>
-          <weight>75</weight>
           <bold>true</bold>
          </font>
         </property>
@@ -3990,7 +4001,6 @@ border-style: outset;</string>
         <property name="font">
          <font>
           <pointsize>12</pointsize>
-          <weight>75</weight>
           <bold>true</bold>
          </font>
         </property>

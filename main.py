@@ -1,12 +1,14 @@
 import datetime
+
+from PyQt5.QtChart import QBarSet, QBarSeries, QChart, QBarCategoryAxis, QChartView, QValueAxis
+from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import Qt, QRect, QPropertyAnimation, QParallelAnimationGroup, QDate
-from PyQt5 import QtChart
+
 from login_main import Ui_MainWindow
 import google_calendar
 import sys
 import login_query
-from charts import Chart_Window
 
 
 class LoginWindow(QMainWindow):
@@ -62,7 +64,12 @@ class LoginWindow(QMainWindow):
         ####################################################
         self.days_labes_hide()
         ####################################################
-
+        self.chart_all_create()
+        self.build_chart()
+        years = login_query.connection.login_list_ofYears(self, widgets.user_tb.text(), widgets.pass_tb.text())
+          # μαζι με το απο πανω φτιαχνει την λιστα με τα διαθεσιμα ετη απο τα οικονομικα
+        widgets.chart_years_ccb.currentIndexChanged.connect(self.handle_index_changed)
+        widgets.chart_years_ccb.addItems(years)
         ####################################################
         sport_list = ["Επιλέξτε", "TAEKWON-DO", "FENCING", "OPLOMAXIA"]
         widgets.SPORT.addItems(sport_list)
@@ -74,16 +81,120 @@ class LoginWindow(QMainWindow):
         self.show()
 
     def chart_all_create(self):
-        self.chart_all_frame = Chart_Window(widgets.user_tb.text(), widgets.pass_tb.text(), "all")
-        chart_all_layout = QHBoxLayout()
-        chart_all_layout.addWidget(self.chart_all_frame)
-        widgets.chart_all_fm.setLayout(chart_all_layout)
+        results_eco = login_query.connection.login_chart_year_all(self, widgets.user_tb.text(), widgets.pass_tb.text())
+        self.set0 = QBarSet("Έτη")
+        self.series_all = QBarSeries()
+        self.set0.append(results_eco[1])
+        self.series_all.append(self.set0)
+        categories = results_eco[0]
+        self.chart_all = QChart()
+        self.chart_all.addSeries(self.series_all)
+        self.chart_all.setTitle("Ετήσια Στατιστικά")
 
-    def chart_one_create(self, year):
-        self.chart_one_frame = Chart_Window(widgets.user_tb.text(), widgets.pass_tb.text(),year)
-        chart_one_layout = QHBoxLayout()
-        chart_one_layout.addWidget(self.chart_one_frame)
-        widgets.chart_one_fm.setLayout(chart_one_layout)
+        self.chart_all.setAnimationOptions(QChart.SeriesAnimations)
+        self.chart_all.setTheme(QChart.ChartThemeBrownSand)
+        self.chart_all.setBackgroundBrush(QBrush(QColor("transparent")))
+
+        # create axis for the chart
+
+        axis = QBarCategoryAxis()
+        axis.append(categories)
+        self.chart_all.createDefaultAxes()
+        self.chart_all.setAxisX(axis, self.series_all)
+
+        # create chartview and add the chart in the chartview
+        self.chartview_all = QChartView(self.chart_all)
+        vbox = QGridLayout(widgets.chart_all_fm)
+        vbox.setContentsMargins(0, 0, 0, 0)
+        vbox.addWidget(self.chartview_all)
+
+    def build_chart(self):
+        self.series = QBarSeries()
+        self.set_tkd = QBarSet("TAEKWON-DO")
+        self.set_fenc = QBarSet("ΞΙΦΑΣΚΙΑ")
+        self.set_oplo = QBarSet("ΟΠΛΟΜΑΧΙΑ")
+        self.set_spends = QBarSet("ΕΞΟΔΑ")
+        self.series.append(self.set_tkd)
+        self.series.append(self.set_fenc)
+        self.series.append(self.set_oplo)
+        self.series.append(self.set_spends)
+
+        self.chart = QChart()
+        self.chart.addSeries(self.series)
+        self.chart.setTitle("Monthly Stats per Year")
+        self.chart.setAnimationOptions(QChart.AllAnimations)
+        self.chart.setTheme(QChart.ChartThemeBrownSand)
+        self.chart.setBackgroundBrush(QBrush(QColor("transparent")))
+        self.chart.legend().setVisible(True)
+        self.chart.legend().setAlignment(Qt.AlignBottom)
+
+        self.axisX = QBarCategoryAxis()
+        self.axisY = QValueAxis()
+        self.axisY.setRange(0, 3000)
+
+        self.chart.addAxis(self.axisX, Qt.AlignBottom)
+        self.chart.addAxis(self.axisY, Qt.AlignLeft)
+
+        self.series.attachAxis(self.axisX)
+        self.series.attachAxis(self.axisY)
+
+        self.chartview = QChartView(self.chart)
+        vbox = QGridLayout(widgets.chart_one_fm)
+        vbox.setContentsMargins(0, 0, 0, 0)
+        vbox.addWidget(self.chartview)
+
+    def handle_index_changed(self, year):
+        values = []
+        values_ = []
+        set_tkd = []
+        set_fenc = []
+        set_oplo = []
+        set_spends = []
+        result_oneYear = login_query.connection.login_chart_oneYear(
+            self, widgets.user_tb.text(), widgets.pass_tb.text(), widgets.chart_years_ccb.currentText())
+        for i in range(len(result_oneYear[0])):  # για καθε μηνα που εχει στην πρωτη εσωτερικη λιστα
+            if result_oneYear[1][i][0] is None:
+                tkd = 0
+            else:
+                tkd = result_oneYear[1][i][0]
+            set_tkd.append(tkd)
+            if result_oneYear[1][i][1] is None:
+                fenc = 0
+            else:
+                fenc = result_oneYear[1][i][1]
+            set_fenc.append(fenc)
+            if result_oneYear[1][i][2] is None:
+                oplo = 0
+            else:
+                oplo = result_oneYear[1][i][2]
+            set_oplo.append(oplo)
+            if result_oneYear[1][i][3] is None:
+                spen = 0
+            else:
+                spen = result_oneYear[1][i][3]
+            set_spends.append(spen)
+        values.append(result_oneYear[0])
+        values_.append(set_tkd)
+        values_.append(set_fenc)
+        values_.append(set_oplo)
+        values_.append(set_spends)
+        values.append(values_)
+        self.update_chart_one(values)
+
+    def update_chart_one(self, datas):
+        self.axisX.clear()
+        self.set_tkd.remove(0, self.set_tkd.count())
+        self.set_fenc.remove(0, self.set_fenc.count())
+        self.set_oplo.remove(0, self.set_oplo.count())
+        self.set_spends.remove(0, self.set_spends.count())
+        categories = datas[0]
+        data = datas[1]
+        self.axisX.append(categories)
+
+        self.set_tkd.append(data[0])
+        self.set_fenc.append(data[1])
+        self.set_oplo.append(data[2])
+        self.set_spends.append(data[3])
 
     def days_labes_hide(self):
         item = widgets.days_splitter.children()
@@ -316,11 +427,11 @@ class LoginWindow(QMainWindow):
             if result == "Connection established":
                 # REFRESH STASTS
                 self.refresh_stats()
-                self.chart_all_create()  # το πρωτο διαγραμμα
 
-                years = login_query.connection.login_list_ofYears(self, widgets.user_tb.text(), widgets.pass_tb.text())
-                widgets.chart_years_ccb.addItems(years)   # μαζι με το απο πανω φτιαχνει την λιστα με τα διαθεσιμα ετη απο τα οικονομικα
-                self.chart_one_create(widgets.chart_years_ccb.currentText())  #
+                #self.build_chart()
+                # years = login_query.connection.login_list_ofYears(self, widgets.user_tb.text(), widgets.pass_tb.text())
+                # widgets.chart_years_ccb.addItems(years)   # μαζι με το απο πανω φτιαχνει την λιστα με τα διαθεσιμα ετη απο τα οικονομικα
+
                 # Re-COLOR MAIN TOOLBAR
                 widgets.maintoolbar_fm.setStyleSheet("background-color: \'#0d5051\';")
                 # Re-COLOR MAIN BOT TOOLBAR
