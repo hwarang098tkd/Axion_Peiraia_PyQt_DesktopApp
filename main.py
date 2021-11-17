@@ -64,12 +64,9 @@ class LoginWindow(QMainWindow):
         ####################################################
         self.days_labes_hide()
         ####################################################
-        self.chart_all_create()
-        self.build_chart()
-        years = login_query.connection.login_list_ofYears(self, widgets.user_tb.text(), widgets.pass_tb.text())
-          # μαζι με το απο πανω φτιαχνει την λιστα με τα διαθεσιμα ετη απο τα οικονομικα
+
         widgets.chart_years_ccb.currentIndexChanged.connect(self.handle_index_changed)
-        widgets.chart_years_ccb.addItems(years)
+
         ####################################################
         sport_list = ["Επιλέξτε", "TAEKWON-DO", "FENCING", "OPLOMAXIA"]
         widgets.SPORT.addItems(sport_list)
@@ -81,7 +78,8 @@ class LoginWindow(QMainWindow):
         self.show()
 
     def chart_all_create(self):
-        results_eco = login_query.connection.login_chart_year_all(self, widgets.user_tb.text(), widgets.pass_tb.text())
+        log_in = login_query.connection(widgets.user_tb.text(), widgets.pass_tb.text())
+        results_eco = log_in.login_chart_year_all()
         self.set0 = QBarSet("Έτη")
         self.series_all = QBarSeries()
         self.set0.append(results_eco[1])
@@ -121,7 +119,7 @@ class LoginWindow(QMainWindow):
 
         self.chart = QChart()
         self.chart.addSeries(self.series)
-        self.chart.setTitle("Monthly Stats per Year")
+        self.chart.setTitle("Μηνιαία στατιστικά ανά Έτος")
         self.chart.setAnimationOptions(QChart.AllAnimations)
         self.chart.setTheme(QChart.ChartThemeBrownSand)
         self.chart.setBackgroundBrush(QBrush(QColor("transparent")))
@@ -130,7 +128,7 @@ class LoginWindow(QMainWindow):
 
         self.axisX = QBarCategoryAxis()
         self.axisY = QValueAxis()
-        self.axisY.setRange(0, 3000)
+
 
         self.chart.addAxis(self.axisX, Qt.AlignBottom)
         self.chart.addAxis(self.axisY, Qt.AlignLeft)
@@ -143,15 +141,14 @@ class LoginWindow(QMainWindow):
         vbox.setContentsMargins(0, 0, 0, 0)
         vbox.addWidget(self.chartview)
 
-    def handle_index_changed(self, year):
+    def handle_index_changed(self):
         values = []
         values_ = []
         set_tkd = []
         set_fenc = []
         set_oplo = []
         set_spends = []
-        result_oneYear = login_query.connection.login_chart_oneYear(
-            self, widgets.user_tb.text(), widgets.pass_tb.text(), widgets.chart_years_ccb.currentText())
+        result_oneYear = self.log_in.login_chart_oneYear(widgets.chart_years_ccb.currentText())
         for i in range(len(result_oneYear[0])):  # για καθε μηνα που εχει στην πρωτη εσωτερικη λιστα
             if result_oneYear[1][i][0] is None:
                 tkd = 0
@@ -181,6 +178,13 @@ class LoginWindow(QMainWindow):
         values.append(values_)
         self.update_chart_one(values)
 
+    def max_value(self, inputlist):
+        top_max = []
+        for item in inputlist:
+            maxNumber = max(item)
+            top_max.append(maxNumber)
+        return max(top_max)
+
     def update_chart_one(self, datas):
         self.axisX.clear()
         self.set_tkd.remove(0, self.set_tkd.count())
@@ -189,6 +193,7 @@ class LoginWindow(QMainWindow):
         self.set_spends.remove(0, self.set_spends.count())
         categories = datas[0]
         data = datas[1]
+        self.axisY.setRange(0, self.max_value(data)+50) #φερνει απο ολα τα data το μεγαλυτερο για να το βαλω στην μεγιστη τιμη του Υ
         self.axisX.append(categories)
 
         self.set_tkd.append(data[0])
@@ -217,8 +222,7 @@ class LoginWindow(QMainWindow):
         reply_box = QMessageBox.warning(self, 'Διαγραφή', 'Θέλετε σίγορα να διαγράψετε αυτό το μέλος;',
                                         QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
         if reply_box == QMessageBox.Yes:
-            result_del = login_query.connection.login_name_delete(self, widgets.user_tb.text(), widgets.pass_tb.text(),
-                                                                  widgets.LAST_NAME.text(), widgets.FIRST_NAME.text())
+            result_del = login_query.connection.login_name_delete(self, widgets.LAST_NAME.text(), widgets.FIRST_NAME.text())
             widgets.add_error_lb.setText(result_del)
             self.new_btn()
             self.radio_refresh()
@@ -258,8 +262,6 @@ class LoginWindow(QMainWindow):
                     widgets.SPORT.setStyleSheet(error_color)
             else:  # παει για ελεγχο διπλογραφης
                 result = login_query.connection.login_name_ifexists(self,
-                                                                    widgets.user_tb.text(),
-                                                                    widgets.pass_tb.text(),
                                                                     widgets.LAST_NAME.text(),
                                                                     widgets.FIRST_NAME.text(),
                                                                     widgets.FATHER_NAME.text())
@@ -268,8 +270,6 @@ class LoginWindow(QMainWindow):
                     error_msg = "Υπάρχει μέλος με αυτά τα στοιχεία !!!"
                 elif result == "go_to_add":
                     error_msg = login_query.connection.login_members_add(self,
-                                                                         widgets.user_tb.text(),
-                                                                         widgets.pass_tb.text(),
                                                                          widgets.LAST_NAME.text(),
                                                                          widgets.FIRST_NAME.text(),
                                                                          widgets.FATHER_NAME.text(),
@@ -320,9 +320,7 @@ class LoginWindow(QMainWindow):
                     error_msg = error_msg + ", Άθλημα "
                     widgets.SPORT.setStyleSheet(error_color)
             else:
-                error_msg = login_query.connection.login_members_updare(self,
-                                                                        widgets.user_tb.text(),
-                                                                        widgets.pass_tb.text(),
+                error_msg = self.log_in.login_members_updare(self,
                                                                         original_lastName,
                                                                         original_firstName,
                                                                         widgets.LAST_NAME.text(),
@@ -420,18 +418,20 @@ class LoginWindow(QMainWindow):
         else:
             widgets.info_lb.setText("")
             widgets.info_lb.setStyleSheet("color: white")
-            result = login_query.connection.login_connection(self, widgets.user_tb.text(), widgets.pass_tb.text())
+            self.log_in = login_query.connection(widgets.user_tb.text(), widgets.pass_tb.text())
+            result = self.log_in.login_connection()
             self.refresh_calendar()  # refresh calendar
             widgets.info_lb.setText(result)
 
-            if result == "Connection established":
+            if result == "Connection established":  #succesfull log in
                 # REFRESH STASTS
                 self.refresh_stats()
 
-                #self.build_chart()
-                # years = login_query.connection.login_list_ofYears(self, widgets.user_tb.text(), widgets.pass_tb.text())
-                # widgets.chart_years_ccb.addItems(years)   # μαζι με το απο πανω φτιαχνει την λιστα με τα διαθεσιμα ετη απο τα οικονομικα
-
+                self.chart_all_create()
+                self.build_chart()
+                years = self.log_in.login_list_ofYears()
+                # μαζι με το απο πανω φτιαχνει την λιστα με τα διαθεσιμα ετη απο τα οικονομικα
+                widgets.chart_years_ccb.addItems(years)
                 # Re-COLOR MAIN TOOLBAR
                 widgets.maintoolbar_fm.setStyleSheet("background-color: \'#0d5051\';")
                 # Re-COLOR MAIN BOT TOOLBAR
@@ -560,7 +560,7 @@ class LoginWindow(QMainWindow):
 
     def refresh_stats(self):
         # MEMBERS STATS
-        members_array = login_query.connection.login_members_stats(self, widgets.user_tb.text(), widgets.pass_tb.text())
+        members_array = self.log_in.login_members_stats()
         # home page
         widgets.sum_members.setText(str(members_array[0]))
         widgets.sum_tkd.setText(str(members_array[1]))
@@ -574,13 +574,13 @@ class LoginWindow(QMainWindow):
         # # #
         self.radio_refresh()
         # PRESENTERS STATS
-        prese_array = login_query.connection.login_presents_stats(self, widgets.user_tb.text(), widgets.pass_tb.text())
+        prese_array = self.log_in.login_presents_stats()
         widgets.sum_pres.setText(str(prese_array[0]))
         widgets.sum_tkd_pre.setText(str(prese_array[1]))
         widgets.sum_fencing_pre.setText(str(prese_array[2]))
         widgets.sum_oplo_pre.setText(str(prese_array[3]))
         # ECONOMICS STATS
-        econ_array = login_query.connection.login_economics_stats(self, widgets.user_tb.text(), widgets.pass_tb.text())
+        econ_array = self.log_in.login_economics_stats()
         widgets.sum_eco_lb.setText(str(econ_array[0]))
         widgets.tkd_eco_lb.setText(str(econ_array[1]))
         widgets.fencing_eco_lb.setText(str(econ_array[2]))
@@ -589,8 +589,7 @@ class LoginWindow(QMainWindow):
 
     def radio_refresh(self):
         widgets.members_cbb.clear()
-        members_list = login_query.connection.login_members_names(self, widgets.user_tb.text(), widgets.pass_tb.text(),
-                                                                  sport_definition(self))
+        members_list = self.log_in.login_members_names(sport_definition(self))
         widgets.members_cbb.addItems(members_list)
         self.clear_editlines()
         widgets.add_ref_btn.setText("ΚΑΤΑΧΩΡΗΣΗ")
@@ -624,7 +623,7 @@ class LoginWindow(QMainWindow):
         global original_firstName
         global original_lastName
         name = widgets.members_cbb.currentText()
-        info_list = login_query.connection.member_info(self, widgets.user_tb.text(), widgets.pass_tb.text(), name)
+        info_list = self.log_in.member_info(name)
         if info_list:
             self.put_info(info_list)
         widgets.add_ref_btn.setText("ΕΝΗΜΕΡΩΣΗ")

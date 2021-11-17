@@ -5,19 +5,22 @@ from datetime import date
 
 
 class connection:
-    global server
-    global database
-    server = 'diaspeiraia2010.hopto.org'
-    database = 'Axion'
 
+    def __init__(self, username, password):
+        self.username = username
+        self.password = password
+        global server
+        global database
+        server = 'diaspeiraia2010.hopto.org'
+        database = 'Axion'
+        self.cnxn = pyodbc.connect(
+            'DRIVER={ODBC Driver 17 for SQL Server};SERVER=' + server +
+            ';DATABASE=' + database + ';UID=' + username + ';PWD=' + password +
+            ';Trusted_Connection=no', timeout=10)
     # ####################################
-    def login_connection(self, username, password):
+    def login_connection(self):
         try:
-            cnxn = pyodbc.connect(
-                'DRIVER={ODBC Driver 17 for SQL Server};SERVER=' + server +
-                ';DATABASE=' + database + ';UID=' + username + ';PWD=' + password +
-                ';Trusted_Connection=no', timeout=10)
-            cursor = cnxn.cursor()
+            cursor = self.cnxn.cursor()
             msg = "Connection established"
         except Exception as e:
             msg = "Connection failed"
@@ -26,16 +29,14 @@ class connection:
         print("LOGIN: " + str(msg))
         return msg
 
-    def login_members_stats(self, username, password):
+    def login_members_stats(self):
         result = []
         try:
             query = '''SELECT Sum_Members = count([ID]) FROM [Data] SELECT Sum_Members_TKD = count([ID]) FROM [Data] 
             where SPORT = 'TAEKWON-DO' SELECT Sum_Members_FENCING = count([ID]) FROM [Data] where SPORT = 'FENCING' 
             SELECT Sum_Members_OPLOMAXIA = count([ID]) FROM [Data] where SPORT = 'OPLOMAXIA' '''
-            cnxn = pyodbc.connect(
-                'DRIVER={ODBC Driver 17 for SQL Server};SERVER=' + server + ';DATABASE=' + database + ';UID=' + username + ';PWD=' + password + ';Trusted_Connection=no',
-                timeout=10)
-            cursor = cnxn.cursor()
+
+            cursor = self.cnxn.cursor()
             cursor.execute(query)
             rows = cursor.fetchall()
             result.append(rows[0][0])
@@ -49,7 +50,7 @@ class connection:
         print(str(msg))
         return result
 
-    def login_members_names(self, username, password, sport):
+    def login_members_names(self, sport):
         result = []
         result.append("Επιλέξτε Μέλος")
         try:
@@ -57,11 +58,7 @@ class connection:
                 query = "SELECT Concat(LAST_NAME,  ' ' , FIRST_NAME) FROM [Data] where SPORT = '" + sport + "' order by LAST_NAME "
             else:
                 query = "SELECT Concat(LAST_NAME,  ' ' , FIRST_NAME) FROM [Data] where SPORT = " + sport + " order by LAST_NAME "
-
-            cnxn = pyodbc.connect(
-                'DRIVER={ODBC Driver 17 for SQL Server};SERVER=' + server + ';DATABASE=' + database + ';UID=' + username + ';PWD=' + password + ';Trusted_Connection=no',
-                timeout=10)
-            cursor = cnxn.cursor()
+            cursor = self.cnxn.cursor()
             cursor.execute(query)
             rows = cursor.fetchall()
             for i in rows:
@@ -73,14 +70,12 @@ class connection:
         print(str(msg))
         return result
 
-    def member_info(self, username, password, name):
+    def member_info(self, name):
         result = []
+        rows = []
         try:
             query = "SELECT * FROM [Data] where '" + name + "' =concat(LAST_NAME, ' ',FIRST_NAME) "
-            cnxn = pyodbc.connect(
-                'DRIVER={ODBC Driver 17 for SQL Server};SERVER=' + server + ';DATABASE=' + database + ';UID=' + username + ';PWD=' + password + ';Trusted_Connection=no',
-                timeout=10)
-            cursor = cnxn.cursor()
+            cursor = self.cnxn.cursor()
             cursor.execute(query)
             rows = cursor.fetchall()
             msg = "member_info: Connection established"
@@ -90,7 +85,7 @@ class connection:
         print(str(msg))
         return rows
 
-    def login_presents_stats(self, username, password):
+    def login_presents_stats(self):
         result = []
         try:
             today = date.today()
@@ -103,10 +98,7 @@ class connection:
                 FROM [Axion].[dbo].[PRESENTERS]  where DATENEW=' ''' + d1 + ''' ' and SPORT='FENCING'
                 SELECT OPLOMAXIA=count([ID])
                 FROM [Axion].[dbo].[PRESENTERS]  where DATENEW=' ''' + d1 + ''' ' and SPORT='OPLOMAXIA' '''
-            cnxn = pyodbc.connect(
-                'DRIVER={ODBC Driver 17 for SQL Server};SERVER=' + server + ';DATABASE=' + database + ';UID=' + username + ';PWD=' + password,
-                timeout=10)
-            cursor = cnxn.cursor()
+            cursor = self.cnxn.cursor()
             cursor.execute(query)
             rows = cursor.fetchall()
             result.append(rows[0][0])
@@ -120,7 +112,7 @@ class connection:
         print(str(msg))
         return result
 
-    def login_economics_stats(self, username, password):
+    def login_economics_stats(self):
         result = []
         try:
             today = date.today()
@@ -137,10 +129,7 @@ class connection:
                         
                         SELECT EXODA = SUM (AMOUNT)
                         FROM [Axion].[dbo].[economics] where month(datenew)=MONTH(getdate()) and year(datenew)=year(getdate()) and  IN_OUT='OUTCOME' '''
-            cnxn = pyodbc.connect(
-                'DRIVER={ODBC Driver 17 for SQL Server};SERVER=' + server + ';DATABASE=' + database + ';UID=' + username + ';PWD=' + password,
-                timeout=10)
-            cursor = cnxn.cursor()
+            cursor = self.cnxn.cursor()
             cursor.execute(query)
             rows = cursor.fetchall()
             result.append(rows[0][0])
@@ -154,15 +143,11 @@ class connection:
         print(str(msg))
         return result
 
-    def login_name_ifexists(self, username, password, last_name, first_name, father_name):
+    def login_name_ifexists(self, last_name, first_name, father_name):
         message = ""
         try:
             query = " if exists(SELECT ID FROM [Axion].[dbo].[Data] where LAST_NAME= '" + last_name + "' and FIRST_NAME= '" + first_name + "' and FATHER_NAME='" + father_name + "') select 'exists' else select 'go_to_add' "
-            cnxn = pyodbc.connect(
-                'DRIVER={ODBC Driver 17 for SQL Server};SERVER=' + server + ';DATABASE=' + database + ';UID=' + username
-                + ';PWD=' + password,
-                timeout=10)
-            cursor = cnxn.cursor()
+            cursor = self.cnxn.cursor()
             cursor.execute(query)
             rows = cursor.fetchall()
             message = rows[0][0]
@@ -173,7 +158,7 @@ class connection:
         print(str(msg))
         return message
 
-    def login_members_add(self, username, password, LAST_NAME, FIRST_NAME, FATHER_NAME,
+    def login_members_add(self, LAST_NAME, FIRST_NAME, FATHER_NAME,
                           MOTHER_NAME,
                           BIRTHDATE,
                           BIRTH_PLACE,
@@ -205,12 +190,9 @@ class connection:
                                                                                                                                                                                  "'" + PROFESSION + "','" + ID_NUMBER + "','" + ADDRESS_STREET + "','" + ADDRESS_NUMBER + "','" + REGION + "','" + HOME_PHONE + "','" + MOTHER_PHONE + "','" + FATHER_PHONE + "'," \
                                                                                                                                                                                                                                                                                                                                                               "'" + EMAIL + "','" + SPORT + "','" + DATE_SUBSCRIBE + "','" + EMERG_PHONE + "','" + BARCODE + "','" + CELL_PHONE + "','" + BARCODE_1 + "','" + SPORT_1 + "','" + PAY_DAY + "')"
 
-            cnxn = pyodbc.connect(
-                'DRIVER={ODBC Driver 17 for SQL Server};SERVER=' + server + ';DATABASE=' + database + ';UID=' + username + ';PWD=' + password,
-                timeout=10)
-            cursor = cnxn.cursor()
+            cursor = self.cnxn.cursor()
             cursor.execute(query)
-            cnxn.commit()
+            self.cnxn.commit()
             message = "Επιτυχία καταχώρησης !!!"
             msg = "Add_members: Connection established"
         except Exception as e:
@@ -220,17 +202,13 @@ class connection:
         print(str(msg))
         return message
 
-    def login_name_delete(self, username, password, last_name, first_name):
+    def login_name_delete(self, last_name, first_name):
         message = ""
         try:
             query = "DELETE FROM [dbo].[Data] WHERE LAST_NAME= '" + last_name + "' and FIRST_NAME= '" + first_name + "'"
-            cnxn = pyodbc.connect(
-                'DRIVER={ODBC Driver 17 for SQL Server};SERVER=' + server + ';DATABASE=' + database + ';UID=' + username
-                + ';PWD=' + password,
-                timeout=10)
-            cursor = cnxn.cursor()
+            cursor = self.cnxn.cursor()
             cursor.execute(query)
-            cnxn.commit()
+            self.cnxn.commit()
             msg = "Delete_name: Connection established"
             message = "Επιτυχία Διαγραφής"
         except Exception as e:
@@ -240,7 +218,7 @@ class connection:
         print(str(msg))
         return message
 
-    def login_members_updare(self, username, password, original_lastName, original_firstName, LAST_NAME, FIRST_NAME, FATHER_NAME,
+    def login_members_updare(self, original_lastName, original_firstName, LAST_NAME, FIRST_NAME, FATHER_NAME,
                           MOTHER_NAME,
                           BIRTHDATE,
                           BIRTH_PLACE,
@@ -270,12 +248,10 @@ class connection:
                   ",[FATHER_PHONE] = '" + FATHER_PHONE + "',[EMAIL] = '" + EMAIL + "',[SPORT] ='" + SPORT + "',[DATE_SUBSCRIBE] = '" + DATE_SUBSCRIBE + "',[EMERG_PHONE] = '" + EMERG_PHONE + "'" \
                   ",[BARCODE] = '" + BARCODE + "',[CELL_PHONE] = '" + CELL_PHONE + "',[BARCODE_1] = '" + BARCODE_1 + "',[SPORT_1] = '" + SPORT_1 + "', [PAY_DAY] ='" + PAY_DAY + "' WHERE LAST_NAME= '" + original_lastName + "' and FIRST_NAME= '" + original_firstName + "'"
 
-            cnxn = pyodbc.connect(
-                'DRIVER={ODBC Driver 17 for SQL Server};SERVER=' + server + ';DATABASE=' + database + ';UID=' + username + ';PWD=' + password,
-                timeout=10)
-            cursor = cnxn.cursor()
+
+            cursor = self.cnxn.cursor()
             cursor.execute(query)
-            cnxn.commit()
+            self.cnxn.commit()
             message = "Επιτυχία ανανέωσης !!!"
             msg = "Update_members: Connection established"
         except Exception as e:
@@ -285,7 +261,7 @@ class connection:
         print(str(msg))
         return message
 
-    def login_chart_year_all(self, username, password):
+    def login_chart_year_all(self):
         result_all = []
         result_years = []
         result_eco = []
@@ -294,11 +270,7 @@ class connection:
             sql_query = os.path.join(home_dir, 'sql_queries/all_years_econ.txt')
             with open(sql_query, 'r') as file:
                 query = file.read()
-            #print(query)
-            cnxn = pyodbc.connect(
-                'DRIVER={ODBC Driver 17 for SQL Server};SERVER=' + server + ';DATABASE=' + database + ';UID=' + username + ';PWD=' + password + ';Trusted_Connection=no',
-                timeout=10)
-            cursor = cnxn.cursor()
+            cursor = self.cnxn.cursor()
             cursor.execute(query)
             rows = cursor.fetchall()
             for i in rows:
@@ -315,27 +287,21 @@ class connection:
         print(str(msg))
         return result_all
 
-    def login_chart_oneYear(self, username, password, year):
-        """
-
-        :rtype: object
-        """
+    def login_chart_oneYear(self, year):
         result_all = []
         result_month = []
         result_eco = []
+        list_greek_months = ["Ιαν", "Φεβρ", "Μαρτ", "Απρ", "Μαιος", "Ιουν", "Ιουλ", "Αυγ", "Σεπτ", "Οκτ", "Νοε", "Δεκ"]
         try:
             home_dir = os.path.abspath('')
             sql_query = os.path.join(home_dir, 'sql_queries/one_year.txt')
             with open(sql_query, 'r') as file:
                 query = file.read().format(year)
-            cnxn = pyodbc.connect(
-                'DRIVER={ODBC Driver 17 for SQL Server};SERVER=' + server + ';DATABASE=' + database + ';UID=' + username + ';PWD=' + password + ';Trusted_Connection=no',
-                timeout=10)
-            cursor = cnxn.cursor()
+            cursor = self.cnxn.cursor()
             cursor.execute(query)
             rows = cursor.fetchall()
             for i in rows:
-                result_month.append(str(i[0]))
+                result_month.append(list_greek_months[i[0]-1])
 
             result_all.append(result_month)
 
@@ -351,17 +317,14 @@ class connection:
         print(str(msg))
         return result_all
 
-    def login_list_ofYears(self, username, password):
+    def login_list_ofYears(self):
         result = []
         try:
             home_dir = os.path.abspath('')
             sql_query = os.path.join(home_dir, 'sql_queries/list_ofYears.txt')
             with open(sql_query, 'r') as file:
                 query = file.read()
-            cnxn = pyodbc.connect(
-                'DRIVER={ODBC Driver 17 for SQL Server};SERVER=' + server + ';DATABASE=' + database + ';UID=' + username + ';PWD=' + password + ';Trusted_Connection=no',
-                timeout=10)
-            cursor = cnxn.cursor()
+            cursor = self.cnxn.cursor()
             cursor.execute(query)
             rows = cursor.fetchall()
             for i in rows:
