@@ -64,8 +64,8 @@ class LoginWindow(QMainWindow):
         ####################################################
         self.days_labes_hide()
         ####################################################
-
         widgets.chart_years_ccb.currentIndexChanged.connect(self.handle_index_changed)
+        ####################################################
 
         ####################################################
         sport_list = ["Επιλέξτε", "TAEKWON-DO", "FENCING", "OPLOMAXIA"]
@@ -424,14 +424,25 @@ class LoginWindow(QMainWindow):
             widgets.info_lb.setText(result)
 
             if result == "Connection established":  #succesfull log in
+                gen_cat_eco = []
+                sub_cat_eco = []
                 # REFRESH STASTS
                 self.refresh_stats()
-
                 self.chart_all_create()
                 self.build_chart()
                 years = self.log_in.login_list_ofYears()
-                # μαζι με το απο πανω φτιαχνει την λιστα με τα διαθεσιμα ετη απο τα οικονομικα
                 widgets.chart_years_ccb.addItems(years)
+                widgets.eco_name_cbb.addItems(self.members_list)
+                eco_gen = self.log_in.login_economics_categ()
+                item = eco_gen[0]
+                for items in item:
+                    gen_cat_eco.append(items[1])
+                item_1 = eco_gen[1]
+                for items_1 in item_1:
+                    sub_cat_eco.append(items_1[1])
+
+                widgets.eco_gen_cbb.addItems(gen_cat_eco)
+                widgets.eco_sub_cbb.addItems(sub_cat_eco)
                 # Re-COLOR MAIN TOOLBAR
                 widgets.maintoolbar_fm.setStyleSheet("background-color: \'#0d5051\';")
                 # Re-COLOR MAIN BOT TOOLBAR
@@ -589,8 +600,8 @@ class LoginWindow(QMainWindow):
 
     def radio_refresh(self):
         widgets.members_cbb.clear()
-        members_list = self.log_in.login_members_names(sport_definition(self))
-        widgets.members_cbb.addItems(members_list)
+        self.members_list = self.log_in.login_members_names(sport_definition(self))
+        widgets.members_cbb.addItems(self.members_list)
         self.clear_editlines()
         widgets.add_ref_btn.setText("ΚΑΤΑΧΩΡΗΣΗ")
         widgets.del_ref_btn.hide()

@@ -3007,6 +3007,20 @@ color: rgb(211, 211, 211);</string>
         <layout class="QHBoxLayout" name="horizontalLayout_7">
          <item>
           <widget class="QComboBox" name="eco_name_cbb">
+           <property name="minimumSize">
+            <size>
+             <width>150</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <pointsize>10</pointsize>
+            </font>
+           </property>
+           <property name="layoutDirection">
+            <enum>Qt::LeftToRight</enum>
+           </property>
            <property name="styleSheet">
             <string notr="true">color: rgb(255, 255, 255);</string>
            </property>
@@ -3053,7 +3067,7 @@ border-style: outset;</string>
         <property name="geometry">
          <rect>
           <x>40</x>
-          <y>360</y>
+          <y>370</y>
           <width>271</width>
           <height>81</height>
          </rect>
@@ -3061,6 +3075,15 @@ border-style: outset;</string>
         <layout class="QGridLayout" name="gridLayout">
          <item row="0" column="0">
           <widget class="QComboBox" name="eco_gen_cbb">
+           <property name="minimumSize">
+            <size>
+             <width>132</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="layoutDirection">
+            <enum>Qt::LeftToRight</enum>
+           </property>
            <property name="styleSheet">
             <string notr="true">color: rgb(255, 255, 255);</string>
            </property>
@@ -3068,6 +3091,15 @@ border-style: outset;</string>
          </item>
          <item row="1" column="0">
           <widget class="QComboBox" name="eco_sub_cbb">
+           <property name="minimumSize">
+            <size>
+             <width>132</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="layoutDirection">
+            <enum>Qt::LeftToRight</enum>
+           </property>
            <property name="styleSheet">
             <string notr="true">color: rgb(255, 255, 255);</string>
            </property>
@@ -3075,6 +3107,15 @@ border-style: outset;</string>
          </item>
          <item row="2" column="0">
           <widget class="QComboBox" name="eco_cash_cbb">
+           <property name="minimumSize">
+            <size>
+             <width>132</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="layoutDirection">
+            <enum>Qt::LeftToRight</enum>
+           </property>
            <property name="styleSheet">
             <string notr="true">color: rgb(255, 255, 255);</string>
            </property>

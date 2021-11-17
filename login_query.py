@@ -266,10 +266,7 @@ class connection:
         result_years = []
         result_eco = []
         try:
-            home_dir = os.path.abspath('')
-            sql_query = os.path.join(home_dir, 'sql_queries/all_years_econ.txt')
-            with open(sql_query, 'r') as file:
-                query = file.read()
+            query = self.str_query('all_years_econ.txt')
             cursor = self.cnxn.cursor()
             cursor.execute(query)
             rows = cursor.fetchall()
@@ -293,10 +290,7 @@ class connection:
         result_eco = []
         list_greek_months = ["Ιαν", "Φεβρ", "Μαρτ", "Απρ", "Μαιος", "Ιουν", "Ιουλ", "Αυγ", "Σεπτ", "Οκτ", "Νοε", "Δεκ"]
         try:
-            home_dir = os.path.abspath('')
-            sql_query = os.path.join(home_dir, 'sql_queries/one_year.txt')
-            with open(sql_query, 'r') as file:
-                query = file.read().format(year)
+            query = self.str_query('one_year.txt').format(year)
             cursor = self.cnxn.cursor()
             cursor.execute(query)
             rows = cursor.fetchall()
@@ -320,10 +314,7 @@ class connection:
     def login_list_ofYears(self):
         result = []
         try:
-            home_dir = os.path.abspath('')
-            sql_query = os.path.join(home_dir, 'sql_queries/list_ofYears.txt')
-            with open(sql_query, 'r') as file:
-                query = file.read()
+            query = self.str_query('list_ofYears.txt')
             cursor = self.cnxn.cursor()
             cursor.execute(query)
             rows = cursor.fetchall()
@@ -335,3 +326,29 @@ class connection:
             print("Error: list_ofYears: " + str(e))
         print(str(msg))
         return result
+
+    def login_economics_categ(self):
+        result = []
+        gen_cat = []
+        sub_cat = []
+        try:
+            query = self.str_query('economics_categ.txt')
+            cursor = self.cnxn.cursor()
+            cursor.execute(query)
+            rows = cursor.fetchall()
+            result.append(rows)
+            while (cursor.nextset()):
+                rows = cursor.fetchall()
+                result.append(rows)
+            msg = "economics_categ: Connection established"
+        except Exception as e:
+            msg = "economics_categ: Connection failed"
+            print("Error: economics_categ: " + str(e))
+        print(str(msg))
+        return result
+
+    def str_query(self, query):
+        home_dir = os.path.abspath('')
+        sql_query = os.path.join(home_dir, 'sql_queries/' + query)
+        with open(sql_query, 'r') as file:
+            return file.read()
