@@ -66,7 +66,11 @@ class LoginWindow(QMainWindow):
         ####################################################
         widgets.chart_years_ccb.currentIndexChanged.connect(self.handle_index_changed)
         ####################################################
-
+        widgets.eco_gen_cbb.currentIndexChanged.connect(self.eco_gen_cbbChange)
+        widgets.eco_sub_cbb.currentIndexChanged.connect(self.eco_sub_cbbChange)
+        widgets.eco_name_cbb.currentIndexChanged.connect(self.eco_name_cbbChange)
+        widgets.outcome_rb.clicked.connect(self.outcomeChange)
+        widgets.inocme_rb.clicked.connect(self.incomeChange)
         ####################################################
         sport_list = ["Επιλέξτε", "TAEKWON-DO", "FENCING", "OPLOMAXIA"]
         widgets.SPORT.addItems(sport_list)
@@ -76,6 +80,66 @@ class LoginWindow(QMainWindow):
         widgets.toolBar_fm.hide()
         widgets.home_bt.setStyleSheet(buttons_style)
         self.show()
+
+    def outcomeChange(self):
+        index = widgets.eco_name_cbb.findText('ΑΓΣ ΑΞΙΟΝ', Qt.MatchContains)
+        print(index)
+        if index >= 0:
+            widgets.eco_name_cbb.setCurrentIndex(index)
+
+    def incomeChange(self):
+        widgets.eco_name_cbb.setCurrentIndex(0)
+
+    def eco_name_cbbChange(self):
+        gen_cat_eco = []
+        global eco_gen
+
+        eco_gen = self.log_in.login_economics_categ()
+        if widgets.eco_name_cbb.currentIndex() != 0:
+            widgets.eco_gen_cbb.setEnabled(True)
+            # widgets.eco_sub_cbb.setEnabled(True)
+            widgets.eco_gen_cbb.clear()
+            widgets.eco_sub_cbb.clear()
+            widgets.eco_gen_cbb.addItem('Επιλέξτε κατηγορία')
+            widgets.eco_sub_cbb.addItem('Επιλέξτε κατηγορία')
+
+            #######################################################
+            for items in eco_gen[0]: gen_cat_eco.append(items[1])
+            widgets.eco_gen_cbb.addItems(gen_cat_eco)
+        else:
+            widgets.eco_gen_cbb.setCurrentIndex(0)
+            widgets.eco_sub_cbb.setCurrentIndex(0)
+            widgets.eco_gen_cbb.setEnabled(False)
+            widgets.eco_sub_cbb.setEnabled(False)
+            widgets.pay_amount_tb.setEnabled(False)
+            #widgets.pay_amount_tb.setStyleSheet('border: 1px solid #2c3531;')
+
+    def eco_gen_cbbChange(self):
+        sub_cat_eco = []
+        if widgets.eco_gen_cbb.currentIndex() != 0:
+            widgets.eco_sub_cbb.setEnabled(True)
+            widgets.eco_sub_cbb.clear()
+            widgets.eco_sub_cbb.addItem('Επιλέξτε κατηγορία')
+            id = 999
+            for items_2 in eco_gen[0]:
+                if widgets.eco_gen_cbb.currentText() == items_2[1]:
+                    id = items_2[0]
+            for items_1 in eco_gen[1]:
+                if id == items_1[0]:
+                    sub_cat_eco.append(items_1[1])
+            widgets.eco_sub_cbb.addItems(sub_cat_eco)
+        else:
+            widgets.eco_sub_cbb.setCurrentIndex(0)
+            widgets.eco_sub_cbb.setEnabled(False)
+            widgets.pay_amount_tb.setEnabled(False)
+
+    def eco_sub_cbbChange(self):
+        if widgets.eco_sub_cbb.currentIndex() != 0:
+            widgets.pay_amount_tb.setEnabled(True)
+            #widgets.pay_amount_tb.setStyleSheet('color: rgb(255, 255, 255);')
+        else:
+            widgets.pay_amount_tb.setEnabled(False)
+            widgets.pay_amount_tb.clear()
 
     def chart_all_create(self):
         log_in = login_query.connection(widgets.user_tb.text(), widgets.pass_tb.text())
@@ -128,7 +192,6 @@ class LoginWindow(QMainWindow):
 
         self.axisX = QBarCategoryAxis()
         self.axisY = QValueAxis()
-
 
         self.chart.addAxis(self.axisX, Qt.AlignBottom)
         self.chart.addAxis(self.axisY, Qt.AlignLeft)
@@ -193,7 +256,8 @@ class LoginWindow(QMainWindow):
         self.set_spends.remove(0, self.set_spends.count())
         categories = datas[0]
         data = datas[1]
-        self.axisY.setRange(0, self.max_value(data)+50) #φερνει απο ολα τα data το μεγαλυτερο για να το βαλω στην μεγιστη τιμη του Υ
+        self.axisY.setRange(0, self.max_value(
+            data) + 50)  # φερνει απο ολα τα data το μεγαλυτερο για να το βαλω στην μεγιστη τιμη του Υ
         self.axisX.append(categories)
 
         self.set_tkd.append(data[0])
@@ -204,17 +268,17 @@ class LoginWindow(QMainWindow):
     def days_labes_hide(self):
         item = widgets.days_splitter.children()
         for frames in item:
-            #print("- - - - - - - - - - - - - - - -")
+            # print("- - - - - - - - - - - - - - - -")
             if isinstance(frames, QFrame):
                 frame_name = frames.objectName()
-                #print("Frame: ", frame_name)
+                # print("Frame: ", frame_name)
                 item2 = frames.children()
                 cut_text = frame_name[:-(len(frame_name) - frame_name.index("_") - 1):]
-                #print("cut_text: ", cut_text)
-                #print("---------------------------")
+                # print("cut_text: ", cut_text)
+                # print("---------------------------")
                 for x in item2:
                     label_name = x.objectName()
-                    #print("Label: ", label_name)
+                    # print("Label: ", label_name)
                     if label_name.find(cut_text) != -1:
                         x.hide()
 
@@ -222,7 +286,8 @@ class LoginWindow(QMainWindow):
         reply_box = QMessageBox.warning(self, 'Διαγραφή', 'Θέλετε σίγορα να διαγράψετε αυτό το μέλος;',
                                         QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
         if reply_box == QMessageBox.Yes:
-            result_del = login_query.connection.login_name_delete(self, widgets.LAST_NAME.text(), widgets.FIRST_NAME.text())
+            result_del = login_query.connection.login_name_delete(self, widgets.LAST_NAME.text(),
+                                                                  widgets.FIRST_NAME.text())
             widgets.add_error_lb.setText(result_del)
             self.new_btn()
             self.radio_refresh()
@@ -321,32 +386,32 @@ class LoginWindow(QMainWindow):
                     widgets.SPORT.setStyleSheet(error_color)
             else:
                 error_msg = self.log_in.login_members_updare(self,
-                                                                        original_lastName,
-                                                                        original_firstName,
-                                                                        widgets.LAST_NAME.text(),
-                                                                        widgets.FIRST_NAME.text(),
-                                                                        widgets.FATHER_NAME.text(),
-                                                                        widgets.MOTHER_NAME.text(),
-                                                                        widgets.BIRTHDATE.text(),
-                                                                        widgets.BIRTH_PLACE.text(),
-                                                                        widgets.NATIONALITY.text(),
-                                                                        widgets.PROFESSION.text(),
-                                                                        widgets.ID_NUMBER.text(),
-                                                                        widgets.ADDRESS_STREET.text(),
-                                                                        widgets.ADDRESS_NUMBER.text(),
-                                                                        widgets.REGION.text(),
-                                                                        widgets.HOME_PHONE.text(),
-                                                                        widgets.MOTHER_PHONE.text(),
-                                                                        widgets.FATHER_PHONE.text(),
-                                                                        widgets.EMAIL.text(),
-                                                                        widgets.SPORT.currentText(),
-                                                                        widgets.DATE_SUBSCRIBE.text(),
-                                                                        widgets.EMERG_PHONE.text(),
-                                                                        widgets.BARCODE.text(),
-                                                                        widgets.CELL_PHONE.text(),
-                                                                        widgets.BARCODE_1.text(),
-                                                                        widgets.SPORT_1.currentText(),
-                                                                        widgets.PAY_DAY.text())
+                                                             original_lastName,
+                                                             original_firstName,
+                                                             widgets.LAST_NAME.text(),
+                                                             widgets.FIRST_NAME.text(),
+                                                             widgets.FATHER_NAME.text(),
+                                                             widgets.MOTHER_NAME.text(),
+                                                             widgets.BIRTHDATE.text(),
+                                                             widgets.BIRTH_PLACE.text(),
+                                                             widgets.NATIONALITY.text(),
+                                                             widgets.PROFESSION.text(),
+                                                             widgets.ID_NUMBER.text(),
+                                                             widgets.ADDRESS_STREET.text(),
+                                                             widgets.ADDRESS_NUMBER.text(),
+                                                             widgets.REGION.text(),
+                                                             widgets.HOME_PHONE.text(),
+                                                             widgets.MOTHER_PHONE.text(),
+                                                             widgets.FATHER_PHONE.text(),
+                                                             widgets.EMAIL.text(),
+                                                             widgets.SPORT.currentText(),
+                                                             widgets.DATE_SUBSCRIBE.text(),
+                                                             widgets.EMERG_PHONE.text(),
+                                                             widgets.BARCODE.text(),
+                                                             widgets.CELL_PHONE.text(),
+                                                             widgets.BARCODE_1.text(),
+                                                             widgets.SPORT_1.currentText(),
+                                                             widgets.PAY_DAY.text())
                 if error_msg == "Επιτυχία ανανέωσης !!!":
                     widgets.add_error_lb.setStyleSheet('color: "#D9B08C";')
                     self.list_names_combobox()
@@ -423,9 +488,8 @@ class LoginWindow(QMainWindow):
             self.refresh_calendar()  # refresh calendar
             widgets.info_lb.setText(result)
 
-            if result == "Connection established":  #succesfull log in
-                gen_cat_eco = []
-                sub_cat_eco = []
+            if result == "Connection established":  # succesfull log in
+
                 # REFRESH STASTS
                 self.refresh_stats()
                 self.chart_all_create()
@@ -433,16 +497,12 @@ class LoginWindow(QMainWindow):
                 years = self.log_in.login_list_ofYears()
                 widgets.chart_years_ccb.addItems(years)
                 widgets.eco_name_cbb.addItems(self.members_list)
-                eco_gen = self.log_in.login_economics_categ()
-                item = eco_gen[0]
-                for items in item:
-                    gen_cat_eco.append(items[1])
-                item_1 = eco_gen[1]
-                for items_1 in item_1:
-                    sub_cat_eco.append(items_1[1])
+                #######################################################
+                widgets.eco_gen_cbb.addItem('Επιλέξτε κατηγορία')
+                widgets.eco_sub_cbb.addItem('Επιλέξτε κατηγορία')
 
-                widgets.eco_gen_cbb.addItems(gen_cat_eco)
-                widgets.eco_sub_cbb.addItems(sub_cat_eco)
+                # widgets.eco_gen_cbb.addItems(gen_cat_eco)
+                # widgets.eco_sub_cbb.addItems(sub_cat_eco)
                 # Re-COLOR MAIN TOOLBAR
                 widgets.maintoolbar_fm.setStyleSheet("background-color: \'#0d5051\';")
                 # Re-COLOR MAIN BOT TOOLBAR
@@ -503,20 +563,24 @@ class LoginWindow(QMainWindow):
             list_labelsDays = []
             item = widgets.days_splitter.children()
             for frames in item:  # για ολα τα frames (ΗΜΕΡΕΣ)
-                #print("- - - - - - - - - - - - - - - -")
+                # print("- - - - - - - - - - - - - - - -")
                 if isinstance(frames, QFrame):  # αν ειναι frame
                     frame_name = frames.objectName()
-                    #print("Frame: ", frame_name)
+                    # print("Frame: ", frame_name)
                     item2 = frames.children()  # ΛΙΣΤΑ: παιρνει ολα τα labes απο τα frames
-                    cut_text = frame_name[:-(len(frame_name) - frame_name.index("_") - 1):]  # μενει απο το ονομα του label η ημερα και το _
-                    cut_text2 = frame_name[:-(len(frame_name) - frame_name.index("_") ):]  # μενει απο το ονομα του label η ημερα χωρις το _
+                    cut_text = frame_name[:-(len(frame_name) - frame_name.index(
+                        "_") - 1):]  # μενει απο το ονομα του label η ημερα και το _
+                    cut_text2 = frame_name[:-(len(frame_name) - frame_name.index(
+                        "_")):]  # μενει απο το ονομα του label η ημερα χωρις το _
                     # print("cut_text: ", cut_text, " || cut_text2: ", cut_text2)
                     # print("---------------------------")
                     for x in item2:  # για καθε label στην λιστα γινεται ελεγχος αν ειναι event label
                         label_name = x.objectName()
 
-                        label_time_start = label_name[-4::]  # αφηνει τα 4 τελευται του ονοματος του label για να κρατησει την ωρα και μονο
-                        if label_name.find(cut_text) != -1:  #αν αυτο το label εχει ονομα ημερας και αφορα event (και οχι τιτλο ή κατι αλλο) τοτε προχωραει για να το φτιαξει
+                        label_time_start = label_name[
+                                           -4::]  # αφηνει τα 4 τελευται του ονοματος του label για να κρατησει την ωρα και μονο
+                        if label_name.find(
+                                cut_text) != -1:  # αν αυτο το label εχει ονομα ημερας και αφορα event (και οχι τιτλο ή κατι αλλο) τοτε προχωραει για να το φτιαξει
 
                             for item in calendar_list:  # για καθε event calendar
                                 dayWeek = datetime.datetime.strptime(item[0], '%d-%m-%Y').strftime('%A').lower()
@@ -527,27 +591,27 @@ class LoginWindow(QMainWindow):
                                     # print("Day Events:")
                                     # print(item[0], dayWeek, item[1], item[2], item[3], item[4])
                                     color_code = ''
-                                    if item[4] == '1':  #levanda
+                                    if item[4] == '1':  # levanda
                                         color_code = 'rgba(121,134,203,'
-                                    elif item[4] == '2':  #faskomilia
+                                    elif item[4] == '2':  # faskomilia
                                         color_code = 'rgba(51,182,121,'
-                                    elif item[4] == '3':  #stafili
+                                    elif item[4] == '3':  # stafili
                                         color_code = 'rgba(142,36,170,'
-                                    elif item[4] == '4':  #flamingo
+                                    elif item[4] == '4':  # flamingo
                                         color_code = 'rgba(230,124,115,'
                                     elif item[4] == '5':
                                         color_code = ''
-                                    elif item[4] == '6':  #mandarine
+                                    elif item[4] == '6':  # mandarine
                                         color_code = 'rgba(244,81,30,'
                                     elif item[4] == '7':
                                         color_code = ''
-                                    elif item[4] == '8':  #grafite
+                                    elif item[4] == '8':  # grafite
                                         color_code = 'rgba(97,97,97,'
                                     elif item[4] == '9':
                                         color_code = ''
-                                    elif item[4] == '10':  #basilikos
+                                    elif item[4] == '10':  # basilikos
                                         color_code = 'rgba(11,128,67,'
-                                    elif item[4] == '11':  #red
+                                    elif item[4] == '11':  # red
                                         color_code = 'rgba(213,0,0,'
                                     traspa_labels = 90
                                     color_code = color_code + str(traspa_labels) + ")"
@@ -557,15 +621,16 @@ class LoginWindow(QMainWindow):
                                         x.setText(" " + str(item[3]))
 
                                     if str(item[2]) == '2:00:00':
-                                        #print('2 hours')
-                                        x.setFixedHeight(x.height()*2)
+                                        # print('2 hours')
+                                        x.setFixedHeight(x.height() * 2)
                                     elif str(item[2]) == '1:30:00':
-                                        #print('1 and a half hour')
-                                        x.setFixedHeight((x.height()/2) + x.height())
-                                    x.setStyleSheet("background-color: " + color_code +";border-left: 3px solid #2c3531;border-radius: 4px; ")
+                                        # print('1 and a half hour')
+                                        x.setFixedHeight((x.height() / 2) + x.height())
+                                    x.setStyleSheet(
+                                        "background-color: " + color_code + ";border-left: 3px solid #2c3531;border-radius: 4px; ")
 
                                     x.setAlignment(Qt.AlignTop)
-                                    #print("****************************")
+                                    # print("****************************")
 
         print("##################### END of Calendar event List ##############################")
 
