@@ -261,7 +261,7 @@
        <enum>QFrame::Sunken</enum>
       </property>
       <property name="currentIndex">
-       <number>4</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="home_page">
        <widget class="QFrame" name="home_row1_col1_memb">
@@ -3069,7 +3069,7 @@ border-style: outset;</string>
           <x>40</x>
           <y>370</y>
           <width>291</width>
-          <height>71</height>
+          <height>72</height>
          </rect>
         </property>
         <layout class="QGridLayout" name="gridLayout">
@@ -3482,6 +3482,11 @@ color: &quot;#2c3531&quot;;
              <height>0</height>
             </size>
            </property>
+           <property name="font">
+            <font>
+             <pointsize>10</pointsize>
+            </font>
+           </property>
            <property name="styleSheet">
             <string notr="true">QLineEdit:enabled{
 color: rgb(255, 255, 255);
@@ -3494,7 +3499,7 @@ border: 1px solid #2c3531;;
             <string/>
            </property>
            <property name="alignment">
-            <set>Qt::AlignCenter</set>
+            <set>Qt::AlignHCenter|Qt::AlignTop</set>
            </property>
           </widget>
          </item>
@@ -3503,10 +3508,10 @@ border: 1px solid #2c3531;;
        <widget class="QLabel" name="add_eco_lb">
         <property name="geometry">
          <rect>
-          <x>40</x>
+          <x>130</x>
           <y>450</y>
-          <width>271</width>
-          <height>16</height>
+          <width>201</width>
+          <height>20</height>
          </rect>
         </property>
         <property name="styleSheet">
@@ -3514,6 +3519,9 @@ border: 1px solid #2c3531;;
         </property>
         <property name="text">
          <string/>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
         </property>
        </widget>
        <widget class="QFrame" name="chart_all_fm">
@@ -3593,6 +3601,17 @@ border: 1px solid #2c3531;;
         <property name="alignment">
          <set>Qt::AlignHCenter|Qt::AlignTop</set>
         </property>
+       </widget>
+       <widget class="QWidget" name="horizontalLayoutWidget_4">
+        <property name="geometry">
+         <rect>
+          <x>40</x>
+          <y>540</y>
+          <width>971</width>
+          <height>191</height>
+         </rect>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_8"/>
        </widget>
       </widget>
       <widget class="QWidget" name="menbers_page">

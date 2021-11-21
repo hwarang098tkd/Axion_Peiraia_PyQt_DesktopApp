@@ -1,9 +1,10 @@
 import datetime
 
 from PyQt5.QtChart import QBarSet, QBarSeries, QChart, QBarCategoryAxis, QChartView, QValueAxis
+from PyQt5 import QtCore
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
-from PyQt5.QtCore import Qt, QRect, QPropertyAnimation, QParallelAnimationGroup, QDate
+from PyQt5.QtCore import Qt, QRect, QPropertyAnimation, QParallelAnimationGroup, QDate, QObject, QRunnable, pyqtSlot, QThreadPool
 
 from login_main import Ui_MainWindow
 import google_calendar
@@ -26,6 +27,8 @@ class LoginWindow(QMainWindow):
         start_pos_x = 150
         global start_pro_y
         start_pro_y = 150
+
+        self.threadpool = QThreadPool()
 
         self.baseHeight = 369
         self.extendedHeight = 400
@@ -72,7 +75,11 @@ class LoginWindow(QMainWindow):
         widgets.outcome_rb.clicked.connect(self.outcomeChange)
         widgets.inocme_rb.clicked.connect(self.incomeChange)
         ####################################################
-        sport_list = ["Επιλέξτε", "TAEKWON-DO", "FENCING", "OPLOMAXIA"]
+        log_inn = login_query.connection(widgets.user_tb.text(), widgets.pass_tb.text())
+        #prepei na mpei mesa sto pressed
+        sport_list = []
+        sport_list.append("Επιλέξτε")  # = ["Επιλέξτε", "TAEKWON-DO", "FENCING", "OPLOMAXIA"]
+        sport_list.append(log_inn.login_sports_list())
         widgets.SPORT.addItems(sport_list)
         widgets.SPORT_1.addItems(sport_list)
         self.installEventFilter(self)
@@ -95,14 +102,13 @@ class LoginWindow(QMainWindow):
         global eco_gen
 
         eco_gen = self.log_in.login_economics_categ()
-        if widgets.eco_name_cbb.currentIndex() != 0:
+        if widgets.eco_name_cbb.currentIndex() != 0 and widgets.eco_name_cbb.count() >1 :
             widgets.eco_gen_cbb.setEnabled(True)
             # widgets.eco_sub_cbb.setEnabled(True)
             widgets.eco_gen_cbb.clear()
             widgets.eco_sub_cbb.clear()
             widgets.eco_gen_cbb.addItem('Επιλέξτε κατηγορία')
             widgets.eco_sub_cbb.addItem('Επιλέξτε κατηγορία')
-
             #######################################################
             for items in eco_gen[0]: gen_cat_eco.append(items[1])
             widgets.eco_gen_cbb.addItems(gen_cat_eco)
@@ -116,7 +122,7 @@ class LoginWindow(QMainWindow):
 
     def eco_gen_cbbChange(self):
         sub_cat_eco = []
-        if widgets.eco_gen_cbb.currentIndex() != 0:
+        if widgets.eco_gen_cbb.currentIndex() != 0 and widgets.eco_gen_cbb.count() >1:
             widgets.eco_sub_cbb.setEnabled(True)
             widgets.eco_sub_cbb.clear()
             widgets.eco_sub_cbb.addItem('Επιλέξτε κατηγορία')
@@ -134,9 +140,15 @@ class LoginWindow(QMainWindow):
             widgets.pay_amount_tb.setEnabled(False)
 
     def eco_sub_cbbChange(self):
-        if widgets.eco_sub_cbb.currentIndex() != 0:
+        if widgets.eco_sub_cbb.currentIndex() != 0 and widgets.eco_sub_cbb.count() > 1:
             widgets.pay_amount_tb.setEnabled(True)
-            #widgets.pay_amount_tb.setStyleSheet('color: rgb(255, 255, 255);')
+            amount = self.log_in.login_get_amount(widgets.eco_name_cbb.currentText(),
+                                                  widgets.eco_gen_cbb.currentText(),
+                                                  widgets.eco_sub_cbb.currentText())
+            if amount == 'None':
+                amount = '0'
+            widgets.pay_amount_tb.setText(str(amount))
+            widgets.add_eco_lb.setText('Ενδεικτικό ποσό')
         else:
             widgets.pay_amount_tb.setEnabled(False)
             widgets.pay_amount_tb.clear()
@@ -735,12 +747,13 @@ class LoginWindow(QMainWindow):
         widgets.PAY_DAY.setText(str(list[0][24]))
 
     def keyPressEvent(self, qKeyEvent):  # αναγνωριζει τα enter και καλει την συναρτηση οταν πατιεται το login button
-        print(qKeyEvent.key())
+        #print(qKeyEvent.key())
         if qKeyEvent.key() == Qt.Key_Return or qKeyEvent.key() == Qt.Key_Enter:
             self.pressed()
             print('Enter pressed')
 
     def mousePressEvent(self, event):
+        #print("mousePressEvent Clicked")
         if event.button() == Qt.LeftButton:
             self.offset = event.pos()
         else:
@@ -748,6 +761,7 @@ class LoginWindow(QMainWindow):
 
     def mouseMoveEvent(self, event):
         try:
+            #print("mouseMoveEvent Clicked")
             if self.offset is not None and event.buttons() == Qt.LeftButton:
                 self.move(self.pos() + event.pos() - self.offset)
             else:
@@ -756,6 +770,7 @@ class LoginWindow(QMainWindow):
             print("error raised on mouseMoveEvent")
 
     def mouseReleaseEvent(self, event):
+        #print("mouseReleaseEvent Clicked")
         self.offset = None
         super().mouseReleaseEvent(event)
 

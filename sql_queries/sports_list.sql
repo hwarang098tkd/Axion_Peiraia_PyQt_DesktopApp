@@ -1,0 +1,1 @@
+SELECT TRIM(SPORT) FROM [Axion].[dbo].[sports]

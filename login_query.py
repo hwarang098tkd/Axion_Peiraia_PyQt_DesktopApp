@@ -266,7 +266,7 @@ class connection:
         result_years = []
         result_eco = []
         try:
-            query = self.str_query('all_years_econ.txt')
+            query = self.str_query('all_years_econ.sql')
             cursor = self.cnxn.cursor()
             cursor.execute(query)
             rows = cursor.fetchall()
@@ -290,7 +290,7 @@ class connection:
         result_eco = []
         list_greek_months = ["Ιαν", "Φεβρ", "Μαρτ", "Απρ", "Μαιος", "Ιουν", "Ιουλ", "Αυγ", "Σεπτ", "Οκτ", "Νοε", "Δεκ"]
         try:
-            query = self.str_query('one_year.txt').format(year)
+            query = self.str_query('one_year.sql').format(year)
             cursor = self.cnxn.cursor()
             cursor.execute(query)
             rows = cursor.fetchall()
@@ -314,7 +314,7 @@ class connection:
     def login_list_ofYears(self):
         result = []
         try:
-            query = self.str_query('list_ofYears.txt')
+            query = self.str_query('list_ofYears.sql')
             cursor = self.cnxn.cursor()
             cursor.execute(query)
             rows = cursor.fetchall()
@@ -332,7 +332,7 @@ class connection:
         gen_cat = []
         sub_cat = []
         try:
-            query = self.str_query('economics_categ.txt')
+            query = self.str_query('economics_categ.sql')
             cursor = self.cnxn.cursor()
             cursor.execute(query)
             rows = cursor.fetchall()
@@ -344,6 +344,36 @@ class connection:
         except Exception as e:
             msg = "economics_categ: Connection failed"
             print("Error: economics_categ: " + str(e))
+        print(str(msg))
+        return result
+
+    def login_get_amount(self, name, cat, sub_cat):
+        result = 0
+        try:
+            query = self.str_query('get_amount.sql').format(name, cat, sub_cat)
+            cursor = self.cnxn.cursor()
+            cursor.execute(query)
+            rows = cursor.fetchall()
+            result= str(rows[0][0])
+            msg = "get_amount: Connection established"
+        except Exception as e:
+            msg = "get_amount: Connection failed"
+            print("Error: get_amount: " + str(e))
+        print(str(msg))
+        return result
+
+    def login_sports_list(self):
+        result = 0
+        try:
+            query = self.str_query('sports_list.sql')
+            cursor = self.cnxn.cursor()
+            cursor.execute(query)
+            rows = cursor.fetchall()
+            result= rows
+            msg = "get_amount: Connection established"
+        except Exception as e:
+            msg = "get_amount: Connection failed"
+            print("Error: get_amount: " + str(e))
         print(str(msg))
         return result
 
