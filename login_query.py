@@ -363,13 +363,15 @@ class connection:
         return result
 
     def login_sports_list(self):
-        result = 0
+        result = []
         try:
             query = self.str_query('sports_list.sql')
             cursor = self.cnxn.cursor()
             cursor.execute(query)
             rows = cursor.fetchall()
-            result= rows
+            result.append("Επιλέξτε")
+            for item in rows:
+                result.append(item[0])
             msg = "get_amount: Connection established"
         except Exception as e:
             msg = "get_amount: Connection failed"

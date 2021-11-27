@@ -4,7 +4,8 @@ from PyQt5.QtChart import QBarSet, QBarSeries, QChart, QBarCategoryAxis, QChartV
 from PyQt5 import QtCore
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
-from PyQt5.QtCore import Qt, QRect, QPropertyAnimation, QParallelAnimationGroup, QDate, QObject, QRunnable, pyqtSlot, QThreadPool
+from PyQt5.QtCore import Qt, QRect, QPropertyAnimation, QParallelAnimationGroup, QDate, QObject, QRunnable, pyqtSlot, \
+    QThreadPool, QRegExp
 
 from login_main import Ui_MainWindow
 import google_calendar
@@ -74,28 +75,65 @@ class LoginWindow(QMainWindow):
         widgets.eco_name_cbb.currentIndexChanged.connect(self.eco_name_cbbChange)
         widgets.outcome_rb.clicked.connect(self.outcomeChange)
         widgets.inocme_rb.clicked.connect(self.incomeChange)
+        widgets.add_erco_btn.clicked.connect(self.add_erco_pressed)
+        widgets.pay_amount_tb.textEdited.connect(self.pay_amountChange)
+        widgets.pay_amount_tb.setValidator(QIntValidator()) #  just to accept only numbers
         ####################################################
-        log_inn = login_query.connection(widgets.user_tb.text(), widgets.pass_tb.text())
-        #prepei na mpei mesa sto pressed
-        sport_list = []
-        sport_list.append("Επιλέξτε")  # = ["Επιλέξτε", "TAEKWON-DO", "FENCING", "OPLOMAXIA"]
-        sport_list.append(log_inn.login_sports_list())
-        widgets.SPORT.addItems(sport_list)
-        widgets.SPORT_1.addItems(sport_list)
+
         self.installEventFilter(self)
         self.displayTime()
         widgets.toolBar_fm.hide()
         widgets.home_bt.setStyleSheet(buttons_style)
         self.show()
 
+    def pay_amountChange(self):
+        message = ''
+        if widgets.pay_amount_tb.text() != '':
+            if widgets.pay_amount_tb.text().isdigit():
+                if int(widgets.pay_amount_tb.text()) <=0:
+                    message = 'Καταχωρήστε το ποσό !!!'
+                    widgets.add_erco_btn.setEnabled(False)
+                    print ("amount error")
+                else:
+                    widgets.add_erco_btn.setEnabled(True)
+                    message = "Πατήστε καταχώρηση ..."
+                    print("amount OK")
+            else:
+                message = 'Καταχωρήστε αριθμούς μόνο !!!'
+                widgets.add_erco_btn.setEnabled(False)
+                print("amount not digit")
+        else:
+            message = 'Καταχωρήστε ποσό !!!'
+            widgets.add_erco_btn.setEnabled(False)
+            print ("amount is empty")
+        widgets.add_eco_lb.setText(message)
+
+    def add_erco_pressed(self):
+        if widgets.inocme_rb.isChecked():
+            income = "INCOME"
+        else:
+            income = "OUTCOME"
+        print (income)
+        name = widgets.eco_name_cbb.currentText()
+        date_str = widgets.calendarWidget.selectedDate().toString('yyyy-MM-dd')
+        eco_cat = widgets.eco_gen_cbb.currentText()
+        eco_sub = widgets.eco_sub_cbb.currentText()
+        amount = widgets.pay_amount_tb.text()
+        if amount != '':
+            if int(amount) <= 0:
+                print ("Amount <= 0")
+        print(name, date_str, eco_cat, eco_sub, amount)
+
     def outcomeChange(self):
         index = widgets.eco_name_cbb.findText('ΑΓΣ ΑΞΙΟΝ', Qt.MatchContains)
         print(index)
         if index >= 0:
             widgets.eco_name_cbb.setCurrentIndex(index)
+            widgets.add_eco_lb.setText('')
 
     def incomeChange(self):
         widgets.eco_name_cbb.setCurrentIndex(0)
+        widgets.add_eco_lb.setText('')
 
     def eco_name_cbbChange(self):
         gen_cat_eco = []
@@ -118,6 +156,7 @@ class LoginWindow(QMainWindow):
             widgets.eco_gen_cbb.setEnabled(False)
             widgets.eco_sub_cbb.setEnabled(False)
             widgets.pay_amount_tb.setEnabled(False)
+            widgets.add_erco_btn.setEnabled(False)
             #widgets.pay_amount_tb.setStyleSheet('border: 1px solid #2c3531;')
 
     def eco_gen_cbbChange(self):
@@ -138,6 +177,7 @@ class LoginWindow(QMainWindow):
             widgets.eco_sub_cbb.setCurrentIndex(0)
             widgets.eco_sub_cbb.setEnabled(False)
             widgets.pay_amount_tb.setEnabled(False)
+            widgets.add_erco_btn.setEnabled(False)
 
     def eco_sub_cbbChange(self):
         if widgets.eco_sub_cbb.currentIndex() != 0 and widgets.eco_sub_cbb.count() > 1:
@@ -147,9 +187,15 @@ class LoginWindow(QMainWindow):
                                                   widgets.eco_sub_cbb.currentText())
             if amount == 'None':
                 amount = '0'
+                widgets.add_erco_btn.setEnabled(False)
+            elif amount == '0' or int(amount)==0:
+                widgets.add_erco_btn.setEnabled(False)
+            else:
+                widgets.add_erco_btn.setEnabled(True)
             widgets.pay_amount_tb.setText(str(amount))
             widgets.add_eco_lb.setText('Ενδεικτικό ποσό')
         else:
+            widgets.add_erco_btn.setEnabled(False)
             widgets.pay_amount_tb.setEnabled(False)
             widgets.pay_amount_tb.clear()
 
@@ -501,7 +547,7 @@ class LoginWindow(QMainWindow):
             widgets.info_lb.setText(result)
 
             if result == "Connection established":  # succesfull log in
-
+                sport_list=[]
                 # REFRESH STASTS
                 self.refresh_stats()
                 self.chart_all_create()
@@ -512,7 +558,9 @@ class LoginWindow(QMainWindow):
                 #######################################################
                 widgets.eco_gen_cbb.addItem('Επιλέξτε κατηγορία')
                 widgets.eco_sub_cbb.addItem('Επιλέξτε κατηγορία')
-
+                sport_list = self.log_in .login_sports_list()
+                widgets.SPORT.addItems(sport_list)
+                widgets.SPORT_1.addItems(sport_list)
                 # widgets.eco_gen_cbb.addItems(gen_cat_eco)
                 # widgets.eco_sub_cbb.addItems(sub_cat_eco)
                 # Re-COLOR MAIN TOOLBAR
@@ -786,10 +834,6 @@ def sport_definition(self):
         sport = "TAEKWON-DO"
     print("Radio BTN selected:", sport)
     return sport
-    # for i in range(widgets.radio_btns_layout.count()):
-    #     radio_button=widgets.radio_btns_layout.itemAt(i).widget()
-    #
-    #     #print(radio_button.objectName(), radio_button.isChecked())
 
 
 def resetStyle(self, btnName):

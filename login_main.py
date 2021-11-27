@@ -15,7 +15,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.setWindowModality(QtCore.Qt.ApplicationModal)
-        MainWindow.resize(1418, 792)
+        MainWindow.resize(1456, 791)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -1018,7 +1018,7 @@ class Ui_MainWindow(object):
         self.econ_page = QtWidgets.QWidget()
         self.econ_page.setObjectName("econ_page")
         self.calendarWidget = QtWidgets.QCalendarWidget(self.econ_page)
-        self.calendarWidget.setGeometry(QtCore.QRect(40, 50, 273, 195))
+        self.calendarWidget.setGeometry(QtCore.QRect(50, 50, 273, 195))
         font = QtGui.QFont()
         font.setPointSize(10)
         self.calendarWidget.setFont(font)
@@ -1039,7 +1039,7 @@ class Ui_MainWindow(object):
         self.label_5.setAlignment(QtCore.Qt.AlignCenter)
         self.label_5.setObjectName("label_5")
         self.horizontalLayoutWidget_2 = QtWidgets.QWidget(self.econ_page)
-        self.horizontalLayoutWidget_2.setGeometry(QtCore.QRect(50, 250, 191, 54))
+        self.horizontalLayoutWidget_2.setGeometry(QtCore.QRect(90, 250, 191, 54))
         self.horizontalLayoutWidget_2.setObjectName("horizontalLayoutWidget_2")
         self.horizontalLayout_5 = QtWidgets.QHBoxLayout(self.horizontalLayoutWidget_2)
         self.horizontalLayout_5.setSizeConstraint(QtWidgets.QLayout.SetDefaultConstraint)
@@ -1086,15 +1086,25 @@ class Ui_MainWindow(object):
         self.label_8.setObjectName("label_8")
         self.horizontalLayout_7.addWidget(self.label_8)
         self.add_erco_btn = QtWidgets.QPushButton(self.econ_page)
-        self.add_erco_btn.setGeometry(QtCore.QRect(40, 470, 273, 24))
-        self.add_erco_btn.setStyleSheet("background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.261364 rgba(44, 53, 50, 255), stop:0.602273 rgba(17, 100, 102, 255), stop:0.98 rgba(217, 176, 140, 255), stop:1 rgba(0, 0, 0, 0));\n"
+        self.add_erco_btn.setGeometry(QtCore.QRect(50, 470, 273, 24))
+        self.add_erco_btn.setStyleSheet("QPushButton:enabled{\n"
+"background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.261364 rgba(44, 53, 50, 255), stop:0.602273 rgba(17, 100, 102, 255), stop:0.98 rgba(217, 176, 140, 255), stop:1 rgba(0, 0, 0, 0));\n"
 "color: rgb(255, 255, 255);\n"
 "border: 2px  #D9B08C;\n"
 "border-radius: 10px;\n"
-"border-style: outset;")
+"border-style: outset;}\n"
+"QPushButton:disabled{\n"
+"background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.261364 rgba(44, 53, 50, 255), stop:0.602273 rgba(17, 100, 102, 255), \n"
+"stop:0.98 rgba(217, 176, 140, 255), \n"
+"stop:1 rgba(0, 0, 0, 0));\n"
+"color: rgb(109, 109, 109);\n"
+"border: 2px  #D9B08C;\n"
+"border-radius: 10px;\n"
+"border-style: outset;}\n"
+"")
         self.add_erco_btn.setObjectName("add_erco_btn")
         self.gridLayoutWidget = QtWidgets.QWidget(self.econ_page)
-        self.gridLayoutWidget.setGeometry(QtCore.QRect(40, 370, 291, 72))
+        self.gridLayoutWidget.setGeometry(QtCore.QRect(40, 370, 291, 77))
         self.gridLayoutWidget.setObjectName("gridLayoutWidget")
         self.gridLayout = QtWidgets.QGridLayout(self.gridLayoutWidget)
         self.gridLayout.setContentsMargins(0, 0, 0, 0)
@@ -1122,6 +1132,9 @@ class Ui_MainWindow(object):
         palette.setBrush(QtGui.QPalette.Active, QtGui.QPalette.Window, brush)
         brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
         brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Active, QtGui.QPalette.PlaceholderText, brush)
+        brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
+        brush.setStyle(QtCore.Qt.SolidPattern)
         palette.setBrush(QtGui.QPalette.Inactive, QtGui.QPalette.WindowText, brush)
         brush = QtGui.QBrush(QtGui.QColor(17, 100, 102))
         brush.setStyle(QtCore.Qt.SolidPattern)
@@ -1138,6 +1151,9 @@ class Ui_MainWindow(object):
         brush = QtGui.QBrush(QtGui.QColor(17, 100, 102))
         brush.setStyle(QtCore.Qt.SolidPattern)
         palette.setBrush(QtGui.QPalette.Inactive, QtGui.QPalette.Window, brush)
+        brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Inactive, QtGui.QPalette.PlaceholderText, brush)
         brush = QtGui.QBrush(QtGui.QColor(44, 53, 49))
         brush.setStyle(QtCore.Qt.SolidPattern)
         palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.WindowText, brush)
@@ -1156,6 +1172,9 @@ class Ui_MainWindow(object):
         brush = QtGui.QBrush(QtGui.QColor(17, 100, 102))
         brush.setStyle(QtCore.Qt.SolidPattern)
         palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.Window, brush)
+        brush = QtGui.QBrush(QtGui.QColor(44, 53, 49))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.PlaceholderText, brush)
         self.eco_gen_cbb.setPalette(palette)
         self.eco_gen_cbb.setLayoutDirection(QtCore.Qt.LeftToRight)
         self.eco_gen_cbb.setStyleSheet("QComboBox:enabled{\n"
@@ -1189,6 +1208,9 @@ class Ui_MainWindow(object):
         palette.setBrush(QtGui.QPalette.Active, QtGui.QPalette.Window, brush)
         brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
         brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Active, QtGui.QPalette.PlaceholderText, brush)
+        brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
+        brush.setStyle(QtCore.Qt.SolidPattern)
         palette.setBrush(QtGui.QPalette.Inactive, QtGui.QPalette.WindowText, brush)
         brush = QtGui.QBrush(QtGui.QColor(17, 100, 102))
         brush.setStyle(QtCore.Qt.SolidPattern)
@@ -1205,6 +1227,9 @@ class Ui_MainWindow(object):
         brush = QtGui.QBrush(QtGui.QColor(17, 100, 102))
         brush.setStyle(QtCore.Qt.SolidPattern)
         palette.setBrush(QtGui.QPalette.Inactive, QtGui.QPalette.Window, brush)
+        brush = QtGui.QBrush(QtGui.QColor(255, 255, 255))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Inactive, QtGui.QPalette.PlaceholderText, brush)
         brush = QtGui.QBrush(QtGui.QColor(44, 53, 49))
         brush.setStyle(QtCore.Qt.SolidPattern)
         palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.WindowText, brush)
@@ -1223,6 +1248,9 @@ class Ui_MainWindow(object):
         brush = QtGui.QBrush(QtGui.QColor(17, 100, 102))
         brush.setStyle(QtCore.Qt.SolidPattern)
         palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.Window, brush)
+        brush = QtGui.QBrush(QtGui.QColor(44, 53, 49))
+        brush.setStyle(QtCore.Qt.SolidPattern)
+        palette.setBrush(QtGui.QPalette.Disabled, QtGui.QPalette.PlaceholderText, brush)
         self.eco_sub_cbb.setPalette(palette)
         self.eco_sub_cbb.setLayoutDirection(QtCore.Qt.LeftToRight)
         self.eco_sub_cbb.setStyleSheet("QComboBox:enabled{\n"
@@ -1251,8 +1279,9 @@ class Ui_MainWindow(object):
 "QLineEdit:disabled {\n"
 "border: 1px solid #2c3531;;\n"
 "}")
+        self.pay_amount_tb.setInputMask("")
         self.pay_amount_tb.setText("")
-        self.pay_amount_tb.setAlignment(QtCore.Qt.AlignCenter)
+        self.pay_amount_tb.setAlignment(QtCore.Qt.AlignHCenter|QtCore.Qt.AlignTop)
         self.pay_amount_tb.setObjectName("pay_amount_tb")
         self.gridLayout.addWidget(self.pay_amount_tb, 2, 0, 1, 1)
         self.add_eco_lb = QtWidgets.QLabel(self.econ_page)
@@ -1286,6 +1315,12 @@ class Ui_MainWindow(object):
         self.label_49.setStyleSheet("color:  \'#ffcb9a\';")
         self.label_49.setAlignment(QtCore.Qt.AlignHCenter|QtCore.Qt.AlignTop)
         self.label_49.setObjectName("label_49")
+        self.horizontalLayoutWidget_4 = QtWidgets.QWidget(self.econ_page)
+        self.horizontalLayoutWidget_4.setGeometry(QtCore.QRect(40, 540, 971, 191))
+        self.horizontalLayoutWidget_4.setObjectName("horizontalLayoutWidget_4")
+        self.horizontalLayout_8 = QtWidgets.QHBoxLayout(self.horizontalLayoutWidget_4)
+        self.horizontalLayout_8.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout_8.setObjectName("horizontalLayout_8")
         self.stackedWidget.addWidget(self.econ_page)
         self.menbers_page = QtWidgets.QWidget()
         self.menbers_page.setObjectName("menbers_page")
@@ -1553,7 +1588,6 @@ class Ui_MainWindow(object):
         font = QtGui.QFont()
         font.setPointSize(9)
         font.setBold(True)
-        font.setWeight(75)
         self.members_title_lb.setFont(font)
         self.members_title_lb.setStyleSheet("color: \"#D9B08C\";")
         self.members_title_lb.setObjectName("members_title_lb")
@@ -1578,7 +1612,6 @@ class Ui_MainWindow(object):
         font = QtGui.QFont()
         font.setPointSize(12)
         font.setBold(True)
-        font.setWeight(75)
         self.members_title_lb_2.setFont(font)
         self.members_title_lb_2.setStyleSheet("color: \"#D9B08C\";")
         self.members_title_lb_2.setAlignment(QtCore.Qt.AlignCenter)
@@ -1968,7 +2001,7 @@ class Ui_MainWindow(object):
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
-        self.stackedWidget.setCurrentIndex(4)
+        self.stackedWidget.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
         MainWindow.setTabOrder(self.LAST_NAME, self.FIRST_NAME)
         MainWindow.setTabOrder(self.FIRST_NAME, self.FATHER_NAME)
