@@ -10,7 +10,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1456</width>
+    <width>1395</width>
     <height>791</height>
    </rect>
   </property>
@@ -261,7 +261,7 @@
        <enum>QFrame::Sunken</enum>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>4</number>
       </property>
       <widget class="QWidget" name="home_page">
        <widget class="QFrame" name="home_row1_col1_memb">
@@ -2944,7 +2944,7 @@ color: rgb(211, 211, 211);</string>
           <x>90</x>
           <y>250</y>
           <width>191</width>
-          <height>54</height>
+          <height>31</height>
          </rect>
         </property>
         <layout class="QHBoxLayout" name="horizontalLayout_5">
@@ -2999,7 +2999,7 @@ color: rgb(211, 211, 211);</string>
         <property name="geometry">
          <rect>
           <x>40</x>
-          <y>310</y>
+          <y>290</y>
           <width>291</width>
           <height>60</height>
          </rect>
@@ -3009,8 +3009,14 @@ color: rgb(211, 211, 211);</string>
           <widget class="QComboBox" name="eco_name_cbb">
            <property name="minimumSize">
             <size>
-             <width>200</width>
+             <width>191</width>
              <height>0</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>191</width>
+             <height>16777215</height>
             </size>
            </property>
            <property name="font">
@@ -3047,7 +3053,7 @@ color: rgb(211, 211, 211);</string>
         <property name="geometry">
          <rect>
           <x>50</x>
-          <y>470</y>
+          <y>500</y>
           <width>273</width>
           <height>24</height>
          </rect>
@@ -3077,12 +3083,18 @@ border-style: outset;}
         <property name="geometry">
          <rect>
           <x>40</x>
-          <y>370</y>
+          <y>350</y>
           <width>291</width>
-          <height>77</height>
+          <height>104</height>
          </rect>
         </property>
         <layout class="QGridLayout" name="gridLayout">
+         <property name="sizeConstraint">
+          <enum>QLayout::SetNoConstraint</enum>
+         </property>
+         <property name="verticalSpacing">
+          <number>5</number>
+         </property>
          <item row="0" column="0">
           <widget class="QComboBox" name="eco_gen_cbb">
            <property name="minimumSize">
@@ -3523,7 +3535,25 @@ color: &quot;#2c3531&quot;;
            </property>
           </widget>
          </item>
-         <item row="0" column="1" rowspan="3">
+         <item row="2" column="0">
+          <widget class="QLineEdit" name="eco_descr">
+           <property name="maximumSize">
+            <size>
+             <width>191</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QLineEdit:enabled{
+color: rgb(255, 255, 255);
+}
+QLineEdit:disabled {
+border: 1px solid #2c3531;;
+}</string>
+           </property>
+          </widget>
+         </item>
+         <item row="2" column="1">
           <widget class="QLabel" name="label_48">
            <property name="font">
             <font>
@@ -3538,46 +3568,14 @@ color: &quot;#2c3531&quot;;
            </property>
           </widget>
          </item>
-         <item row="2" column="0">
-          <widget class="QLineEdit" name="pay_amount_tb">
-           <property name="minimumSize">
-            <size>
-             <width>180</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="font">
-            <font>
-             <pointsize>10</pointsize>
-            </font>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">QLineEdit:enabled{
-color: rgb(255, 255, 255);
-}
-QLineEdit:disabled {
-border: 1px solid #2c3531;;
-}</string>
-           </property>
-           <property name="inputMask">
-            <string/>
-           </property>
-           <property name="text">
-            <string/>
-           </property>
-           <property name="alignment">
-            <set>Qt::AlignHCenter|Qt::AlignTop</set>
-           </property>
-          </widget>
-         </item>
         </layout>
        </widget>
        <widget class="QLabel" name="add_eco_lb">
         <property name="geometry">
          <rect>
-          <x>130</x>
-          <y>450</y>
-          <width>201</width>
+          <x>140</x>
+          <y>480</y>
+          <width>191</width>
           <height>20</height>
          </rect>
         </property>
@@ -3678,7 +3676,102 @@ border: 1px solid #2c3531;;
           <height>191</height>
          </rect>
         </property>
-        <layout class="QHBoxLayout" name="horizontalLayout_8"/>
+        <layout class="QHBoxLayout" name="eco_table_lout">
+         <item>
+          <widget class="QTreeView" name="eco_treeview"/>
+         </item>
+        </layout>
+       </widget>
+       <widget class="QWidget" name="horizontalLayoutWidget_5">
+        <property name="geometry">
+         <rect>
+          <x>40</x>
+          <y>450</y>
+          <width>291</width>
+          <height>32</height>
+         </rect>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_9">
+         <item>
+          <widget class="QLineEdit" name="pay_amount_tb">
+           <property name="minimumSize">
+            <size>
+             <width>191</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>191</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <pointsize>10</pointsize>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QLineEdit:enabled{
+color: rgb(255, 255, 255);
+}
+QLineEdit:disabled {
+border: 1px solid #2c3531;;
+}</string>
+           </property>
+           <property name="inputMask">
+            <string/>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignHCenter|Qt::AlignTop</set>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QCheckBox" name="pos_chechbox">
+           <property name="maximumSize">
+            <size>
+             <width>45</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="autoFillBackground">
+            <bool>false</bool>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">color: rgb(255, 203, 154);
+</string>
+           </property>
+           <property name="text">
+            <string>POS:</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_50">
+           <property name="minimumSize">
+            <size>
+             <width>30</width>
+             <height>0</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <pointsize>12</pointsize>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">color:  '#ffcb9a';</string>
+           </property>
+           <property name="text">
+            <string>Ποσό:</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </widget>
       </widget>
       <widget class="QWidget" name="menbers_page">
@@ -3688,7 +3781,7 @@ border: 1px solid #2c3531;;
           <x>330</x>
           <y>50</y>
           <width>253</width>
-          <height>581</height>
+          <height>664</height>
          </rect>
         </property>
         <layout class="QFormLayout" name="formLayout_3">

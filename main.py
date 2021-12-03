@@ -66,7 +66,7 @@ class LoginWindow(QMainWindow):
         widgets.del_ref_btn.hide()
         widgets.del_ref_btn.clicked.connect(self.del_refresh_btn)
         ####################################################
-        self.days_labes_hide()
+        self.days_labels_hide()
         ####################################################
         widgets.chart_years_ccb.currentIndexChanged.connect(self.handle_index_changed)
         ####################################################
@@ -77,6 +77,7 @@ class LoginWindow(QMainWindow):
         widgets.inocme_rb.clicked.connect(self.incomeChange)
         widgets.add_erco_btn.clicked.connect(self.add_erco_pressed)
         widgets.pay_amount_tb.textEdited.connect(self.pay_amountChange)
+        widgets.pos_chechbox.stateChanged.connect(self.pos_chechboxChanged)
         widgets.pay_amount_tb.setValidator(QIntValidator()) #  just to accept only numbers
         ####################################################
 
@@ -86,11 +87,14 @@ class LoginWindow(QMainWindow):
         widgets.home_bt.setStyleSheet(buttons_style)
         self.show()
 
+    def pos_chechboxChanged(self):
+        widgets.add_eco_lb.setText('')
+
     def pay_amountChange(self):
         message = ''
-        if widgets.pay_amount_tb.text() != '':
+        if widgets.pay_amount_tb.text() != '': # τα περισοτερα ειναι περιττα γιατι εβαλα στο editline το QIntValidator()
             if widgets.pay_amount_tb.text().isdigit():
-                if int(widgets.pay_amount_tb.text()) <=0:
+                if int(widgets.pay_amount_tb.text()) <= 0:
                     message = 'Καταχωρήστε το ποσό !!!'
                     widgets.add_erco_btn.setEnabled(False)
                     print ("amount error")
@@ -110,30 +114,40 @@ class LoginWindow(QMainWindow):
 
     def add_erco_pressed(self):
         if widgets.inocme_rb.isChecked():
-            income = "INCOME"
+            in_out = "INCOME"
         else:
-            income = "OUTCOME"
-        print (income)
+            in_out = "OUTCOME"
+        if widgets.pos_chechbox.isChecked():
+            pos = 'YES'
+        else:
+            pos = 'NO'
+
         name = widgets.eco_name_cbb.currentText()
+        descr = widgets.eco_descr.text().replace("'",'')
         date_str = widgets.calendarWidget.selectedDate().toString('yyyy-MM-dd')
         eco_cat = widgets.eco_gen_cbb.currentText()
         eco_sub = widgets.eco_sub_cbb.currentText()
         amount = widgets.pay_amount_tb.text()
-        if amount != '':
-            if int(amount) <= 0:
-                print ("Amount <= 0")
+        exists_or_not = self.log_in.login_eco_check(name, eco_cat, eco_sub, date_str)
+        print(exists_or_not)
+        if exists_or_not == 'not_exist': # τοτε δεν υπαρχει εγγραφη για την ημερ, κατ, υποκατηγ σε σχεση με το ονομα και θα κανει insert
+            message = self.log_in.login_eco_INSERT(name, descr, amount, in_out, date_str, eco_cat, eco_sub, pos)
+        else:  # update
+            message = self.log_in.login_eco_UPDATE(descr, amount, in_out, pos, name, eco_cat, eco_sub,date_str)
+        widgets.add_eco_lb.setText(message)
         print(name, date_str, eco_cat, eco_sub, amount)
 
-    def outcomeChange(self):
+    def outcomeChange(self): # οταν επιλεγετε το εξοδα τοτε ψαχνει το ΑΓΣ ΑΞΙΟΝ ΠΕΙΡΑΙΑ και το επιλέγει
         index = widgets.eco_name_cbb.findText('ΑΓΣ ΑΞΙΟΝ', Qt.MatchContains)
         print(index)
         if index >= 0:
             widgets.eco_name_cbb.setCurrentIndex(index)
             widgets.add_eco_lb.setText('')
 
-    def incomeChange(self):
+    def incomeChange(self):  # οταν επιλεγετ το radiobutton εσοδα τοτε κανει reset ολα
         widgets.eco_name_cbb.setCurrentIndex(0)
         widgets.add_eco_lb.setText('')
+        widgets.eco_descr.clear()
 
     def eco_name_cbbChange(self):
         gen_cat_eco = []
@@ -147,6 +161,7 @@ class LoginWindow(QMainWindow):
             widgets.eco_sub_cbb.clear()
             widgets.eco_gen_cbb.addItem('Επιλέξτε κατηγορία')
             widgets.eco_sub_cbb.addItem('Επιλέξτε κατηγορία')
+            widgets.eco_descr.clear()
             #######################################################
             for items in eco_gen[0]: gen_cat_eco.append(items[1])
             widgets.eco_gen_cbb.addItems(gen_cat_eco)
@@ -157,6 +172,7 @@ class LoginWindow(QMainWindow):
             widgets.eco_sub_cbb.setEnabled(False)
             widgets.pay_amount_tb.setEnabled(False)
             widgets.add_erco_btn.setEnabled(False)
+            widgets.eco_descr.setEnabled(False)
             #widgets.pay_amount_tb.setStyleSheet('border: 1px solid #2c3531;')
 
     def eco_gen_cbbChange(self):
@@ -178,17 +194,19 @@ class LoginWindow(QMainWindow):
             widgets.eco_sub_cbb.setEnabled(False)
             widgets.pay_amount_tb.setEnabled(False)
             widgets.add_erco_btn.setEnabled(False)
+            widgets.eco_descr.setEnabled(False)
 
     def eco_sub_cbbChange(self):
         if widgets.eco_sub_cbb.currentIndex() != 0 and widgets.eco_sub_cbb.count() > 1:
             widgets.pay_amount_tb.setEnabled(True)
+            widgets.eco_descr.setEnabled(True)
             amount = self.log_in.login_get_amount(widgets.eco_name_cbb.currentText(),
                                                   widgets.eco_gen_cbb.currentText(),
                                                   widgets.eco_sub_cbb.currentText())
             if amount == 'None':
                 amount = '0'
                 widgets.add_erco_btn.setEnabled(False)
-            elif amount == '0' or int(amount)==0:
+            elif amount == '0' or int(amount) == 0:
                 widgets.add_erco_btn.setEnabled(False)
             else:
                 widgets.add_erco_btn.setEnabled(True)
@@ -199,7 +217,7 @@ class LoginWindow(QMainWindow):
             widgets.pay_amount_tb.setEnabled(False)
             widgets.pay_amount_tb.clear()
 
-    def chart_all_create(self):
+    def chart_all_create(self): # δηυμιουργει το διαγραμμα με τις ετησιες τιμες
         log_in = login_query.connection(widgets.user_tb.text(), widgets.pass_tb.text())
         results_eco = log_in.login_chart_year_all()
         self.set0 = QBarSet("Έτη")
@@ -228,7 +246,7 @@ class LoginWindow(QMainWindow):
         vbox.setContentsMargins(0, 0, 0, 0)
         vbox.addWidget(self.chartview_all)
 
-    def build_chart(self):
+    def build_chart(self):  # δημιουργει το διαγραμα με τις μηνιαιες τιμες
         self.series = QBarSeries()
         self.set_tkd = QBarSet("TAEKWON-DO")
         self.set_fenc = QBarSet("ΞΙΦΑΣΚΙΑ")
@@ -262,7 +280,7 @@ class LoginWindow(QMainWindow):
         vbox.setContentsMargins(0, 0, 0, 0)
         vbox.addWidget(self.chartview)
 
-    def handle_index_changed(self):
+    def handle_index_changed(self):  # χειριζζεται την αλλαγει του ετους απο το combbox
         values = []
         values_ = []
         set_tkd = []
@@ -299,14 +317,14 @@ class LoginWindow(QMainWindow):
         values.append(values_)
         self.update_chart_one(values)
 
-    def max_value(self, inputlist):
+    def max_value(self, inputlist):  # απλα φερνει την μεγιστη τιμη απο λιστα που εχει λιστες
         top_max = []
         for item in inputlist:
             maxNumber = max(item)
             top_max.append(maxNumber)
         return max(top_max)
 
-    def update_chart_one(self, datas):
+    def update_chart_one(self, datas):  # ανανεωνει το διαγραμμα
         self.axisX.clear()
         self.set_tkd.remove(0, self.set_tkd.count())
         self.set_fenc.remove(0, self.set_fenc.count())
@@ -323,20 +341,15 @@ class LoginWindow(QMainWindow):
         self.set_oplo.append(data[2])
         self.set_spends.append(data[3])
 
-    def days_labes_hide(self):
+    def days_labels_hide(self):  # κρυβει τις ετικετες που βρισκονται μεσα στο κουτι για το ημερολογιο
         item = widgets.days_splitter.children()
         for frames in item:
-            # print("- - - - - - - - - - - - - - - -")
             if isinstance(frames, QFrame):
                 frame_name = frames.objectName()
-                # print("Frame: ", frame_name)
                 item2 = frames.children()
                 cut_text = frame_name[:-(len(frame_name) - frame_name.index("_") - 1):]
-                # print("cut_text: ", cut_text)
-                # print("---------------------------")
                 for x in item2:
                     label_name = x.objectName()
-                    # print("Label: ", label_name)
                     if label_name.find(cut_text) != -1:
                         x.hide()
 

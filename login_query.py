@@ -379,6 +379,53 @@ class connection:
         print(str(msg))
         return result
 
+    def login_eco_check(self, name, cat_id, catsub_id, datenew):
+        result = ''
+        try:
+            query = self.str_query('eco_check.sql').format(name, cat_id, catsub_id, datenew)
+            cursor = self.cnxn.cursor()
+            cursor.execute(query)
+            rows = cursor.fetchall()
+            result = rows[0][0]
+            msg = "eco_check: Connection established"
+        except Exception as e:
+            msg = "eco_check: Connection failed"
+            print("Error: eco_check: " + str(e))
+        print(str(msg))
+        return result
+
+    def login_eco_INSERT(self, name, descr, amount, in_out, datenew, cat_id, catsub_id, pos):
+        result = ''
+        try:
+            query = self.str_query('eco_insert.sql').format(name, descr, amount, in_out, datenew, cat_id, catsub_id, pos)
+            cursor = self.cnxn.cursor()
+            cursor.execute(query)
+            self.cnxn.commit()
+            result = "Επιτυχία καταχώρησης !!!"
+            msg = "eco_INSERT: Connection established"
+        except Exception as e:
+            msg = "eco_INSERT: Connection failed"
+            result = "Αποτυχία καταχώρησης !!!"
+            print("Error: eco_INSERT: " + str(e))
+        print(str(msg))
+        return result
+
+    def login_eco_UPDATE(self, descr, amount, in_out, pos, name, cat_id, catsub_id, datenew):
+        result = ''
+        try:
+            query = self.str_query('eco_update.sql').format(descr, amount, in_out, pos, name, cat_id, catsub_id, datenew)
+            cursor = self.cnxn.cursor()
+            cursor.execute(query)
+            self.cnxn.commit()
+            result = "Επιτυχία ενημέρωσης !!!"
+            msg = "eco_UPDATE: Connection established"
+        except Exception as e:
+            msg = "eco_UPDATE: Connection failed"
+            result = "Αποτυχία ενημέρωσης !!!"
+            print("Error: eco_UPDATE: " + str(e))
+        print(str(msg))
+        return result
+
     def str_query(self, query):
         home_dir = os.path.abspath('')
         sql_query = os.path.join(home_dir, 'sql_queries/' + query)
