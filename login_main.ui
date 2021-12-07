@@ -3670,15 +3670,31 @@ border: 1px solid #2c3531;;
        <widget class="QWidget" name="horizontalLayoutWidget_4">
         <property name="geometry">
          <rect>
-          <x>40</x>
+          <x>30</x>
           <y>540</y>
-          <width>971</width>
+          <width>561</width>
           <height>191</height>
          </rect>
         </property>
         <layout class="QHBoxLayout" name="eco_table_lout">
          <item>
-          <widget class="QTreeView" name="eco_treeview"/>
+          <widget class="QTreeView" name="eco_treeview">
+           <property name="layoutDirection">
+            <enum>Qt::LeftToRight</enum>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QAbstractItemView QHeaderView {
+    show-decoration-selected: 0;
+    background: transparent;
+}
+QAbstractItemView::section QHeaderView::section {
+    show-decoration-selected: 0;
+    background: transparent;	
+	color: rgb(247, 196, 149);
+	font: 700 italic 9pt &quot;Segoe UI&quot;;
+}</string>
+           </property>
+          </widget>
          </item>
         </layout>
        </widget>
@@ -5599,8 +5615,7 @@ border-color: beige;
   </widget>
  </widget>
  <tabstops>
-  <tabstop>LAST_NAME</tabstop>
-  <tabstop>FIRST_NAME</tabstop>
+  <tabstop>SPORT_1</tabstop>
   <tabstop>FATHER_NAME</tabstop>
   <tabstop>MOTHER_NAME</tabstop>
   <tabstop>BIRTHDATE</tabstop>
@@ -5628,7 +5643,7 @@ border-color: beige;
   <tabstop>all_rb</tabstop>
   <tabstop>new_member_btn</tabstop>
   <tabstop>home_bt</tabstop>
-  <tabstop>user_tb</tabstop>
+  <tabstop>FIRST_NAME</tabstop>
   <tabstop>pass_tb</tabstop>
   <tabstop>login_btn</tabstop>
   <tabstop>toggle_bt</tabstop>
@@ -5639,6 +5654,22 @@ border-color: beige;
   <tabstop>prese_bt</tabstop>
   <tabstop>members_bt</tabstop>
   <tabstop>members_cbb</tabstop>
+  <tabstop>calendarWidget</tabstop>
+  <tabstop>inocme_rb</tabstop>
+  <tabstop>outcome_rb</tabstop>
+  <tabstop>chart_years_ccb</tabstop>
+  <tabstop>eco_treeview</tabstop>
+  <tabstop>LAST_NAME</tabstop>
+  <tabstop>user_tb</tabstop>
+  <tabstop>eco_name_cbb</tabstop>
+  <tabstop>eco_gen_cbb</tabstop>
+  <tabstop>eco_sub_cbb</tabstop>
+  <tabstop>eco_descr</tabstop>
+  <tabstop>pay_amount_tb</tabstop>
+  <tabstop>pos_chechbox</tabstop>
+  <tabstop>add_erco_btn</tabstop>
+  <tabstop>SPORT</tabstop>
+  <tabstop>del_ref_btn</tabstop>
  </tabstops>
  <resources>
   <include location="../Modern_GUI_PyDracula_PySide6_or_PyQt6/resources.qrc"/>

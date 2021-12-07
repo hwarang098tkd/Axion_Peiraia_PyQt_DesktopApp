@@ -1313,12 +1313,23 @@ class Ui_MainWindow(object):
         self.label_49.setAlignment(QtCore.Qt.AlignHCenter|QtCore.Qt.AlignTop)
         self.label_49.setObjectName("label_49")
         self.horizontalLayoutWidget_4 = QtWidgets.QWidget(self.econ_page)
-        self.horizontalLayoutWidget_4.setGeometry(QtCore.QRect(40, 540, 971, 191))
+        self.horizontalLayoutWidget_4.setGeometry(QtCore.QRect(30, 540, 561, 191))
         self.horizontalLayoutWidget_4.setObjectName("horizontalLayoutWidget_4")
         self.eco_table_lout = QtWidgets.QHBoxLayout(self.horizontalLayoutWidget_4)
         self.eco_table_lout.setContentsMargins(0, 0, 0, 0)
         self.eco_table_lout.setObjectName("eco_table_lout")
         self.eco_treeview = QtWidgets.QTreeView(self.horizontalLayoutWidget_4)
+        self.eco_treeview.setLayoutDirection(QtCore.Qt.LeftToRight)
+        self.eco_treeview.setStyleSheet("QAbstractItemView QHeaderView {\n"
+"    show-decoration-selected: 0;\n"
+"    background: transparent;\n"
+"}\n"
+"QAbstractItemView::section QHeaderView::section {\n"
+"    show-decoration-selected: 0;\n"
+"    background: transparent;    \n"
+"    color: rgb(247, 196, 149);\n"
+"    font: 700 italic 9pt \"Segoe UI\";\n"
+"}")
         self.eco_treeview.setObjectName("eco_treeview")
         self.eco_table_lout.addWidget(self.eco_treeview)
         self.horizontalLayoutWidget_5 = QtWidgets.QWidget(self.econ_page)
@@ -2041,8 +2052,7 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
         self.stackedWidget.setCurrentIndex(4)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
-        MainWindow.setTabOrder(self.LAST_NAME, self.FIRST_NAME)
-        MainWindow.setTabOrder(self.FIRST_NAME, self.FATHER_NAME)
+        MainWindow.setTabOrder(self.SPORT_1, self.FATHER_NAME)
         MainWindow.setTabOrder(self.FATHER_NAME, self.MOTHER_NAME)
         MainWindow.setTabOrder(self.MOTHER_NAME, self.BIRTHDATE)
         MainWindow.setTabOrder(self.BIRTHDATE, self.BIRTH_PLACE)
@@ -2069,8 +2079,8 @@ class Ui_MainWindow(object):
         MainWindow.setTabOrder(self.tkd_rb, self.all_rb)
         MainWindow.setTabOrder(self.all_rb, self.new_member_btn)
         MainWindow.setTabOrder(self.new_member_btn, self.home_bt)
-        MainWindow.setTabOrder(self.home_bt, self.user_tb)
-        MainWindow.setTabOrder(self.user_tb, self.pass_tb)
+        MainWindow.setTabOrder(self.home_bt, self.FIRST_NAME)
+        MainWindow.setTabOrder(self.FIRST_NAME, self.pass_tb)
         MainWindow.setTabOrder(self.pass_tb, self.login_btn)
         MainWindow.setTabOrder(self.login_btn, self.toggle_bt)
         MainWindow.setTabOrder(self.toggle_bt, self.taek_bt)
@@ -2080,6 +2090,22 @@ class Ui_MainWindow(object):
         MainWindow.setTabOrder(self.eco_bt, self.prese_bt)
         MainWindow.setTabOrder(self.prese_bt, self.members_bt)
         MainWindow.setTabOrder(self.members_bt, self.members_cbb)
+        MainWindow.setTabOrder(self.members_cbb, self.calendarWidget)
+        MainWindow.setTabOrder(self.calendarWidget, self.inocme_rb)
+        MainWindow.setTabOrder(self.inocme_rb, self.outcome_rb)
+        MainWindow.setTabOrder(self.outcome_rb, self.chart_years_ccb)
+        MainWindow.setTabOrder(self.chart_years_ccb, self.eco_treeview)
+        MainWindow.setTabOrder(self.eco_treeview, self.LAST_NAME)
+        MainWindow.setTabOrder(self.LAST_NAME, self.user_tb)
+        MainWindow.setTabOrder(self.user_tb, self.eco_name_cbb)
+        MainWindow.setTabOrder(self.eco_name_cbb, self.eco_gen_cbb)
+        MainWindow.setTabOrder(self.eco_gen_cbb, self.eco_sub_cbb)
+        MainWindow.setTabOrder(self.eco_sub_cbb, self.eco_descr)
+        MainWindow.setTabOrder(self.eco_descr, self.pay_amount_tb)
+        MainWindow.setTabOrder(self.pay_amount_tb, self.pos_chechbox)
+        MainWindow.setTabOrder(self.pos_chechbox, self.add_erco_btn)
+        MainWindow.setTabOrder(self.add_erco_btn, self.SPORT)
+        MainWindow.setTabOrder(self.SPORT, self.del_ref_btn)
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate

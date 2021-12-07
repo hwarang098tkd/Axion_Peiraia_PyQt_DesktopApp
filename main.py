@@ -1,5 +1,5 @@
 import datetime
-
+from collections import deque
 from PyQt5.QtChart import QBarSet, QBarSeries, QChart, QBarCategoryAxis, QChartView, QValueAxis
 from PyQt5 import QtCore
 from PyQt5.QtGui import *
@@ -11,6 +11,9 @@ from login_main import Ui_MainWindow
 import google_calendar
 import sys
 import login_query
+
+global list_greek_months
+list_greek_months = ["0", "Ιαν", "Φεβρ", "Μαρτ", "Απρ", "Μαιος", "Ιουν", "Ιουλ", "Αυγ", "Σεπτ", "Οκτ", "Νοε", "Δεκ"]
 
 
 class LoginWindow(QMainWindow):
@@ -30,7 +33,6 @@ class LoginWindow(QMainWindow):
         start_pro_y = 150
 
         self.threadpool = QThreadPool()
-
         self.baseHeight = 369
         self.extendedHeight = 400
         self.rect = QRect(start_pos_x, start_pro_y, 320, self.baseHeight)
@@ -80,12 +82,70 @@ class LoginWindow(QMainWindow):
         widgets.pos_chechbox.stateChanged.connect(self.pos_chechboxChanged)
         widgets.pay_amount_tb.setValidator(QIntValidator()) #  just to accept only numbers
         ####################################################
+        widgets.eco_treeview.clicked.connect(self.eco_tree_selected)
 
         self.installEventFilter(self)
         self.displayTime()
         widgets.toolBar_fm.hide()
         widgets.home_bt.setStyleSheet(buttons_style)
         self.show()
+
+    def eco_tree_selected(self):
+        mhnas_int = 0
+        indexes = widgets.eco_treeview.selectedIndexes()
+        items = []
+        for index in indexes:
+            items.append(self.model.itemFromIndex(index))
+
+        i=0
+        for mhnas in list_greek_months:  #return month to int again in order to call it from SQLSERVER
+            if items[0].text() == mhnas:
+                mhnas_int = i
+            i+=1
+        print('TreeView selected --> YEAR:', items[0].parent().text(), 'MHNAS:', mhnas_int)
+
+
+    def eco_tree_create(self):
+        self.model = QStandardItemModel()
+        self.model.setHorizontalHeaderLabels(['Ημερομηνία', 'Taekwon-Do', 'Fencing', 'Οπλομαχία', 'Εξοδα', 'Σύνολο'])
+        widgets.eco_treeview.header().setDefaultSectionSize(90)
+        widgets.eco_treeview.header().setDefaultAlignment(Qt.AlignHCenter)
+
+        widgets.eco_treeview.setModel(self.model)
+        data = []
+        data.append(self.log_in.eco_data_tree())
+        self.importData(data)
+        widgets.eco_treeview.expandAll()
+
+    def importData(self, data):
+
+        text_color = QColor(255, 255, 255)
+        text_color1 = QColor(44, 53, 49)
+        text_color2 = QColor(129, 0, 0)
+        years_color = QColor(255, 203, 154)
+        self.model.setRowCount(0)
+        root = self.model.invisibleRootItem()
+        years = []
+        for i in data[0]: #create years list
+            if i[0] not in years:
+                years.append(i[0])
+        first_value = data[0][0][0]
+        year_row = StandardItem(str(first_value), 12,set_bold=True, color=years_color)
+        for i in data[0]:
+            if i[0] != first_value:
+                first_value = i[0]
+                root.appendRow(year_row)
+                year_row = StandardItem(str(first_value), 12,set_bold=True, color=years_color)
+
+            months_rows = [StandardItem(list_greek_months[i[1]], 12, color=text_color1),
+                           StandardItem(i[2], 10, set_italic=True, color=text_color),
+                           StandardItem(i[3], 10, set_italic=True, color=text_color),
+                           StandardItem(i[4], 10, set_italic=True, color=text_color),
+                           StandardItem(i[5], 10, set_italic=True, color=text_color2),
+                           StandardItem(i[6], 10, set_italic=True, color=text_color)]
+            year_row.appendRow(months_rows)
+            print(i)
+        root.appendRow(year_row)
 
     def pos_chechboxChanged(self):
         widgets.add_eco_lb.setText('')
@@ -560,6 +620,8 @@ class LoginWindow(QMainWindow):
             widgets.info_lb.setText(result)
 
             if result == "Connection established":  # succesfull log in
+
+                self.eco_tree_create()
                 sport_list=[]
                 # REFRESH STASTS
                 self.refresh_stats()
@@ -626,7 +688,12 @@ class LoginWindow(QMainWindow):
                 widgets.toolBar_fm.show()
 
     def refresh_calendar(self):
-        calendar_list = google_calendar.calendar_data.main(self)
+        calendar_list = []
+        calendar_list.append("empty")
+        try:
+            calendar_list = google_calendar.calendar_data.main(self)
+        except Exception as e:
+            print(e)
         if calendar_list[0] == "empty":
             print("No Calendar Events")
             widgets.calendar_error_lb.setText("No Calendar Events")
@@ -854,6 +921,18 @@ def resetStyle(self, btnName):
         if w.objectName() != btnName:
             w.setStyleSheet("")
 
+class StandardItem(QStandardItem):
+    def __init__(self, txt='', font_size=9, set_bold=False,set_italic=False, color=QColor(0, 0, 0)):
+        super().__init__()
+
+        fnt = QFont('Open Sans', font_size)
+        fnt.setBold(set_bold)
+        fnt.setItalic(set_italic)
+        self.setTextAlignment(Qt.AlignHCenter)
+        self.setEditable(False)
+        self.setForeground(color)
+        self.setFont(fnt)
+        self.setText(str(txt))
 
 # Create the application object
 if __name__ == "__main__":
