@@ -11,7 +11,7 @@
     <x>0</x>
     <y>0</y>
     <width>1395</width>
-    <height>791</height>
+    <height>829</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -3789,737 +3789,39 @@ border: 1px solid #2c3531;;
          </item>
         </layout>
        </widget>
-      </widget>
-      <widget class="QWidget" name="menbers_page">
-       <widget class="QWidget" name="formLayoutWidget_2">
+       <widget class="QWidget" name="horizontalLayoutWidget_6">
         <property name="geometry">
          <rect>
-          <x>330</x>
-          <y>50</y>
-          <width>253</width>
-          <height>664</height>
+          <x>600</x>
+          <y>540</y>
+          <width>401</width>
+          <height>191</height>
          </rect>
         </property>
-        <layout class="QFormLayout" name="formLayout_3">
-         <item row="0" column="0">
-          <widget class="QLineEdit" name="LAST_NAME">
-           <property name="minimumSize">
-            <size>
-             <width>133</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>133</width>
-             <height>16777215</height>
-            </size>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">color: &quot;#D1E8E2&quot;;</string>
-           </property>
-          </widget>
-         </item>
-         <item row="0" column="1">
-          <widget class="QLabel" name="label_21">
-           <property name="styleSheet">
-            <string notr="true">color: &quot;#D9B08C&quot;;</string>
-           </property>
-           <property name="text">
-            <string>Επώνυμο:</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="0">
-          <widget class="QLineEdit" name="FIRST_NAME">
-           <property name="minimumSize">
-            <size>
-             <width>133</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>133</width>
-             <height>16777215</height>
-            </size>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">color: &quot;#D1E8E2&quot;;</string>
-           </property>
-          </widget>
-         </item>
-         <item row="1" column="1">
-          <widget class="QLabel" name="label_22">
-           <property name="styleSheet">
-            <string notr="true">color: &quot;#D9B08C&quot;;</string>
-           </property>
-           <property name="text">
-            <string>Όνομα:</string>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="0">
-          <widget class="QLineEdit" name="FATHER_NAME">
-           <property name="minimumSize">
-            <size>
-             <width>133</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>133</width>
-             <height>16777215</height>
-            </size>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">color: &quot;#D1E8E2&quot;;</string>
-           </property>
-          </widget>
-         </item>
-         <item row="2" column="1">
-          <widget class="QLabel" name="label_23">
-           <property name="styleSheet">
-            <string notr="true">color: &quot;#D9B08C&quot;;</string>
-           </property>
-           <property name="text">
-            <string>Πατρώνυμο:</string>
-           </property>
-          </widget>
-         </item>
-         <item row="3" column="0">
-          <widget class="QLineEdit" name="MOTHER_NAME">
-           <property name="minimumSize">
-            <size>
-             <width>133</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>133</width>
-             <height>16777215</height>
-            </size>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">color: &quot;#D1E8E2&quot;;</string>
-           </property>
-          </widget>
-         </item>
-         <item row="3" column="1">
-          <widget class="QLabel" name="label_24">
-           <property name="styleSheet">
-            <string notr="true">color: &quot;#D9B08C&quot;;</string>
-           </property>
-           <property name="text">
-            <string>Μητρώνυμο:</string>
-           </property>
-          </widget>
-         </item>
-         <item row="4" column="0">
-          <widget class="QLineEdit" name="BIRTHDATE">
-           <property name="minimumSize">
-            <size>
-             <width>133</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>133</width>
-             <height>16777215</height>
-            </size>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">color: &quot;#D1E8E2&quot;;</string>
-           </property>
-          </widget>
-         </item>
-         <item row="4" column="1">
-          <widget class="QLabel" name="label_25">
-           <property name="styleSheet">
-            <string notr="true">color: &quot;#D9B08C&quot;;</string>
-           </property>
-           <property name="text">
-            <string>Ημ. Γέννησης:</string>
-           </property>
-          </widget>
-         </item>
-         <item row="5" column="0">
-          <widget class="QLineEdit" name="BIRTH_PLACE">
-           <property name="minimumSize">
-            <size>
-             <width>133</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>133</width>
-             <height>16777215</height>
-            </size>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">color: &quot;#D1E8E2&quot;;</string>
-           </property>
-          </widget>
-         </item>
-         <item row="5" column="1">
-          <widget class="QLabel" name="label_27">
-           <property name="styleSheet">
-            <string notr="true">color: &quot;#D9B08C&quot;;</string>
-           </property>
-           <property name="text">
-            <string>Τόπος Γέννησης:</string>
-           </property>
-          </widget>
-         </item>
-         <item row="6" column="0">
-          <widget class="QLineEdit" name="NATIONALITY">
-           <property name="minimumSize">
-            <size>
-             <width>133</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>133</width>
-             <height>16777215</height>
-            </size>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">color: &quot;#D1E8E2&quot;;</string>
-           </property>
-          </widget>
-         </item>
-         <item row="6" column="1">
-          <widget class="QLabel" name="label_28">
-           <property name="styleSheet">
-            <string notr="true">color: &quot;#D9B08C&quot;;</string>
-           </property>
-           <property name="text">
-            <string>Υπηκοότητα:</string>
-           </property>
-          </widget>
-         </item>
-         <item row="7" column="0">
-          <widget class="QLineEdit" name="PROFESSION">
-           <property name="minimumSize">
-            <size>
-             <width>133</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>133</width>
-             <height>16777215</height>
-            </size>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">color: &quot;#D1E8E2&quot;;</string>
-           </property>
-          </widget>
-         </item>
-         <item row="7" column="1">
-          <widget class="QLabel" name="label_26">
-           <property name="styleSheet">
-            <string notr="true">color: &quot;#D9B08C&quot;;</string>
-           </property>
-           <property name="text">
-            <string>Επάγγελμα:</string>
-           </property>
-          </widget>
-         </item>
-         <item row="8" column="0">
-          <widget class="QLineEdit" name="ID_NUMBER">
-           <property name="minimumSize">
-            <size>
-             <width>133</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>133</width>
-             <height>16777215</height>
-            </size>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">color: &quot;#D1E8E2&quot;;</string>
-           </property>
-          </widget>
-         </item>
-         <item row="8" column="1">
-          <widget class="QLabel" name="label_30">
-           <property name="styleSheet">
-            <string notr="true">color: &quot;#D9B08C&quot;;</string>
-           </property>
-           <property name="text">
-            <string>Αρ. Ταυτότητας:</string>
-           </property>
-          </widget>
-         </item>
-         <item row="9" column="0">
-          <widget class="QLineEdit" name="ADDRESS_STREET">
-           <property name="minimumSize">
-            <size>
-             <width>133</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>133</width>
-             <height>16777215</height>
-            </size>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">color: &quot;#D1E8E2&quot;;</string>
-           </property>
-          </widget>
-         </item>
-         <item row="9" column="1">
-          <widget class="QLabel" name="label_33">
-           <property name="styleSheet">
-            <string notr="true">color: &quot;#D9B08C&quot;;</string>
-           </property>
-           <property name="text">
-            <string>Διεύθυνση:</string>
-           </property>
-          </widget>
-         </item>
-         <item row="10" column="0">
-          <widget class="QLineEdit" name="ADDRESS_NUMBER">
-           <property name="minimumSize">
-            <size>
-             <width>133</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>133</width>
-             <height>16777215</height>
-            </size>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">color: &quot;#D1E8E2&quot;;</string>
-           </property>
-          </widget>
-         </item>
-         <item row="10" column="1">
-          <widget class="QLabel" name="label_34">
-           <property name="styleSheet">
-            <string notr="true">color: &quot;#D9B08C&quot;;</string>
-           </property>
-           <property name="text">
-            <string>Αριθμός Οδού:</string>
-           </property>
-          </widget>
-         </item>
-         <item row="11" column="0">
-          <widget class="QLineEdit" name="REGION">
-           <property name="minimumSize">
-            <size>
-             <width>133</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>133</width>
-             <height>16777215</height>
-            </size>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">color: &quot;#D1E8E2&quot;;</string>
-           </property>
-          </widget>
-         </item>
-         <item row="11" column="1">
-          <widget class="QLabel" name="label_35">
-           <property name="styleSheet">
-            <string notr="true">color: &quot;#D9B08C&quot;;</string>
-           </property>
-           <property name="text">
-            <string>Περιοχή:</string>
-           </property>
-          </widget>
-         </item>
-         <item row="12" column="0">
-          <widget class="QLineEdit" name="HOME_PHONE">
-           <property name="minimumSize">
-            <size>
-             <width>133</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>133</width>
-             <height>16777215</height>
-            </size>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">color: &quot;#D1E8E2&quot;;</string>
-           </property>
-          </widget>
-         </item>
-         <item row="12" column="1">
-          <widget class="QLabel" name="label_31">
-           <property name="styleSheet">
-            <string notr="true">color: &quot;#D9B08C&quot;;</string>
-           </property>
-           <property name="text">
-            <string>Τηλ. Οικείας:</string>
-           </property>
-          </widget>
-         </item>
-         <item row="13" column="0">
-          <widget class="QLineEdit" name="MOTHER_PHONE">
-           <property name="minimumSize">
-            <size>
-             <width>133</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>133</width>
-             <height>16777215</height>
-            </size>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">color: &quot;#D1E8E2&quot;;</string>
-           </property>
-          </widget>
-         </item>
-         <item row="13" column="1">
-          <widget class="QLabel" name="label_29">
-           <property name="styleSheet">
-            <string notr="true">color: &quot;#D9B08C&quot;;</string>
-           </property>
-           <property name="text">
-            <string>Τηλ. Μητέρας:</string>
-           </property>
-          </widget>
-         </item>
-         <item row="14" column="0">
-          <widget class="QLineEdit" name="FATHER_PHONE">
-           <property name="minimumSize">
-            <size>
-             <width>133</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>133</width>
-             <height>16777215</height>
-            </size>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">color: &quot;#D1E8E2&quot;;</string>
-           </property>
-          </widget>
-         </item>
-         <item row="14" column="1">
-          <widget class="QLabel" name="label_32">
-           <property name="styleSheet">
-            <string notr="true">color: &quot;#D9B08C&quot;;</string>
-           </property>
-           <property name="text">
-            <string>Τηλ. Πατέρα:</string>
-           </property>
-          </widget>
-         </item>
-         <item row="15" column="0">
-          <widget class="QLineEdit" name="CELL_PHONE">
-           <property name="minimumSize">
-            <size>
-             <width>133</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>133</width>
-             <height>16777215</height>
-            </size>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">color: &quot;#D1E8E2&quot;;</string>
-           </property>
-          </widget>
-         </item>
-         <item row="15" column="1">
-          <widget class="QLabel" name="label_43">
-           <property name="styleSheet">
-            <string notr="true">color: &quot;#D9B08C&quot;;</string>
-           </property>
-           <property name="text">
-            <string>Κινητό:</string>
-           </property>
-          </widget>
-         </item>
-         <item row="16" column="0">
-          <widget class="QLineEdit" name="EMERG_PHONE">
-           <property name="minimumSize">
-            <size>
-             <width>133</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>133</width>
-             <height>16777215</height>
-            </size>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">color: &quot;#D1E8E2&quot;;</string>
-           </property>
-          </widget>
-         </item>
-         <item row="16" column="1">
-          <widget class="QLabel" name="label_40">
-           <property name="styleSheet">
-            <string notr="true">color: &quot;#D9B08C&quot;;</string>
-           </property>
-           <property name="text">
-            <string>Τηλ. Ανάγκης:</string>
-           </property>
-          </widget>
-         </item>
-         <item row="17" column="0">
-          <widget class="QLineEdit" name="EMAIL">
-           <property name="minimumSize">
-            <size>
-             <width>133</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>133</width>
-             <height>16777215</height>
-            </size>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">color: &quot;#D1E8E2&quot;;</string>
-           </property>
-          </widget>
-         </item>
-         <item row="17" column="1">
-          <widget class="QLabel" name="label_36">
-           <property name="styleSheet">
-            <string notr="true">color: &quot;#D9B08C&quot;;</string>
-           </property>
-           <property name="text">
-            <string>Email:</string>
-           </property>
-          </widget>
-         </item>
-         <item row="18" column="1">
-          <widget class="QLabel" name="label_39">
-           <property name="styleSheet">
-            <string notr="true">color: &quot;#D9B08C&quot;;</string>
-           </property>
-           <property name="text">
-            <string>Άθλημα (1):</string>
-           </property>
-          </widget>
-         </item>
-         <item row="19" column="1">
-          <widget class="QLabel" name="label_38">
-           <property name="styleSheet">
-            <string notr="true">color: &quot;#D9B08C&quot;;</string>
-           </property>
-           <property name="text">
-            <string>Άθλημα (2):</string>
-           </property>
-          </widget>
-         </item>
-         <item row="20" column="0">
-          <widget class="QLineEdit" name="DATE_SUBSCRIBE">
-           <property name="minimumSize">
-            <size>
-             <width>133</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>133</width>
-             <height>16777215</height>
-            </size>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">color: &quot;#D1E8E2&quot;;</string>
-           </property>
-          </widget>
-         </item>
-         <item row="20" column="1">
-          <widget class="QLabel" name="label_37">
-           <property name="styleSheet">
-            <string notr="true">color: &quot;#D9B08C&quot;;</string>
-           </property>
-           <property name="text">
-            <string>Ημ. Εγγραφής:</string>
-           </property>
-          </widget>
-         </item>
-         <item row="21" column="0">
-          <widget class="QLineEdit" name="BARCODE">
-           <property name="minimumSize">
-            <size>
-             <width>133</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>133</width>
-             <height>16777215</height>
-            </size>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">color: &quot;#D1E8E2&quot;;</string>
-           </property>
-          </widget>
-         </item>
-         <item row="21" column="1">
-          <widget class="QLabel" name="label_44">
-           <property name="styleSheet">
-            <string notr="true">color: &quot;#D9B08C&quot;;</string>
-           </property>
-           <property name="text">
-            <string>Barcode (1):</string>
-           </property>
-          </widget>
-         </item>
-         <item row="22" column="0">
-          <widget class="QLineEdit" name="BARCODE_1">
-           <property name="minimumSize">
-            <size>
-             <width>133</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>133</width>
-             <height>16777215</height>
-            </size>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">color: &quot;#D1E8E2&quot;;</string>
-           </property>
-          </widget>
-         </item>
-         <item row="22" column="1">
-          <widget class="QLabel" name="label_41">
-           <property name="styleSheet">
-            <string notr="true">color: &quot;#D9B08C&quot;;</string>
-           </property>
-           <property name="text">
-            <string>Barcode (2):</string>
-           </property>
-          </widget>
-         </item>
-         <item row="23" column="0">
-          <widget class="QLineEdit" name="PAY_DAY">
-           <property name="minimumSize">
-            <size>
-             <width>133</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>133</width>
-             <height>16777215</height>
-            </size>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">color: &quot;#D1E8E2&quot;;</string>
-           </property>
-          </widget>
-         </item>
-         <item row="23" column="1">
-          <widget class="QLabel" name="label_42">
-           <property name="styleSheet">
-            <string notr="true">color: &quot;#D9B08C&quot;;</string>
-           </property>
-           <property name="text">
-            <string>Ημέρα Πληρωμής:</string>
-           </property>
-          </widget>
-         </item>
-         <item row="19" column="0">
-          <widget class="QComboBox" name="SPORT_1">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>133</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>133</width>
-             <height>16777215</height>
-            </size>
-           </property>
+        <layout class="QHBoxLayout" name="eco_table_lout_2">
+         <item>
+          <widget class="QTreeView" name="eco_treeview_analy">
            <property name="layoutDirection">
             <enum>Qt::LeftToRight</enum>
            </property>
            <property name="styleSheet">
-            <string notr="true">color: &quot;#D1E8E2&quot;;</string>
-           </property>
-           <property name="maxVisibleItems">
-            <number>5</number>
-           </property>
-          </widget>
-         </item>
-         <item row="18" column="0">
-          <widget class="QComboBox" name="SPORT">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>10</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="minimumSize">
-            <size>
-             <width>133</width>
-             <height>0</height>
-            </size>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>133</width>
-             <height>16777215</height>
-            </size>
-           </property>
-           <property name="layoutDirection">
-            <enum>Qt::LeftToRight</enum>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">color: &quot;#D1E8E2&quot;;</string>
+            <string notr="true">QAbstractItemView QHeaderView {
+    show-decoration-selected: 0;
+    background: transparent;
+}
+QAbstractItemView::section QHeaderView::section {
+    show-decoration-selected: 0;
+    background: transparent;	
+	color: rgb(247, 196, 149);
+	font: 700 italic 9pt &quot;Segoe UI&quot;;
+}</string>
            </property>
           </widget>
          </item>
         </layout>
        </widget>
+      </widget>
+      <widget class="QWidget" name="menbers_page">
        <widget class="QLabel" name="members_title_lb">
         <property name="geometry">
          <rect>
@@ -4540,26 +3842,6 @@ border: 1px solid #2c3531;;
         </property>
         <property name="text">
          <string>ΚΑΤΑΧΩΡΗΣΗ ΣΤΟΙΧΕΙΩΝ</string>
-        </property>
-       </widget>
-       <widget class="QPushButton" name="add_ref_btn">
-        <property name="geometry">
-         <rect>
-          <x>370</x>
-          <y>670</y>
-          <width>171</width>
-          <height>31</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.261364 rgba(44, 53, 50, 255), stop:0.602273 rgba(17, 100, 102, 255), stop:0.98 rgba(217, 176, 140, 255), stop:1 rgba(0, 0, 0, 0));
-color: rgb(255, 255, 255);
-border: 2px  #D9B08C;
-border-radius: 15px;
-border-style: outset;</string>
-        </property>
-        <property name="text">
-         <string>ΚΑΤΑΧΩΡΗΣΗ</string>
         </property>
        </widget>
        <widget class="QComboBox" name="members_cbb">
@@ -4902,47 +4184,785 @@ border-style: outset;</string>
          <string>OPLOM:</string>
         </property>
        </widget>
-       <widget class="QLabel" name="add_error_lb">
+       <widget class="QWidget" name="verticalLayoutWidget">
         <property name="geometry">
          <rect>
-          <x>340</x>
-          <y>640</y>
-          <width>221</width>
-          <height>21</height>
+          <x>330</x>
+          <y>50</y>
+          <width>244</width>
+          <height>671</height>
          </rect>
         </property>
-        <property name="layoutDirection">
-         <enum>Qt::LeftToRight</enum>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">color: rgb(80, 27, 29);</string>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="wordWrap">
-         <bool>true</bool>
-        </property>
-       </widget>
-       <widget class="QPushButton" name="del_ref_btn">
-        <property name="geometry">
-         <rect>
-          <x>380</x>
-          <y>710</y>
-          <width>151</width>
-          <height>21</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.329545 rgba(46, 17, 20, 255), stop:0.738636 rgba(80, 27, 29, 255), stop:1 rgba(217, 176, 140, 255));
+        <layout class="QVBoxLayout" name="verticalLayout_2">
+         <property name="sizeConstraint">
+          <enum>QLayout::SetDefaultConstraint</enum>
+         </property>
+         <item>
+          <layout class="QFormLayout" name="formLayout_3">
+           <item row="0" column="0">
+            <widget class="QLineEdit" name="LAST_NAME">
+             <property name="minimumSize">
+              <size>
+               <width>133</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>133</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">color: &quot;#D1E8E2&quot;;</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QLabel" name="label_21">
+             <property name="styleSheet">
+              <string notr="true">color: &quot;#D9B08C&quot;;</string>
+             </property>
+             <property name="text">
+              <string>Επώνυμο:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QLineEdit" name="FIRST_NAME">
+             <property name="minimumSize">
+              <size>
+               <width>133</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>133</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">color: &quot;#D1E8E2&quot;;</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QLabel" name="label_22">
+             <property name="styleSheet">
+              <string notr="true">color: &quot;#D9B08C&quot;;</string>
+             </property>
+             <property name="text">
+              <string>Όνομα:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0">
+            <widget class="QLineEdit" name="FATHER_NAME">
+             <property name="minimumSize">
+              <size>
+               <width>133</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>133</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">color: &quot;#D1E8E2&quot;;</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="1">
+            <widget class="QLabel" name="label_23">
+             <property name="styleSheet">
+              <string notr="true">color: &quot;#D9B08C&quot;;</string>
+             </property>
+             <property name="text">
+              <string>Πατρώνυμο:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="0">
+            <widget class="QLineEdit" name="MOTHER_NAME">
+             <property name="minimumSize">
+              <size>
+               <width>133</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>133</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">color: &quot;#D1E8E2&quot;;</string>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="1">
+            <widget class="QLabel" name="label_24">
+             <property name="styleSheet">
+              <string notr="true">color: &quot;#D9B08C&quot;;</string>
+             </property>
+             <property name="text">
+              <string>Μητρώνυμο:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="0">
+            <widget class="QLineEdit" name="BIRTHDATE">
+             <property name="minimumSize">
+              <size>
+               <width>133</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>133</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">color: &quot;#D1E8E2&quot;;</string>
+             </property>
+            </widget>
+           </item>
+           <item row="4" column="1">
+            <widget class="QLabel" name="label_25">
+             <property name="styleSheet">
+              <string notr="true">color: &quot;#D9B08C&quot;;</string>
+             </property>
+             <property name="text">
+              <string>Ημ. Γέννησης:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="0">
+            <widget class="QLineEdit" name="BIRTH_PLACE">
+             <property name="minimumSize">
+              <size>
+               <width>133</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>133</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">color: &quot;#D1E8E2&quot;;</string>
+             </property>
+            </widget>
+           </item>
+           <item row="5" column="1">
+            <widget class="QLabel" name="label_27">
+             <property name="styleSheet">
+              <string notr="true">color: &quot;#D9B08C&quot;;</string>
+             </property>
+             <property name="text">
+              <string>Τόπος Γέννησης:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="6" column="0">
+            <widget class="QLineEdit" name="NATIONALITY">
+             <property name="minimumSize">
+              <size>
+               <width>133</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>133</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">color: &quot;#D1E8E2&quot;;</string>
+             </property>
+            </widget>
+           </item>
+           <item row="6" column="1">
+            <widget class="QLabel" name="label_28">
+             <property name="styleSheet">
+              <string notr="true">color: &quot;#D9B08C&quot;;</string>
+             </property>
+             <property name="text">
+              <string>Υπηκοότητα:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="7" column="0">
+            <widget class="QLineEdit" name="PROFESSION">
+             <property name="minimumSize">
+              <size>
+               <width>133</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>133</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">color: &quot;#D1E8E2&quot;;</string>
+             </property>
+            </widget>
+           </item>
+           <item row="7" column="1">
+            <widget class="QLabel" name="label_26">
+             <property name="styleSheet">
+              <string notr="true">color: &quot;#D9B08C&quot;;</string>
+             </property>
+             <property name="text">
+              <string>Επάγγελμα:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="8" column="0">
+            <widget class="QLineEdit" name="ID_NUMBER">
+             <property name="minimumSize">
+              <size>
+               <width>133</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>133</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">color: &quot;#D1E8E2&quot;;</string>
+             </property>
+            </widget>
+           </item>
+           <item row="8" column="1">
+            <widget class="QLabel" name="label_30">
+             <property name="styleSheet">
+              <string notr="true">color: &quot;#D9B08C&quot;;</string>
+             </property>
+             <property name="text">
+              <string>Αρ. Ταυτότητας:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="9" column="0">
+            <widget class="QLineEdit" name="ADDRESS_STREET">
+             <property name="minimumSize">
+              <size>
+               <width>133</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>133</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">color: &quot;#D1E8E2&quot;;</string>
+             </property>
+            </widget>
+           </item>
+           <item row="9" column="1">
+            <widget class="QLabel" name="label_33">
+             <property name="styleSheet">
+              <string notr="true">color: &quot;#D9B08C&quot;;</string>
+             </property>
+             <property name="text">
+              <string>Διεύθυνση:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="10" column="0">
+            <widget class="QLineEdit" name="ADDRESS_NUMBER">
+             <property name="minimumSize">
+              <size>
+               <width>133</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>133</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">color: &quot;#D1E8E2&quot;;</string>
+             </property>
+            </widget>
+           </item>
+           <item row="10" column="1">
+            <widget class="QLabel" name="label_34">
+             <property name="styleSheet">
+              <string notr="true">color: &quot;#D9B08C&quot;;</string>
+             </property>
+             <property name="text">
+              <string>Αριθμός Οδού:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="11" column="0">
+            <widget class="QLineEdit" name="REGION">
+             <property name="minimumSize">
+              <size>
+               <width>133</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>133</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">color: &quot;#D1E8E2&quot;;</string>
+             </property>
+            </widget>
+           </item>
+           <item row="11" column="1">
+            <widget class="QLabel" name="label_35">
+             <property name="styleSheet">
+              <string notr="true">color: &quot;#D9B08C&quot;;</string>
+             </property>
+             <property name="text">
+              <string>Περιοχή:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="12" column="0">
+            <widget class="QLineEdit" name="HOME_PHONE">
+             <property name="minimumSize">
+              <size>
+               <width>133</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>133</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">color: &quot;#D1E8E2&quot;;</string>
+             </property>
+            </widget>
+           </item>
+           <item row="12" column="1">
+            <widget class="QLabel" name="label_31">
+             <property name="styleSheet">
+              <string notr="true">color: &quot;#D9B08C&quot;;</string>
+             </property>
+             <property name="text">
+              <string>Τηλ. Οικείας:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="13" column="0">
+            <widget class="QLineEdit" name="MOTHER_PHONE">
+             <property name="minimumSize">
+              <size>
+               <width>133</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>133</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">color: &quot;#D1E8E2&quot;;</string>
+             </property>
+            </widget>
+           </item>
+           <item row="13" column="1">
+            <widget class="QLabel" name="label_29">
+             <property name="styleSheet">
+              <string notr="true">color: &quot;#D9B08C&quot;;</string>
+             </property>
+             <property name="text">
+              <string>Τηλ. Μητέρας:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="14" column="0">
+            <widget class="QLineEdit" name="FATHER_PHONE">
+             <property name="minimumSize">
+              <size>
+               <width>133</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>133</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">color: &quot;#D1E8E2&quot;;</string>
+             </property>
+            </widget>
+           </item>
+           <item row="14" column="1">
+            <widget class="QLabel" name="label_32">
+             <property name="styleSheet">
+              <string notr="true">color: &quot;#D9B08C&quot;;</string>
+             </property>
+             <property name="text">
+              <string>Τηλ. Πατέρα:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="15" column="0">
+            <widget class="QLineEdit" name="CELL_PHONE">
+             <property name="minimumSize">
+              <size>
+               <width>133</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>133</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">color: &quot;#D1E8E2&quot;;</string>
+             </property>
+            </widget>
+           </item>
+           <item row="15" column="1">
+            <widget class="QLabel" name="label_43">
+             <property name="styleSheet">
+              <string notr="true">color: &quot;#D9B08C&quot;;</string>
+             </property>
+             <property name="text">
+              <string>Κινητό:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="16" column="0">
+            <widget class="QLineEdit" name="EMERG_PHONE">
+             <property name="minimumSize">
+              <size>
+               <width>133</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>133</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">color: &quot;#D1E8E2&quot;;</string>
+             </property>
+            </widget>
+           </item>
+           <item row="16" column="1">
+            <widget class="QLabel" name="label_40">
+             <property name="styleSheet">
+              <string notr="true">color: &quot;#D9B08C&quot;;</string>
+             </property>
+             <property name="text">
+              <string>Τηλ. Ανάγκης:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="17" column="0">
+            <widget class="QLineEdit" name="EMAIL">
+             <property name="minimumSize">
+              <size>
+               <width>133</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>133</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">color: &quot;#D1E8E2&quot;;</string>
+             </property>
+            </widget>
+           </item>
+           <item row="17" column="1">
+            <widget class="QLabel" name="label_36">
+             <property name="styleSheet">
+              <string notr="true">color: &quot;#D9B08C&quot;;</string>
+             </property>
+             <property name="text">
+              <string>Email:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="18" column="0">
+            <widget class="QComboBox" name="SPORT">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>10</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>133</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>133</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="layoutDirection">
+              <enum>Qt::LeftToRight</enum>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">color: &quot;#D1E8E2&quot;;</string>
+             </property>
+            </widget>
+           </item>
+           <item row="18" column="1">
+            <widget class="QLabel" name="label_39">
+             <property name="styleSheet">
+              <string notr="true">color: &quot;#D9B08C&quot;;</string>
+             </property>
+             <property name="text">
+              <string>Άθλημα (1):</string>
+             </property>
+            </widget>
+           </item>
+           <item row="19" column="0">
+            <widget class="QComboBox" name="SPORT_1">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>133</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>133</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="layoutDirection">
+              <enum>Qt::LeftToRight</enum>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">color: &quot;#D1E8E2&quot;;</string>
+             </property>
+             <property name="maxVisibleItems">
+              <number>5</number>
+             </property>
+            </widget>
+           </item>
+           <item row="19" column="1">
+            <widget class="QLabel" name="label_38">
+             <property name="styleSheet">
+              <string notr="true">color: &quot;#D9B08C&quot;;</string>
+             </property>
+             <property name="text">
+              <string>Άθλημα (2):</string>
+             </property>
+            </widget>
+           </item>
+           <item row="20" column="0">
+            <widget class="QLineEdit" name="DATE_SUBSCRIBE">
+             <property name="minimumSize">
+              <size>
+               <width>133</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>133</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">color: &quot;#D1E8E2&quot;;</string>
+             </property>
+            </widget>
+           </item>
+           <item row="20" column="1">
+            <widget class="QLabel" name="label_37">
+             <property name="styleSheet">
+              <string notr="true">color: &quot;#D9B08C&quot;;</string>
+             </property>
+             <property name="text">
+              <string>Ημ. Εγγραφής:</string>
+             </property>
+            </widget>
+           </item>
+           <item row="21" column="0">
+            <widget class="QLineEdit" name="BARCODE">
+             <property name="minimumSize">
+              <size>
+               <width>133</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>133</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">color: &quot;#D1E8E2&quot;;</string>
+             </property>
+            </widget>
+           </item>
+           <item row="21" column="1">
+            <widget class="QLabel" name="label_44">
+             <property name="styleSheet">
+              <string notr="true">color: &quot;#D9B08C&quot;;</string>
+             </property>
+             <property name="text">
+              <string>Barcode (1):</string>
+             </property>
+            </widget>
+           </item>
+           <item row="22" column="0">
+            <widget class="QLineEdit" name="BARCODE_1">
+             <property name="minimumSize">
+              <size>
+               <width>133</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>133</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">color: &quot;#D1E8E2&quot;;</string>
+             </property>
+            </widget>
+           </item>
+           <item row="22" column="1">
+            <widget class="QLabel" name="label_41">
+             <property name="styleSheet">
+              <string notr="true">color: &quot;#D9B08C&quot;;</string>
+             </property>
+             <property name="text">
+              <string>Barcode (2):</string>
+             </property>
+            </widget>
+           </item>
+           <item row="23" column="0">
+            <widget class="QLineEdit" name="PAY_DAY">
+             <property name="minimumSize">
+              <size>
+               <width>133</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>133</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">color: &quot;#D1E8E2&quot;;</string>
+             </property>
+            </widget>
+           </item>
+           <item row="23" column="1">
+            <widget class="QLabel" name="label_42">
+             <property name="styleSheet">
+              <string notr="true">color: &quot;#D9B08C&quot;;</string>
+             </property>
+             <property name="text">
+              <string>Ημέρα Πληρωμής:</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <widget class="QLabel" name="add_error_lb">
+           <property name="layoutDirection">
+            <enum>Qt::LeftToRight</enum>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">color: rgb(80, 27, 29);</string>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="wordWrap">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="add_ref_btn">
+           <property name="styleSheet">
+            <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.261364 rgba(44, 53, 50, 255), stop:0.602273 rgba(17, 100, 102, 255), stop:0.98 rgba(217, 176, 140, 255), stop:1 rgba(0, 0, 0, 0));
+color: rgb(255, 255, 255);
+border: 2px  #D9B08C;
+border-radius: 15px;
+border-style: outset;</string>
+           </property>
+           <property name="text">
+            <string>ΚΑΤΑΧΩΡΗΣΗ</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="del_ref_btn">
+           <property name="styleSheet">
+            <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.329545 rgba(46, 17, 20, 255), stop:0.738636 rgba(80, 27, 29, 255), stop:1 rgba(217, 176, 140, 255));
 color: rgb(255, 255, 255);
 border: 2px  #D9B08C;
 border-radius: 10px;
 border-style: outset;</string>
-        </property>
-        <property name="text">
-         <string>ΔΙΑΓΡΑΦΗ</string>
-        </property>
+           </property>
+           <property name="text">
+            <string>ΔΙΑΓΡΑΦΗ</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </widget>
       </widget>
       <widget class="QWidget" name="presenters_page">
@@ -5636,7 +5656,6 @@ border-color: beige;
   <tabstop>BARCODE</tabstop>
   <tabstop>BARCODE_1</tabstop>
   <tabstop>PAY_DAY</tabstop>
-  <tabstop>add_ref_btn</tabstop>
   <tabstop>olpo_rb</tabstop>
   <tabstop>fencing_rb</tabstop>
   <tabstop>tkd_rb</tabstop>

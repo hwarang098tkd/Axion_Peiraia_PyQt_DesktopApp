@@ -428,7 +428,6 @@ class connection:
 
     def eco_data_tree(self):
         result_all = []
-        result_temp = []
         try:
             query = self.str_query('eco_data_tree.sql')
             cursor = self.cnxn.cursor()
@@ -443,6 +442,25 @@ class connection:
         except Exception as e:
             msg = "eco_data_tree: Connection failed"
             print("Error: eco_data_tree: " + str(e))
+        print(str(msg))
+        return result_all
+
+    def eco_analytics(self, year, month):
+        result_all = []
+        try:
+            query = self.str_query('eco_analytics.sql').format(str(year),str(month))
+            cursor = self.cnxn.cursor()
+            cursor.execute(query)
+            rows = cursor.fetchall()
+            for i in rows:
+                result_all.append(i)
+            while (cursor.nextset()):
+                rows = cursor.fetchall()
+                result_all.append(rows[0])
+            msg = "eco_analytics: Connection established"
+        except Exception as e:
+            msg = "eco_analytics: Connection failed"
+            print("Error: eco_analytics: " + str(e))
         print(str(msg))
         return result_all
 

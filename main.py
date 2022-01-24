@@ -91,19 +91,77 @@ class LoginWindow(QMainWindow):
         self.show()
 
     def eco_tree_selected(self):
+        mhnas = '0'
+        etos = '0'
         mhnas_int = 0
         indexes = widgets.eco_treeview.selectedIndexes()
         items = []
-        for index in indexes:
-            items.append(self.model.itemFromIndex(index))
-
+        for index in indexes: items.append(self.model.itemFromIndex(index))
         i=0
         for mhnas in list_greek_months:  #return month to int again in order to call it from SQLSERVER
             if items[0].text() == mhnas:
                 mhnas_int = i
             i+=1
-        print('TreeView selected --> YEAR:', items[0].parent().text(), 'MHNAS:', mhnas_int)
+        try:
+            mhnas = mhnas_int
+            etos = items[0].parent().text()
+            print('TreeView selected --> YEAR:', etos, 'MHNAS:', mhnas)
+        except Exception as e:  #οταν πατει επικεφαλιδα δεν μπορει να βγαλει το parent().text()
+            etos = self.selectedParents()
+            print(etos[0])
 
+        self.eco_tree_create_analyt(etos, mhnas)
+
+
+    def selectedParents(self):
+        parents = set()
+        for index in widgets.eco_treeview.selectedIndexes():
+            while index.parent().isValid():
+                index = index.parent()
+            parents.add(index.sibling(index.row(), 0))
+        return [index.data() for index in sorted(parents)]
+
+    def eco_tree_create_analyt(self, etos, month):
+        self.model2 = QStandardItemModel()
+        self.model2.setHorizontalHeaderLabels(['Στοιχεία', 'Κατηγορία', 'Ποσό', 'Pos'])
+        widgets.eco_treeview_analy.header().setDefaultSectionSize(90)
+        widgets.eco_treeview_analy.header().setDefaultAlignment(Qt.AlignHCenter)
+
+        widgets.eco_treeview_analy.setModel(self.model2)
+        data = []
+        if month==0:
+            pass
+        else:
+            data.append(self.log_in.eco_analytics(etos, month))
+            self.importData_analyt(data)
+            widgets.eco_treeview_analy.expandAll()
+
+    def importData_analyt(self, data):
+
+        text_color = QColor(255, 255, 255)
+        text_color_months = QColor(44, 53, 49)
+        text_color_spends = QColor(129, 0, 0)
+        years_color = QColor(255, 203, 154)
+        self.model2.setRowCount(0)
+        root = self.model2.invisibleRootItem()
+        sport = []
+        for i in data[0]: #create sport list
+            if i[0] not in sport:
+                sport.append(i[0])
+        first_value = data[0][0][0]
+        sport_row = StandardItem(str(first_value), 10,set_bold=True, color=years_color)
+        for i in data[0]:
+            if i[0] != first_value:
+                first_value = i[0]
+                root.appendRow(sport_row)
+                sport_row = StandardItem(str(first_value), 10,set_bold=True, color=years_color)
+
+            names_rows = [StandardItem(i[1], 9, color=text_color_months),
+                           StandardItem(i[2], 9, set_italic=True, color=text_color),
+                           StandardItem(i[3], 9, set_italic=True, color=text_color),
+                           StandardItem(i[8], 8, set_italic=True, color=text_color)]
+            sport_row.appendRow(names_rows)
+        root.appendRow(sport_row)
 
     def eco_tree_create(self):
         self.model = QStandardItemModel()
@@ -120,31 +178,32 @@ class LoginWindow(QMainWindow):
     def importData(self, data):
 
         text_color = QColor(255, 255, 255)
-        text_color1 = QColor(44, 53, 49)
-        text_color2 = QColor(129, 0, 0)
+        text_color_months = QColor(44, 53, 49)
+        text_color_spends = QColor(129, 0, 0)
         years_color = QColor(255, 203, 154)
         self.model.setRowCount(0)
         root = self.model.invisibleRootItem()
         years = []
+
         for i in data[0]: #create years list
             if i[0] not in years:
                 years.append(i[0])
+
         first_value = data[0][0][0]
-        year_row = StandardItem(str(first_value), 12,set_bold=True, color=years_color)
+        year_row =StandardItem(str(first_value), 12,set_bold=True, color=years_color)
         for i in data[0]:
             if i[0] != first_value:
                 first_value = i[0]
                 root.appendRow(year_row)
                 year_row = StandardItem(str(first_value), 12,set_bold=True, color=years_color)
 
-            months_rows = [StandardItem(list_greek_months[i[1]], 12, color=text_color1),
+            months_rows = [StandardItem(list_greek_months[i[1]], 12, color=text_color_months),
                            StandardItem(i[2], 10, set_italic=True, color=text_color),
                            StandardItem(i[3], 10, set_italic=True, color=text_color),
                            StandardItem(i[4], 10, set_italic=True, color=text_color),
-                           StandardItem(i[5], 10, set_italic=True, color=text_color2),
-                           StandardItem(i[6], 10, set_italic=True, color=text_color)]
+                           StandardItem(i[5], 10, set_italic=True, color=text_color_spends),
+                           StandardItem(i[6], 10, set_italic=True, set_bold= True, color=text_color)]
             year_row.appendRow(months_rows)
-            print(i)
         root.appendRow(year_row)
 
     def pos_chechboxChanged(self):
@@ -622,6 +681,8 @@ class LoginWindow(QMainWindow):
             if result == "Connection established":  # succesfull log in
 
                 self.eco_tree_create()
+
+
                 sport_list=[]
                 # REFRESH STASTS
                 self.refresh_stats()
@@ -765,7 +826,7 @@ class LoginWindow(QMainWindow):
                                         x.setFixedHeight(x.height() * 2)
                                     elif str(item[2]) == '1:30:00':
                                         # print('1 and a half hour')
-                                        x.setFixedHeight((x.height() / 2) + x.height())
+                                        x.setFixedHeight(int((x.height()) / 2) + int(x.height()))
                                     x.setStyleSheet(
                                         "background-color: " + color_code + ";border-left: 3px solid #2c3531;border-radius: 4px; ")
 
