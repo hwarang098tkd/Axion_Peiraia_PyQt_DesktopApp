@@ -1,22 +1,26 @@
 import os
-
 import pyodbc
 from datetime import date
 
 
-class connection:
+class Connection:
 
     def __init__(self, username, password):
         self.username = username
         self.password = password
-        global server
-        global database
-        server = 'diaspeiraia2010.hopto.org'
+        #server = 'diaspeiraia2010.hopto.org'
+        server = '192.168.1.100'
         database = 'Axion'
-        self.cnxn = pyodbc.connect(
-            'DRIVER={ODBC Driver 17 for SQL Server};SERVER=' + server +
-            ';DATABASE=' + database + ';UID=' + username + ';PWD=' + password +
-            ';Trusted_Connection=no', timeout=10)
+        try:
+            self.cnxn = pyodbc.connect(
+                'DRIVER={ODBC Driver 17 for SQL Server};SERVER=' + server +
+                ';DATABASE=' + database + ';UID=' + username + ';PWD=' + password +
+                ';Trusted_Connection=no', timeout=10)
+
+        except Exception as e:
+            msg = "Connection failed"
+            print(str(e))
+
     # ####################################
     def login_connection(self):
         try:
@@ -159,26 +163,13 @@ class connection:
         return message
 
     def login_members_add(self, LAST_NAME, FIRST_NAME, FATHER_NAME,
-                          MOTHER_NAME,
-                          BIRTHDATE,
-                          BIRTH_PLACE,
-                          NATIONALITY,
-                          PROFESSION,
-                          ID_NUMBER,
-                          ADDRESS_STREET,
-                          ADDRESS_NUMBER,
-                          REGION,
-                          HOME_PHONE,
-                          MOTHER_PHONE,
-                          FATHER_PHONE,
-                          EMAIL,
-                          SPORT,
-                          DATE_SUBSCRIBE,
-                          EMERG_PHONE,
-                          BARCODE,
-                          CELL_PHONE,
-                          BARCODE_1,
-                          SPORT_1,
+                          MOTHER_NAME, BIRTHDATE, BIRTH_PLACE,
+                          NATIONALITY, PROFESSION, ID_NUMBER,
+                          ADDRESS_STREET, ADDRESS_NUMBER, REGION,
+                          HOME_PHONE, MOTHER_PHONE, FATHER_PHONE,
+                          EMAIL, SPORT, DATE_SUBSCRIBE,
+                          EMERG_PHONE, BARCODE, CELL_PHONE,
+                          BARCODE_1, SPORT_1,
                           PAY_DAY):
         message = ""
         try:
@@ -219,35 +210,34 @@ class connection:
         return message
 
     def login_members_updare(self, original_lastName, original_firstName, LAST_NAME, FIRST_NAME, FATHER_NAME,
-                          MOTHER_NAME,
-                          BIRTHDATE,
-                          BIRTH_PLACE,
-                          NATIONALITY,
-                          PROFESSION,
-                          ID_NUMBER,
-                          ADDRESS_STREET,
-                          ADDRESS_NUMBER,
-                          REGION,
-                          HOME_PHONE,
-                          MOTHER_PHONE,
-                          FATHER_PHONE,
-                          EMAIL,
-                          SPORT,
-                          DATE_SUBSCRIBE,
-                          EMERG_PHONE,
-                          BARCODE,
-                          CELL_PHONE,
-                          BARCODE_1,
-                          SPORT_1,
-                          PAY_DAY):
+                             MOTHER_NAME,
+                             BIRTHDATE,
+                             BIRTH_PLACE,
+                             NATIONALITY,
+                             PROFESSION,
+                             ID_NUMBER,
+                             ADDRESS_STREET,
+                             ADDRESS_NUMBER,
+                             REGION,
+                             HOME_PHONE,
+                             MOTHER_PHONE,
+                             FATHER_PHONE,
+                             EMAIL,
+                             SPORT,
+                             DATE_SUBSCRIBE,
+                             EMERG_PHONE,
+                             BARCODE,
+                             CELL_PHONE,
+                             BARCODE_1,
+                             SPORT_1,
+                             PAY_DAY):
         message = ""
         try:
             query = "UPDATE [dbo].[Data] SET [LAST_NAME] = '" + LAST_NAME + "',[FIRST_NAME] =  '" + FIRST_NAME + "',[FATHER_NAME] = '" + FATHER_NAME + "',[MOTHER_NAME] = '" + MOTHER_NAME + "'" \
-                  ",[BIRTHDATE] = '" + BIRTHDATE + "',[BIRTH_PLACE] = '" + BIRTH_PLACE + "',[NATIONALITY] = '" + NATIONALITY + "',[PROFESSION] = '" + PROFESSION + "',[ID_NUMBER] = '" + ID_NUMBER + "'" \
-                  ",[ADDRESS_STREET] = '" + ADDRESS_STREET + "',[ADDRESS_NUMBER] = '" + ADDRESS_NUMBER + "',[REGION] = '" + REGION + "',[HOME_PHONE] = '" + HOME_PHONE + "',[MOTHER_PHONE] = '" + MOTHER_PHONE + "'" \
-                  ",[FATHER_PHONE] = '" + FATHER_PHONE + "',[EMAIL] = '" + EMAIL + "',[SPORT] ='" + SPORT + "',[DATE_SUBSCRIBE] = '" + DATE_SUBSCRIBE + "',[EMERG_PHONE] = '" + EMERG_PHONE + "'" \
-                  ",[BARCODE] = '" + BARCODE + "',[CELL_PHONE] = '" + CELL_PHONE + "',[BARCODE_1] = '" + BARCODE_1 + "',[SPORT_1] = '" + SPORT_1 + "', [PAY_DAY] ='" + PAY_DAY + "' WHERE LAST_NAME= '" + original_lastName + "' and FIRST_NAME= '" + original_firstName + "'"
-
+                                                                                                                                                                                             ",[BIRTHDATE] = '" + BIRTHDATE + "',[BIRTH_PLACE] = '" + BIRTH_PLACE + "',[NATIONALITY] = '" + NATIONALITY + "',[PROFESSION] = '" + PROFESSION + "',[ID_NUMBER] = '" + ID_NUMBER + "'" \
+                                                                                                                                                                                                                                                                                                                                                                                ",[ADDRESS_STREET] = '" + ADDRESS_STREET + "',[ADDRESS_NUMBER] = '" + ADDRESS_NUMBER + "',[REGION] = '" + REGION + "',[HOME_PHONE] = '" + HOME_PHONE + "',[MOTHER_PHONE] = '" + MOTHER_PHONE + "'" \
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               ",[FATHER_PHONE] = '" + FATHER_PHONE + "',[EMAIL] = '" + EMAIL + "',[SPORT] ='" + SPORT + "',[DATE_SUBSCRIBE] = '" + DATE_SUBSCRIBE + "',[EMERG_PHONE] = '" + EMERG_PHONE + "'" \
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           ",[BARCODE] = '" + BARCODE + "',[CELL_PHONE] = '" + CELL_PHONE + "',[BARCODE_1] = '" + BARCODE_1 + "',[SPORT_1] = '" + SPORT_1 + "', [PAY_DAY] ='" + PAY_DAY + "' WHERE LAST_NAME= '" + original_lastName + "' and FIRST_NAME= '" + original_firstName + "'"
 
             cursor = self.cnxn.cursor()
             cursor.execute(query)
@@ -295,7 +285,7 @@ class connection:
             cursor.execute(query)
             rows = cursor.fetchall()
             for i in rows:
-                result_month.append(list_greek_months[i[0]-1])
+                result_month.append(list_greek_months[i[0] - 1])
 
             result_all.append(result_month)
 
@@ -354,7 +344,7 @@ class connection:
             cursor = self.cnxn.cursor()
             cursor.execute(query)
             rows = cursor.fetchall()
-            result= str(rows[0][0])
+            result = str(rows[0][0])
             msg = "get_amount: Connection established"
         except Exception as e:
             msg = "get_amount: Connection failed"
@@ -397,7 +387,8 @@ class connection:
     def login_eco_INSERT(self, name, descr, amount, in_out, datenew, cat_id, catsub_id, pos):
         result = ''
         try:
-            query = self.str_query('eco_insert.sql').format(name, descr, amount, in_out, datenew, cat_id, catsub_id, pos)
+            query = self.str_query('eco_insert.sql').format(name, descr, amount, in_out, datenew, cat_id, catsub_id,
+                                                            pos)
             cursor = self.cnxn.cursor()
             cursor.execute(query)
             self.cnxn.commit()
@@ -413,7 +404,8 @@ class connection:
     def login_eco_UPDATE(self, descr, amount, in_out, pos, name, cat_id, catsub_id, datenew):
         result = ''
         try:
-            query = self.str_query('eco_update.sql').format(descr, amount, in_out, pos, name, cat_id, catsub_id, datenew)
+            query = self.str_query('eco_update.sql').format(descr, amount, in_out, pos, name, cat_id, catsub_id,
+                                                            datenew)
             cursor = self.cnxn.cursor()
             cursor.execute(query)
             self.cnxn.commit()
@@ -448,7 +440,7 @@ class connection:
     def eco_analytics(self, year, month):
         result_all = []
         try:
-            query = self.str_query('eco_analytics.sql').format(str(year),str(month))
+            query = self.str_query('eco_analytics.sql').format(str(year), str(month))
             cursor = self.cnxn.cursor()
             cursor.execute(query)
             rows = cursor.fetchall()

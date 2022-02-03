@@ -1,19 +1,18 @@
 import datetime
-from collections import deque
 from PyQt5.QtChart import QBarSet, QBarSeries, QChart, QBarCategoryAxis, QChartView, QValueAxis
-from PyQt5 import QtCore
 from PyQt5.QtGui import *
 from PyQt5.QtWidgets import *
-from PyQt5.QtCore import Qt, QRect, QPropertyAnimation, QParallelAnimationGroup, QDate, QObject, QRunnable, pyqtSlot, \
-    QThreadPool, QRegExp
-
-from login_main import Ui_MainWindow
+from PyQt5.QtCore import Qt, QRect, QPropertyAnimation, QParallelAnimationGroup, QDate
+import pyautogui
+from main_UI import Ui_MainWindow
 import google_calendar
 import sys
-import login_query
+from connection_sql import Connection
 
 global list_greek_months
-list_greek_months = ["0", "Ιαν", "Φεβρ", "Μαρτ", "Απρ", "Μαιος", "Ιουν", "Ιουλ", "Αυγ", "Σεπτ", "Οκτ", "Νοε", "Δεκ"]
+
+list_greek_months = ["0", "Ιαν", "Φεβρ", "Μαρτ", "Απρ", "Μαιος",
+                     "Ιουν", "Ιουλ", "Αυγ", "Σεπτ", "Οκτ", "Νοε", "Δεκ"]
 
 
 class LoginWindow(QMainWindow):
@@ -27,18 +26,28 @@ class LoginWindow(QMainWindow):
         buttons_style = "QToolTip { background-color: black } QPushButton { border-left: 5px solid #88b1b2; border-radius: 13px 0px 0px 13px; background-color: #116466} "
         global widgets
         widgets = self.ui
+        self.percent_screen = 95
+        self.screen_width, self.screen_height = pyautogui.size()
+        print(f" Primary Display Resolution: W ( {self.screen_width} ),H ( {self.screen_height} )")
+        # η απολυτη θεση που ξεκιναει το login window στην οθονη
         global start_pos_x
-        start_pos_x = 150
+        start_pos_x = 50
         global start_pro_y
-        start_pro_y = 150
+        start_pro_y = 50
 
-        self.threadpool = QThreadPool()
         self.baseHeight = 369
         self.extendedHeight = 400
         self.rect = QRect(start_pos_x, start_pro_y, 320, self.baseHeight)
+        ### απαραιτητο για να παει στο κεντρο
+        global centerPoint
+        centerPoint = QDesktopWidget().availableGeometry().center()
+        self.rect.moveCenter(centerPoint)
+        ###
         self.setGeometry(self.rect)
+
         # this will hide the title bar
         self.setWindowFlag(Qt.FramelessWindowHint)
+
         widgets.toggle_bt.clicked.connect(self.buttonClick)
         widgets.home_bt.clicked.connect(self.buttonClick)
         widgets.taek_bt.clicked.connect(self.buttonClick)
@@ -80,7 +89,7 @@ class LoginWindow(QMainWindow):
         widgets.add_erco_btn.clicked.connect(self.add_erco_pressed)
         widgets.pay_amount_tb.textEdited.connect(self.pay_amountChange)
         widgets.pos_chechbox.stateChanged.connect(self.pos_chechboxChanged)
-        widgets.pay_amount_tb.setValidator(QIntValidator()) #  just to accept only numbers
+        widgets.pay_amount_tb.setValidator(QIntValidator())  # just to accept only numbers
         ####################################################
         widgets.eco_treeview.clicked.connect(self.eco_tree_selected)
 
@@ -90,6 +99,116 @@ class LoginWindow(QMainWindow):
         widgets.home_bt.setStyleSheet(buttons_style)
         self.show()
 
+    def pressed(self):  # login button CLICKED
+
+        if (widgets.user_tb.text() == "" or widgets.user_tb.text() == "Username") and (
+                widgets.pass_tb.text() == "" or widgets.pass_tb.text() == "Password"):
+            widgets.info_lb.setText("No username and password")
+            print("No username and password inserted")
+        elif widgets.user_tb.text() == "" or widgets.user_tb.text() == "Username":
+            widgets.info_lb.setText("no username")
+            print("No username inserted")
+        elif widgets.pass_tb.text() == "" or widgets.pass_tb.text() == "Password":
+            print("No password inserted")
+            widgets.info_lb.setText("no password")
+        else:
+            widgets.info_lb.setText("")
+            widgets.info_lb.setStyleSheet("color: white")
+            self.log_in = Connection(widgets.user_tb.text(), widgets.pass_tb.text())
+            result = self.log_in.login_connection()
+            self.refresh_calendar()  # refresh calendar
+            widgets.info_lb.setText(result)
+
+            if result == "Connection established":  # succesfull log in
+
+                self.eco_tree_create()
+                sport_list = []
+                # REFRESH STASTS
+                self.refresh_stats()
+                self.chart_all_create()
+                self.build_chart()
+                years = self.log_in.login_list_ofYears()
+                widgets.chart_years_ccb.addItems(years)
+                widgets.eco_name_cbb.addItems(self.members_list)
+                #######################################################
+                widgets.eco_gen_cbb.addItem('Επιλέξτε κατηγορία')
+                widgets.eco_sub_cbb.addItem('Επιλέξτε κατηγορία')
+                sport_list = self.log_in.login_sports_list()
+                widgets.SPORT.addItems(sport_list)
+                widgets.SPORT_1.addItems(sport_list)
+                # widgets.eco_gen_cbb.addItems(gen_cat_eco)
+                # widgets.eco_sub_cbb.addItems(sub_cat_eco)
+                # Re-COLOR MAIN TOOLBAR
+                widgets.maintoolbar_fm.setStyleSheet("background-color: \'#0d5051\';")
+                # Re-COLOR MAIN BOT TOOLBAR
+                widgets.maintoolbarBot_fm.setStyleSheet("background-color: \'#0d5051\';")
+
+                animation_time = 300
+                end_width = int((self.screen_width * self.percent_screen) / 100)
+                end_height = int((self.screen_height * self.percent_screen) / 100)
+
+                start_pos_xx = int((self.screen_width - end_width) / 2)
+                start_pro_yy = int((self.screen_height - end_height) / 2)
+                print(end_height, end_width, start_pos_xx, start_pro_yy)
+
+                # ANIMATION WINDOW
+                self.main_window = QPropertyAnimation(self, b'geometry')
+                self.main_window.setDuration(animation_time + 200)
+                self.main_window.setStartValue(QRect(start_pos_xx, start_pro_yy, 320, 369))
+                self.main_window.setEndValue(QRect(start_pos_xx, start_pro_yy, end_width, end_height))
+
+                # ANIMATION MAIN TOOLBAR FRAME
+                self.maintoolbar_fm = QPropertyAnimation(self.ui.maintoolbar_fm, b'geometry')
+                self.maintoolbar_fm.setDuration(animation_time)
+                self.maintoolbar_fm.setStartValue(QRect(0, 0, 20, 35))
+                self.maintoolbar_fm.setEndValue(QRect(0, 0, end_width, 35))
+
+                # ANIMATION MAIN BOT TOOLBAR FRAME
+                self.maintoolbarBot_fm = QPropertyAnimation(self.ui.maintoolbarBot_fm, b'geometry')
+                self.maintoolbarBot_fm.setDuration(animation_time)
+                self.maintoolbarBot_fm.setStartValue(QRect(0, end_height - 35, 20, 35))
+                self.maintoolbarBot_fm.setEndValue(QRect(0, end_height - 35, end_width, 35))
+
+                # ANIMATION LOGIN FRAME
+                self.basic_fm_1 = QPropertyAnimation(self.ui.login_fm, b'geometry')
+                self.basic_fm_1.setDuration(animation_time)
+                self.basic_fm_1.setStartValue(QRect(0, 0, 320, 369))
+                self.basic_fm_1.setEndValue(QRect(0, 0, 60, end_height))
+
+                # ANIMATION MAIN FRAME
+                self.basic_fm_2 = QPropertyAnimation(self.ui.main_fm, b'geometry')
+                self.basic_fm_2.setDuration(animation_time)
+                self.basic_fm_2.setStartValue(QRect(0, 0, 300, 369))
+                self.basic_fm_2.setEndValue(QRect(0, 0, end_width, end_height))
+
+                # ANIMATION PAGE FRAME
+                self.pageContainer = QPropertyAnimation(self.ui.pageContainer, b'geometry')
+                self.pageContainer.setDuration(animation_time)
+                self.pageContainer.setStartValue(QRect(0, 0, 0, 0))
+                self.pageContainer.setEndValue(QRect(45, 35, end_width - 50, int(end_height - 2.5 * 35)))
+
+                # ANIMATION STACKEDWIDGET FRAME
+                self.stackedWidget = QPropertyAnimation(self.ui.stackedWidget, b'geometry')
+                self.stackedWidget.setDuration(animation_time)
+                self.stackedWidget.setStartValue(QRect(0, 0, 0, 0))
+                self.stackedWidget.setEndValue(QRect(20, 10, end_width, int(end_height - 3 * 35)))
+
+                # GROUP ANIMATIONeco_table_lout
+                self.group = QParallelAnimationGroup()
+                self.group.addAnimation(self.main_window)
+                self.group.addAnimation(self.maintoolbar_fm)
+                self.group.addAnimation(self.maintoolbarBot_fm)
+                self.group.addAnimation(self.basic_fm_1)
+                self.group.addAnimation(self.basic_fm_2)
+                self.group.addAnimation(self.pageContainer)
+                self.group.addAnimation(self.stackedWidget)
+                # self.group.addAnimation(self.eco_table_lout)
+                self.group.start()
+
+                self.ui.eco_table_lout.setGeometry(QRect(0, -50, int(end_width * 0.92), int(end_height * 0.38)))
+
+                widgets.toolBar_fm.show()
+
     def eco_tree_selected(self):
         mhnas = '0'
         etos = '0'
@@ -97,21 +216,20 @@ class LoginWindow(QMainWindow):
         indexes = widgets.eco_treeview.selectedIndexes()
         items = []
         for index in indexes: items.append(self.model.itemFromIndex(index))
-        i=0
-        for mhnas in list_greek_months:  #return month to int again in order to call it from SQLSERVER
+        i = 0
+        for mhnas in list_greek_months:  # return month to int again in order to call it from SQLSERVER
             if items[0].text() == mhnas:
                 mhnas_int = i
-            i+=1
+            i += 1
         try:
             mhnas = mhnas_int
             etos = items[0].parent().text()
             print('TreeView selected --> YEAR:', etos, 'MHNAS:', mhnas)
-        except Exception as e:  #οταν πατει επικεφαλιδα δεν μπορει να βγαλει το parent().text()
+        except Exception as e:  # οταν πατει επικεφαλιδα δεν μπορει να βγαλει το parent().text()
             etos = self.selectedParents()
             print(etos[0])
 
         self.eco_tree_create_analyt(etos, mhnas)
-
 
     def selectedParents(self):
         parents = set()
@@ -123,17 +241,20 @@ class LoginWindow(QMainWindow):
 
     def eco_tree_create_analyt(self, etos, month):
         self.model2 = QStandardItemModel()
-        self.model2.setHorizontalHeaderLabels(['Στοιχεία', 'Κατηγορία', 'Ποσό', 'Pos'])
-        widgets.eco_treeview_analy.header().setDefaultSectionSize(90)
-        widgets.eco_treeview_analy.header().setDefaultAlignment(Qt.AlignHCenter)
+        self.model2.setHorizontalHeaderLabels(['Στοιχεία', 'Κατηγορία', 'Ποσό', 'Pos', 'Id'])
 
+        widgets.eco_treeview_analy.header().setDefaultSectionSize(90)
+        widgets.eco_treeview_analy.header().setDefaultAlignment(Qt.AlignLeft)
         widgets.eco_treeview_analy.setModel(self.model2)
         data = []
-        if month==0:
+        if month == 0:
             pass
         else:
             data.append(self.log_in.eco_analytics(etos, month))
+
             self.importData_analyt(data)
+
+
             widgets.eco_treeview_analy.expandAll()
 
     def importData_analyt(self, data):
@@ -145,22 +266,58 @@ class LoginWindow(QMainWindow):
         self.model2.setRowCount(0)
         root = self.model2.invisibleRootItem()
         sport = []
-        for i in data[0]: #create sport list
+        for i in data[0]:  # create sport list
             if i[0] not in sport:
                 sport.append(i[0])
         first_value = data[0][0][0]
-        sport_row = StandardItem(str(first_value), 10,set_bold=True, color=years_color)
+        sport_row = StandardItem(str(first_value), 10, set_bold=True, color=years_color)
+        str_len = [0, 0, 0, 0, 0]
         for i in data[0]:
             if i[0] != first_value:
                 first_value = i[0]
                 root.appendRow(sport_row)
-                sport_row = StandardItem(str(first_value), 10,set_bold=True, color=years_color)
+                sport_row = StandardItem(str(first_value), 10, set_bold=True, color=years_color)
 
-            names_rows = [StandardItem(i[1], 9, color=text_color_months),
-                           StandardItem(i[2], 9, set_italic=True, color=text_color),
-                           StandardItem(i[3], 9, set_italic=True, color=text_color),
-                           StandardItem(i[8], 8, set_italic=True, color=text_color)]
+            if i[1] != None:
+                if isinstance(i[1], str):
+                    if len(i[1]) > str_len[0]:
+                        str_len[0] = len(i[1].strip())
+                else:
+                    str_len[0] = 2
+            if i[2] != None:
+                if isinstance(i[2], str) :
+                    if len(i[2]) > str_len[1]:
+                        str_len[1] = len(i[2].strip())
+                else:
+                    str_len[1] = 2
+            if i[3] != None:
+                if isinstance(i[3], str):
+                    if len(i[3]) > str_len[2]:
+                        str_len[2] = len(i[3].strip())
+                else:
+                    str_len[2] = 2
+            if i[8] != None:
+                if isinstance(i[8], str):
+                    if len(i[8]) > str_len[3]:
+                        str_len[3] = len(i[8].strip())
+                else:
+                    str_len[3] = 2
+            if i[9] != None:
+                if isinstance(i[9], str):
+                    if len(i[9]) > str_len[4]:
+                        str_len[4] = len(i[9].strip())
+                else:
+                    str_len[4] = 2
+
+            names_rows = [StandardItem(i[1], 9, color=text_color_months, set_Text_Alignment=Qt.AlignLeft),
+                          StandardItem(i[2], 9, set_italic=True, color=text_color, set_Text_Alignment=Qt.AlignLeft),
+                          StandardItem(i[3], 9, set_italic=True, color=text_color, set_Text_Alignment=Qt.AlignCenter),
+                          StandardItem(i[8], 8, set_italic=True, color=text_color, set_Text_Alignment=Qt.AlignCenter),
+                          StandardItem(i[9], 8, set_italic=True, color=text_color, set_Text_Alignment=Qt.AlignCenter)]
             sport_row.appendRow(names_rows)
+        # bazei se olew tiw kolones platos
+        for i in range(self.model2.columnCount()):
+            widgets.eco_treeview_analy.setColumnWidth(i, str_len[i]*10)
         root.appendRow(sport_row)
 
     def eco_tree_create(self):
@@ -185,24 +342,24 @@ class LoginWindow(QMainWindow):
         root = self.model.invisibleRootItem()
         years = []
 
-        for i in data[0]: #create years list
+        for i in data[0]:  # create years list
             if i[0] not in years:
                 years.append(i[0])
 
         first_value = data[0][0][0]
-        year_row =StandardItem(str(first_value), 12,set_bold=True, color=years_color)
+        year_row = StandardItem(str(first_value), 12, set_bold=True, color=years_color)
         for i in data[0]:
             if i[0] != first_value:
                 first_value = i[0]
                 root.appendRow(year_row)
-                year_row = StandardItem(str(first_value), 12,set_bold=True, color=years_color)
+                year_row = StandardItem(str(first_value), 12, set_bold=True, color=years_color)
 
             months_rows = [StandardItem(list_greek_months[i[1]], 12, color=text_color_months),
                            StandardItem(i[2], 10, set_italic=True, color=text_color),
                            StandardItem(i[3], 10, set_italic=True, color=text_color),
                            StandardItem(i[4], 10, set_italic=True, color=text_color),
                            StandardItem(i[5], 10, set_italic=True, color=text_color_spends),
-                           StandardItem(i[6], 10, set_italic=True, set_bold= True, color=text_color)]
+                           StandardItem(i[6], 10, set_italic=True, set_bold=True, color=text_color)]
             year_row.appendRow(months_rows)
         root.appendRow(year_row)
 
@@ -211,12 +368,12 @@ class LoginWindow(QMainWindow):
 
     def pay_amountChange(self):
         message = ''
-        if widgets.pay_amount_tb.text() != '': # τα περισοτερα ειναι περιττα γιατι εβαλα στο editline το QIntValidator()
+        if widgets.pay_amount_tb.text() != '':  # τα περισοτερα ειναι περιττα γιατι εβαλα στο editline το QIntValidator()
             if widgets.pay_amount_tb.text().isdigit():
                 if int(widgets.pay_amount_tb.text()) <= 0:
                     message = 'Καταχωρήστε το ποσό !!!'
                     widgets.add_erco_btn.setEnabled(False)
-                    print ("amount error")
+                    print("amount error")
                 else:
                     widgets.add_erco_btn.setEnabled(True)
                     message = "Πατήστε καταχώρηση ..."
@@ -228,7 +385,7 @@ class LoginWindow(QMainWindow):
         else:
             message = 'Καταχωρήστε ποσό !!!'
             widgets.add_erco_btn.setEnabled(False)
-            print ("amount is empty")
+            print("amount is empty")
         widgets.add_eco_lb.setText(message)
 
     def add_erco_pressed(self):
@@ -242,21 +399,21 @@ class LoginWindow(QMainWindow):
             pos = 'NO'
 
         name = widgets.eco_name_cbb.currentText()
-        descr = widgets.eco_descr.text().replace("'",'')
+        descr = widgets.eco_descr.text().replace("'", '')
         date_str = widgets.calendarWidget.selectedDate().toString('yyyy-MM-dd')
         eco_cat = widgets.eco_gen_cbb.currentText()
         eco_sub = widgets.eco_sub_cbb.currentText()
         amount = widgets.pay_amount_tb.text()
         exists_or_not = self.log_in.login_eco_check(name, eco_cat, eco_sub, date_str)
         print(exists_or_not)
-        if exists_or_not == 'not_exist': # τοτε δεν υπαρχει εγγραφη για την ημερ, κατ, υποκατηγ σε σχεση με το ονομα και θα κανει insert
+        if exists_or_not == 'not_exist':  # τοτε δεν υπαρχει εγγραφη για την ημερ, κατ, υποκατηγ σε σχεση με το ονομα και θα κανει insert
             message = self.log_in.login_eco_INSERT(name, descr, amount, in_out, date_str, eco_cat, eco_sub, pos)
         else:  # update
-            message = self.log_in.login_eco_UPDATE(descr, amount, in_out, pos, name, eco_cat, eco_sub,date_str)
+            message = self.log_in.login_eco_UPDATE(descr, amount, in_out, pos, name, eco_cat, eco_sub, date_str)
         widgets.add_eco_lb.setText(message)
         print(name, date_str, eco_cat, eco_sub, amount)
 
-    def outcomeChange(self): # οταν επιλεγετε το εξοδα τοτε ψαχνει το ΑΓΣ ΑΞΙΟΝ ΠΕΙΡΑΙΑ και το επιλέγει
+    def outcomeChange(self):  # οταν επιλεγετε το εξοδα τοτε ψαχνει το ΑΓΣ ΑΞΙΟΝ ΠΕΙΡΑΙΑ και το επιλέγει
         index = widgets.eco_name_cbb.findText('ΑΓΣ ΑΞΙΟΝ', Qt.MatchContains)
         print(index)
         if index >= 0:
@@ -273,7 +430,7 @@ class LoginWindow(QMainWindow):
         global eco_gen
 
         eco_gen = self.log_in.login_economics_categ()
-        if widgets.eco_name_cbb.currentIndex() != 0 and widgets.eco_name_cbb.count() >1 :
+        if widgets.eco_name_cbb.currentIndex() != 0 and widgets.eco_name_cbb.count() > 1:
             widgets.eco_gen_cbb.setEnabled(True)
             # widgets.eco_sub_cbb.setEnabled(True)
             widgets.eco_gen_cbb.clear()
@@ -292,11 +449,11 @@ class LoginWindow(QMainWindow):
             widgets.pay_amount_tb.setEnabled(False)
             widgets.add_erco_btn.setEnabled(False)
             widgets.eco_descr.setEnabled(False)
-            #widgets.pay_amount_tb.setStyleSheet('border: 1px solid #2c3531;')
+            # widgets.pay_amount_tb.setStyleSheet('border: 1px solid #2c3531;')
 
     def eco_gen_cbbChange(self):
         sub_cat_eco = []
-        if widgets.eco_gen_cbb.currentIndex() != 0 and widgets.eco_gen_cbb.count() >1:
+        if widgets.eco_gen_cbb.currentIndex() != 0 and widgets.eco_gen_cbb.count() > 1:
             widgets.eco_sub_cbb.setEnabled(True)
             widgets.eco_sub_cbb.clear()
             widgets.eco_sub_cbb.addItem('Επιλέξτε κατηγορία')
@@ -336,8 +493,8 @@ class LoginWindow(QMainWindow):
             widgets.pay_amount_tb.setEnabled(False)
             widgets.pay_amount_tb.clear()
 
-    def chart_all_create(self): # δηυμιουργει το διαγραμμα με τις ετησιες τιμες
-        log_in = login_query.connection(widgets.user_tb.text(), widgets.pass_tb.text())
+    def chart_all_create(self):  # δηυμιουργει το διαγραμμα με τις ετησιες τιμες
+        log_in = Connection(widgets.user_tb.text(), widgets.pass_tb.text())
         results_eco = log_in.login_chart_year_all()
         self.set0 = QBarSet("Έτη")
         self.series_all = QBarSeries()
@@ -476,8 +633,8 @@ class LoginWindow(QMainWindow):
         reply_box = QMessageBox.warning(self, 'Διαγραφή', 'Θέλετε σίγορα να διαγράψετε αυτό το μέλος;',
                                         QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
         if reply_box == QMessageBox.Yes:
-            result_del = login_query.connection.login_name_delete(self, widgets.LAST_NAME.text(),
-                                                                  widgets.FIRST_NAME.text())
+            result_del = Connection.login_name_delete(self, widgets.LAST_NAME.text(),
+                                                      widgets.FIRST_NAME.text())
             widgets.add_error_lb.setText(result_del)
             self.new_btn()
             self.radio_refresh()
@@ -516,39 +673,39 @@ class LoginWindow(QMainWindow):
                     error_msg = error_msg + ", Άθλημα "
                     widgets.SPORT.setStyleSheet(error_color)
             else:  # παει για ελεγχο διπλογραφης
-                result = login_query.connection.login_name_ifexists(self,
-                                                                    widgets.LAST_NAME.text(),
-                                                                    widgets.FIRST_NAME.text(),
-                                                                    widgets.FATHER_NAME.text())
+                result = Connection.login_name_ifexists(self,
+                                                        widgets.LAST_NAME.text(),
+                                                        widgets.FIRST_NAME.text(),
+                                                        widgets.FATHER_NAME.text())
                 print("Exists result: " + result)
                 if result == "exists":
                     error_msg = "Υπάρχει μέλος με αυτά τα στοιχεία !!!"
                 elif result == "go_to_add":
-                    error_msg = login_query.connection.login_members_add(self,
-                                                                         widgets.LAST_NAME.text(),
-                                                                         widgets.FIRST_NAME.text(),
-                                                                         widgets.FATHER_NAME.text(),
-                                                                         widgets.MOTHER_NAME.text(),
-                                                                         widgets.BIRTHDATE.text(),
-                                                                         widgets.BIRTH_PLACE.text(),
-                                                                         widgets.NATIONALITY.text(),
-                                                                         widgets.PROFESSION.text(),
-                                                                         widgets.ID_NUMBER.text(),
-                                                                         widgets.ADDRESS_STREET.text(),
-                                                                         widgets.ADDRESS_NUMBER.text(),
-                                                                         widgets.REGION.text(),
-                                                                         widgets.HOME_PHONE.text(),
-                                                                         widgets.MOTHER_PHONE.text(),
-                                                                         widgets.FATHER_PHONE.text(),
-                                                                         widgets.EMAIL.text(),
-                                                                         widgets.SPORT.currentText(),
-                                                                         widgets.DATE_SUBSCRIBE.text(),
-                                                                         widgets.EMERG_PHONE.text(),
-                                                                         widgets.BARCODE.text(),
-                                                                         widgets.CELL_PHONE.text(),
-                                                                         widgets.BARCODE_1.text(),
-                                                                         widgets.SPORT_1.currentText(),
-                                                                         widgets.PAY_DAY.text())
+                    error_msg = Connection.login_members_add(self,
+                                                             widgets.LAST_NAME.text(),
+                                                             widgets.FIRST_NAME.text(),
+                                                             widgets.FATHER_NAME.text(),
+                                                             widgets.MOTHER_NAME.text(),
+                                                             widgets.BIRTHDATE.text(),
+                                                             widgets.BIRTH_PLACE.text(),
+                                                             widgets.NATIONALITY.text(),
+                                                             widgets.PROFESSION.text(),
+                                                             widgets.ID_NUMBER.text(),
+                                                             widgets.ADDRESS_STREET.text(),
+                                                             widgets.ADDRESS_NUMBER.text(),
+                                                             widgets.REGION.text(),
+                                                             widgets.HOME_PHONE.text(),
+                                                             widgets.MOTHER_PHONE.text(),
+                                                             widgets.FATHER_PHONE.text(),
+                                                             widgets.EMAIL.text(),
+                                                             widgets.SPORT.currentText(),
+                                                             widgets.DATE_SUBSCRIBE.text(),
+                                                             widgets.EMERG_PHONE.text(),
+                                                             widgets.BARCODE.text(),
+                                                             widgets.CELL_PHONE.text(),
+                                                             widgets.BARCODE_1.text(),
+                                                             widgets.SPORT_1.currentText(),
+                                                             widgets.PAY_DAY.text())
                     if error_msg == "Επιτυχία καταχώρησης !!!":
                         widgets.add_error_lb.setStyleSheet('color: "#D9B08C";')
         elif widgets.add_ref_btn.text() == "ΕΝΗΜΕΡΩΣΗ":
@@ -658,95 +815,6 @@ class LoginWindow(QMainWindow):
             widgets.stackedWidget.setCurrentWidget(widgets.menbers_page)
             resetStyle(self, btnName)
             btn.setStyleSheet(buttons_style)
-
-    def pressed(self):
-        if (widgets.user_tb.text() == "" or widgets.user_tb.text() == "Username") and (
-                widgets.pass_tb.text() == "" or widgets.pass_tb.text() == "Password"):
-            widgets.info_lb.setText("No username and password")
-            print("No username and password inserted")
-        elif widgets.user_tb.text() == "" or widgets.user_tb.text() == "Username":
-            widgets.info_lb.setText("no username")
-            print("No username inserted")
-        elif widgets.pass_tb.text() == "" or widgets.pass_tb.text() == "Password":
-            print("No password inserted")
-            widgets.info_lb.setText("no password")
-        else:
-            widgets.info_lb.setText("")
-            widgets.info_lb.setStyleSheet("color: white")
-            self.log_in = login_query.connection(widgets.user_tb.text(), widgets.pass_tb.text())
-            result = self.log_in.login_connection()
-            self.refresh_calendar()  # refresh calendar
-            widgets.info_lb.setText(result)
-
-            if result == "Connection established":  # succesfull log in
-
-                self.eco_tree_create()
-
-
-                sport_list=[]
-                # REFRESH STASTS
-                self.refresh_stats()
-                self.chart_all_create()
-                self.build_chart()
-                years = self.log_in.login_list_ofYears()
-                widgets.chart_years_ccb.addItems(years)
-                widgets.eco_name_cbb.addItems(self.members_list)
-                #######################################################
-                widgets.eco_gen_cbb.addItem('Επιλέξτε κατηγορία')
-                widgets.eco_sub_cbb.addItem('Επιλέξτε κατηγορία')
-                sport_list = self.log_in .login_sports_list()
-                widgets.SPORT.addItems(sport_list)
-                widgets.SPORT_1.addItems(sport_list)
-                # widgets.eco_gen_cbb.addItems(gen_cat_eco)
-                # widgets.eco_sub_cbb.addItems(sub_cat_eco)
-                # Re-COLOR MAIN TOOLBAR
-                widgets.maintoolbar_fm.setStyleSheet("background-color: \'#0d5051\';")
-                # Re-COLOR MAIN BOT TOOLBAR
-                widgets.maintoolbarBot_fm.setStyleSheet("background-color: \'#0d5051\';")
-
-                animation_time = 300
-                end_height = 800
-                end_width = 1050
-                # ANIMATION WINDOW
-                self.main_window = QPropertyAnimation(self, b'geometry')
-                self.main_window.setDuration(animation_time + 200)
-                self.main_window.setStartValue(QRect(start_pos_x, start_pro_y, 320, 369))
-                self.main_window.setEndValue(QRect(start_pos_x, start_pro_y, end_width, end_height))
-
-                # ANIMATION MAIN TOOLBAR FRAME
-                self.maintoolbar_fm = QPropertyAnimation(self.ui.maintoolbar_fm, b'geometry')
-                self.maintoolbar_fm.setDuration(animation_time)
-                self.maintoolbar_fm.setStartValue(QRect(0, 0, 1111, 35))
-                self.maintoolbar_fm.setEndValue(QRect(0, 0, end_width, 35))
-
-                # ANIMATION MAIN BOT TOOLBAR FRAME
-                self.maintoolbarBot_fm = QPropertyAnimation(self.ui.maintoolbarBot_fm, b'geometry')
-                self.maintoolbarBot_fm.setDuration(animation_time)
-                self.maintoolbarBot_fm.setStartValue(QRect(0, 800 - 35, 1111, 35))
-                self.maintoolbarBot_fm.setEndValue(QRect(0, 800 - 35, end_width, 35))
-
-                # ANIMATION LOGIN FRAME
-                self.basic_fm_1 = QPropertyAnimation(self.ui.login_fm, b'geometry')
-                self.basic_fm_1.setDuration(animation_time)
-                self.basic_fm_1.setStartValue(QRect(0, 0, 320, 369))
-                self.basic_fm_1.setEndValue(QRect(0, 0, 60, end_height))
-
-                # ANIMATION MAIN FRAME
-                self.basic_fm_2 = QPropertyAnimation(self.ui.main_fm, b'geometry')
-                self.basic_fm_2.setDuration(animation_time)
-                self.basic_fm_2.setStartValue(QRect(0, 0, 300, 369))
-                self.basic_fm_2.setEndValue(QRect(0, 0, end_width, end_height))
-
-                # GROUP ANIMATION
-                self.group = QParallelAnimationGroup()
-                self.group.addAnimation(self.main_window)
-                self.group.addAnimation(self.maintoolbar_fm)
-                self.group.addAnimation(self.maintoolbarBot_fm)
-                self.group.addAnimation(self.basic_fm_1)
-                self.group.addAnimation(self.basic_fm_2)
-                self.group.start()
-                ######################################################
-                widgets.toolBar_fm.show()
 
     def refresh_calendar(self):
         calendar_list = []
@@ -936,13 +1004,13 @@ class LoginWindow(QMainWindow):
         widgets.PAY_DAY.setText(str(list[0][24]))
 
     def keyPressEvent(self, qKeyEvent):  # αναγνωριζει τα enter και καλει την συναρτηση οταν πατιεται το login button
-        #print(qKeyEvent.key())
+        # print(qKeyEvent.key())
         if qKeyEvent.key() == Qt.Key_Return or qKeyEvent.key() == Qt.Key_Enter:
             self.pressed()
             print('Enter pressed')
 
     def mousePressEvent(self, event):
-        #print("mousePressEvent Clicked")
+        # print("mousePressEvent Clicked")
         if event.button() == Qt.LeftButton:
             self.offset = event.pos()
         else:
@@ -950,7 +1018,7 @@ class LoginWindow(QMainWindow):
 
     def mouseMoveEvent(self, event):
         try:
-            #print("mouseMoveEvent Clicked")
+            # print("mouseMoveEvent Clicked")
             if self.offset is not None and event.buttons() == Qt.LeftButton:
                 self.move(self.pos() + event.pos() - self.offset)
             else:
@@ -959,7 +1027,7 @@ class LoginWindow(QMainWindow):
             print("error raised on mouseMoveEvent")
 
     def mouseReleaseEvent(self, event):
-        #print("mouseReleaseEvent Clicked")
+        # print("mouseReleaseEvent Clicked")
         self.offset = None
         super().mouseReleaseEvent(event)
 
@@ -982,18 +1050,21 @@ def resetStyle(self, btnName):
         if w.objectName() != btnName:
             w.setStyleSheet("")
 
+
 class StandardItem(QStandardItem):
-    def __init__(self, txt='', font_size=9, set_bold=False,set_italic=False, color=QColor(0, 0, 0)):
+    def __init__(self, txt='', font_size=9, set_bold=False, set_italic=False, color=QColor(0, 0, 0),
+                 set_Text_Alignment=Qt.AlignHCenter):
         super().__init__()
 
         fnt = QFont('Open Sans', font_size)
         fnt.setBold(set_bold)
         fnt.setItalic(set_italic)
-        self.setTextAlignment(Qt.AlignHCenter)
+        self.setTextAlignment(set_Text_Alignment)
         self.setEditable(False)
         self.setForeground(color)
         self.setFont(fnt)
         self.setText(str(txt))
+
 
 # Create the application object
 if __name__ == "__main__":
