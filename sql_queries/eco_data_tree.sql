@@ -1,9 +1,9 @@
---cant use print statment in this form of query
 Declare @yearss int
 Declare @tkd int
 Declare @fencing int
 Declare @oplo int
 Declare @outcomes int
+Declare @axion_income int
 
 DECLARE MY_CURSOR CURSOR
   LOCAL STATIC READ_ONLY FORWARD_ONLY
@@ -38,7 +38,10 @@ BEGIN
 				set @outcomes = (Select SUM([AMOUNT]) from economics where MONTH(datenew)=@months AND YEAR(DATENEW)=@yearss and IN_OUT='OUTCOME')
 				if @outcomes is NUll
 					Set @outcomes = 0
-				select @yearss as 'YEAR', @months as 'MONTH',@tkd as 'TKD',@fencing as 'FENCING',@oplo as 'OPLOMAXIA',@outcomes as 'SPENDS', SUM(@tkd+@fencing+@oplo-@outcomes)
+				set @axion_income = (Select SUM([AMOUNT]) from economics where MONTH(datenew)=@months AND YEAR(DATENEW)=@yearss and IN_OUT='INCOME' and (SELECT ID FROM Data WHERE ID=ID_DATA)=130)
+				if @axion_income is NUll
+					Set @axion_income = 0
+				select @yearss as 'YEAR', @months as 'MONTH',@tkd as 'TKD',@fencing as 'FENCING',@oplo as 'OPLOMAXIA',@outcomes as 'SPENDS', SUM(@tkd+@fencing+@oplo-@outcomes+@axion_income) as 'Total'
 			FETCH NEXT FROM MY_CURSOR1 INTO @months
 			END
 			CLOSE MY_CURSOR1

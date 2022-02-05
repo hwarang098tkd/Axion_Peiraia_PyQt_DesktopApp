@@ -26,7 +26,7 @@ class LoginWindow(QMainWindow):
         buttons_style = "QToolTip { background-color: black } QPushButton { border-left: 5px solid #88b1b2; border-radius: 13px 0px 0px 13px; background-color: #116466} "
         global widgets
         widgets = self.ui
-        self.percent_screen = 95
+        self.percent_screen = 90
         self.screen_width, self.screen_height = pyautogui.size()
         print(f" Primary Display Resolution: W ( {self.screen_width} ),H ( {self.screen_height} )")
         # η απολυτη θεση που ξεκιναει το login window στην οθονη
@@ -92,12 +92,48 @@ class LoginWindow(QMainWindow):
         widgets.pay_amount_tb.setValidator(QIntValidator())  # just to accept only numbers
         ####################################################
         widgets.eco_treeview.clicked.connect(self.eco_tree_selected)
+        # Connect the contextmenu
+        widgets.eco_treeview_analy.setContextMenuPolicy(Qt.CustomContextMenu)
+        widgets.eco_treeview_analy.customContextMenuRequested.connect(self.openMenu)
+        #widgets.eco_treeview_analy.clicked.connect(self.eco_tree_selected)
 
         self.installEventFilter(self)
         self.displayTime()
         widgets.toolBar_fm.hide()
         widgets.home_bt.setStyleSheet(buttons_style)
         self.show()
+
+    def openMenu(self, position):
+        indexes = self.ui.eco_treeview_analy.selectedIndexes()
+        if len(indexes) > 0:
+            level = 0
+            index = indexes[0]
+            while index.parent().isValid():
+                index = index.parent()
+                level += 1
+
+        menu = QMenu()
+
+        if level == 0:
+            print("right click on tree_analy no action")
+            #menu.addAction(self.tr("No action"))
+        elif level == 1:
+            menu.addAction(self.tr("Ανανέωση"))
+            menu.addAction(self.tr("Διαγραφή"))
+
+        action = menu.exec_(self.ui.eco_treeview_analy.viewport().mapToGlobal(position))
+        if action.text() =='Ανανέωση':
+            self.refresh_item_tree_analy("")
+            indexes = widgets.eco_treeview_analy.selectedIndexes()
+            print("")
+        elif action.text() =='Διαγραφή':
+            self.delete_item_tree_analy("")
+
+    def delete_item_tree_analy(self,id):
+        pass
+
+    def refresh_item_tree_analy(self,id):
+        pass
 
     def pressed(self):  # login button CLICKED
 
@@ -161,13 +197,13 @@ class LoginWindow(QMainWindow):
                 self.maintoolbar_fm = QPropertyAnimation(self.ui.maintoolbar_fm, b'geometry')
                 self.maintoolbar_fm.setDuration(animation_time)
                 self.maintoolbar_fm.setStartValue(QRect(0, 0, 20, 35))
-                self.maintoolbar_fm.setEndValue(QRect(0, 0, end_width, 35))
+                self.maintoolbar_fm.setEndValue(QRect(20, 0, end_width-20, 35))
 
                 # ANIMATION MAIN BOT TOOLBAR FRAME
                 self.maintoolbarBot_fm = QPropertyAnimation(self.ui.maintoolbarBot_fm, b'geometry')
                 self.maintoolbarBot_fm.setDuration(animation_time)
                 self.maintoolbarBot_fm.setStartValue(QRect(0, end_height - 35, 20, 35))
-                self.maintoolbarBot_fm.setEndValue(QRect(0, end_height - 35, end_width, 35))
+                self.maintoolbarBot_fm.setEndValue(QRect(10, end_height - 35, end_width-10, 35))
 
                 # ANIMATION LOGIN FRAME
                 self.basic_fm_1 = QPropertyAnimation(self.ui.login_fm, b'geometry')
@@ -181,17 +217,11 @@ class LoginWindow(QMainWindow):
                 self.basic_fm_2.setStartValue(QRect(0, 0, 300, 369))
                 self.basic_fm_2.setEndValue(QRect(0, 0, end_width, end_height))
 
-                # ANIMATION PAGE FRAME
-                self.pageContainer = QPropertyAnimation(self.ui.pageContainer, b'geometry')
-                self.pageContainer.setDuration(animation_time)
-                self.pageContainer.setStartValue(QRect(0, 0, 0, 0))
-                self.pageContainer.setEndValue(QRect(45, 35, end_width - 50, int(end_height - 2.5 * 35)))
-
                 # ANIMATION STACKEDWIDGET FRAME
                 self.stackedWidget = QPropertyAnimation(self.ui.stackedWidget, b'geometry')
                 self.stackedWidget.setDuration(animation_time)
                 self.stackedWidget.setStartValue(QRect(0, 0, 0, 0))
-                self.stackedWidget.setEndValue(QRect(20, 10, end_width, int(end_height - 3 * 35)))
+                self.stackedWidget.setEndValue(QRect(30, 35, end_width-20, int(end_height - 2 * 35)))
 
                 # GROUP ANIMATIONeco_table_lout
                 self.group = QParallelAnimationGroup()
@@ -200,7 +230,6 @@ class LoginWindow(QMainWindow):
                 self.group.addAnimation(self.maintoolbarBot_fm)
                 self.group.addAnimation(self.basic_fm_1)
                 self.group.addAnimation(self.basic_fm_2)
-                self.group.addAnimation(self.pageContainer)
                 self.group.addAnimation(self.stackedWidget)
                 # self.group.addAnimation(self.eco_table_lout)
                 self.group.start()
@@ -265,18 +294,18 @@ class LoginWindow(QMainWindow):
         years_color = QColor(255, 203, 154)
         self.model2.setRowCount(0)
         root = self.model2.invisibleRootItem()
-        sport = []
-        for i in data[0]:  # create sport list
-            if i[0] not in sport:
-                sport.append(i[0])
+
         first_value = data[0][0][0]
-        sport_row = StandardItem(str(first_value), 10, set_bold=True, color=years_color)
+        category_row = StandardItem(str(first_value), 10, set_bold=True, color=years_color)
         str_len = [0, 0, 0, 0, 0]
         for i in data[0]:
-            if i[0] != first_value:
-                first_value = i[0]
-                root.appendRow(sport_row)
-                sport_row = StandardItem(str(first_value), 10, set_bold=True, color=years_color)
+            if i[0] != first_value and first_value != 'ΕΞΟΔΑ':
+                if i[0].strip() == '0':
+                    first_value = 'ΕΞΟΔΑ'
+                else:
+                    first_value = i[0]
+                root.appendRow(category_row)
+                category_row = StandardItem(str(first_value), 10, set_bold=True, color=years_color)
 
             if i[1] != None:
                 if isinstance(i[1], str):
@@ -308,17 +337,21 @@ class LoginWindow(QMainWindow):
                         str_len[4] = len(i[9].strip())
                 else:
                     str_len[4] = 2
-
+            if i[4].strip() == 'OUTCOME':
+                i[3] = i[3]*-1
+                text_color_spends = QColor(255, 0, 0)
+            else:
+                text_color_spends = QColor(255, 255, 255)
             names_rows = [StandardItem(i[1], 9, color=text_color_months, set_Text_Alignment=Qt.AlignLeft),
                           StandardItem(i[2], 9, set_italic=True, color=text_color, set_Text_Alignment=Qt.AlignLeft),
-                          StandardItem(i[3], 9, set_italic=True, color=text_color, set_Text_Alignment=Qt.AlignCenter),
+                          StandardItem(i[3], 9, set_italic=True, color=text_color_spends, set_Text_Alignment=Qt.AlignCenter),
                           StandardItem(i[8], 8, set_italic=True, color=text_color, set_Text_Alignment=Qt.AlignCenter),
                           StandardItem(i[9], 8, set_italic=True, color=text_color, set_Text_Alignment=Qt.AlignCenter)]
-            sport_row.appendRow(names_rows)
+            category_row.appendRow(names_rows)
         # bazei se olew tiw kolones platos
         for i in range(self.model2.columnCount()):
             widgets.eco_treeview_analy.setColumnWidth(i, str_len[i]*10)
-        root.appendRow(sport_row)
+        root.appendRow(category_row)
 
     def eco_tree_create(self):
         self.model = QStandardItemModel()
@@ -1013,6 +1046,8 @@ class LoginWindow(QMainWindow):
         # print("mousePressEvent Clicked")
         if event.button() == Qt.LeftButton:
             self.offset = event.pos()
+        elif event.button() == Qt.RightButton:
+            print("right mouse Button pressed1")
         else:
             super().mousePressEvent(event)
 
@@ -1023,6 +1058,7 @@ class LoginWindow(QMainWindow):
                 self.move(self.pos() + event.pos() - self.offset)
             else:
                 super().mouseMoveEvent(event)
+
         except Exception as e:
             print("error raised on mouseMoveEvent")
 

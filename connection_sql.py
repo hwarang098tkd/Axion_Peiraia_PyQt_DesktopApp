@@ -15,7 +15,7 @@ class Connection:
             self.cnxn = pyodbc.connect(
                 'DRIVER={ODBC Driver 17 for SQL Server};SERVER=' + server +
                 ';DATABASE=' + database + ';UID=' + username + ';PWD=' + password +
-                ';Trusted_Connection=no', timeout=10)
+                ';Trusted_Connection=no', timeout=20)
 
         except Exception as e:
             msg = "Connection failed"
