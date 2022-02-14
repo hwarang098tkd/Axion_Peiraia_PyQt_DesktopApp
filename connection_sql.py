@@ -418,6 +418,21 @@ class Connection:
         print(str(msg))
         return result
 
+    def login_eco_UPDATE_fromTreeview(self,id, descr, amount, in_out, pos, cat_id, catsub_id, datenew):
+        try:
+            query = self.str_query('eco_updade_fromTree.sql').format(descr, amount, in_out, datenew, cat_id, catsub_id, pos, id)
+            cursor = self.cnxn.cursor()
+            cursor.execute(query)
+            self.cnxn.commit()
+            result = "Επιτυχία ενημέρωσης !!!"
+            msg = "eco_updade_fromTree: Connection established"
+        except Exception as e:
+            msg = "eco_updade_fromTree: Connection failed"
+            result = "Αποτυχία ενημέρωσης !!!"
+            print("Error: eco_updade_fromTree: " + str(e))
+        print(str(msg))
+        return result
+
     def eco_data_tree(self):
         result_all = []
         try:
@@ -456,8 +471,22 @@ class Connection:
         print(str(msg))
         return result_all
 
+    def eco_delete(self, member_id):
+        try:
+            query = self.str_query('eco_delete.sql').format(str(member_id))
+            cursor = self.cnxn.cursor()
+            cursor.execute(query)
+
+            msg = "eco_delete: Connection established"
+            self.cnxn.commit()
+        except Exception as e:
+            msg = "eco_delete: Connection failed"
+            print("Error: eco_delete: " + str(e))
+        print(str(msg))
+        return msg
+
     def str_query(self, query):
-        home_dir = os.path.abspath('')
-        sql_query = os.path.join(home_dir, 'sql_queries/' + query)
+        home_dir = os.path.abspath('.')
+        sql_query = os.path.join(home_dir, 'sql_queries//' + query)
         with open(sql_query, 'r') as file:
             return file.read()

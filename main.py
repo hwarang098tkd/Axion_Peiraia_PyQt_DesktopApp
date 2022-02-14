@@ -35,6 +35,11 @@ class LoginWindow(QMainWindow):
         global start_pro_y
         start_pro_y = 50
 
+        self.month_tree = 0
+        self.year_tree = 0
+        self.add_eco_state = None
+        self.member_eco_id = None
+
         self.baseHeight = 369
         self.extendedHeight = 400
         self.rect = QRect(start_pos_x, start_pro_y, 320, self.baseHeight)
@@ -77,7 +82,7 @@ class LoginWindow(QMainWindow):
         widgets.del_ref_btn.hide()
         widgets.del_ref_btn.clicked.connect(self.del_refresh_btn)
         ####################################################
-        self.days_labels_hide()
+        #self.days_labels_hide()
         ####################################################
         widgets.chart_years_ccb.currentIndexChanged.connect(self.handle_index_changed)
         ####################################################
@@ -95,7 +100,7 @@ class LoginWindow(QMainWindow):
         # Connect the contextmenu
         widgets.eco_treeview_analy.setContextMenuPolicy(Qt.CustomContextMenu)
         widgets.eco_treeview_analy.customContextMenuRequested.connect(self.openMenu)
-        #widgets.eco_treeview_analy.clicked.connect(self.eco_tree_selected)
+        # widgets.eco_treeview_analy.clicked.connect(self.eco_tree_selected)
 
         self.installEventFilter(self)
         self.displayTime()
@@ -116,24 +121,45 @@ class LoginWindow(QMainWindow):
 
         if level == 0:
             print("right click on tree_analy no action")
-            #menu.addAction(self.tr("No action"))
+            # menu.addAction(self.tr("No action"))
         elif level == 1:
             menu.addAction(self.tr("Ανανέωση"))
             menu.addAction(self.tr("Διαγραφή"))
 
         action = menu.exec_(self.ui.eco_treeview_analy.viewport().mapToGlobal(position))
-        if action.text() =='Ανανέωση':
-            self.refresh_item_tree_analy("")
-            indexes = widgets.eco_treeview_analy.selectedIndexes()
-            print("")
-        elif action.text() =='Διαγραφή':
-            self.delete_item_tree_analy("")
+        indexes = widgets.eco_treeview_analy.selectedIndexes()
+        items = []
+        for index in indexes: items.append(self.model2.itemFromIndex(index))
+        try:
+            member_id = items[6].text()
+            if action.text() == 'Ανανέωση':
+                self.add_eco_state = 'refresh'
+                member_name = items[0].text()
+                self.member_eco_id = items[7].text()
+                self.refresh_item_tree_analy(member_name)
+            elif action.text() == 'Διαγραφή':
+                self.delete_item_tree_analy(member_id)
+        except Exception as e:
+            print(e)
 
-    def delete_item_tree_analy(self,id):
-        pass
+    def delete_item_tree_analy(self, member_id):
+        qm = QMessageBox
+        ret = qm.question(self, 'Επιβεβαίωση Διαγραφής', "   Θέτετε να διαγράψετε;  ", qm.Yes | qm.No)
 
-    def refresh_item_tree_analy(self,id):
-        pass
+        if ret == qm.Yes:
+            result_delete = self.log_in.eco_delete(member_id)
+
+        self.eco_tree_create_analyt(self.year_tree, self.month_tree) #refresh the analytic treeview
+
+    def refresh_item_tree_analy(self, member_name):
+        widgets.add_erco_btn.setText("ΑΝΑΝΕΩΣΗ")
+        index = widgets.eco_name_cbb.findText(member_name, Qt.MatchContains)
+        print(index)
+        if index >= 0:
+            widgets.eco_name_cbb.setCurrentIndex(index)
+            widgets.add_eco_lb.setText('')
+
+
 
     def pressed(self):  # login button CLICKED
 
@@ -152,7 +178,7 @@ class LoginWindow(QMainWindow):
             widgets.info_lb.setStyleSheet("color: white")
             self.log_in = Connection(widgets.user_tb.text(), widgets.pass_tb.text())
             result = self.log_in.login_connection()
-            self.refresh_calendar()  # refresh calendar
+            #self.refresh_calendar()  # refresh calendar
             widgets.info_lb.setText(result)
 
             if result == "Connection established":  # succesfull log in
@@ -179,13 +205,13 @@ class LoginWindow(QMainWindow):
                 # Re-COLOR MAIN BOT TOOLBAR
                 widgets.maintoolbarBot_fm.setStyleSheet("background-color: \'#0d5051\';")
 
-                animation_time = 300
+                animation_time = 250
                 end_width = int((self.screen_width * self.percent_screen) / 100)
                 end_height = int((self.screen_height * self.percent_screen) / 100)
 
                 start_pos_xx = int((self.screen_width - end_width) / 2)
                 start_pro_yy = int((self.screen_height - end_height) / 2)
-                print(end_height, end_width, start_pos_xx, start_pro_yy)
+                print(f"EndH: {end_height}, EndW {end_width}, StartX {start_pos_xx},StartY {start_pro_yy}")
 
                 # ANIMATION WINDOW
                 self.main_window = QPropertyAnimation(self, b'geometry')
@@ -197,13 +223,13 @@ class LoginWindow(QMainWindow):
                 self.maintoolbar_fm = QPropertyAnimation(self.ui.maintoolbar_fm, b'geometry')
                 self.maintoolbar_fm.setDuration(animation_time)
                 self.maintoolbar_fm.setStartValue(QRect(0, 0, 20, 35))
-                self.maintoolbar_fm.setEndValue(QRect(20, 0, end_width-20, 35))
+                self.maintoolbar_fm.setEndValue(QRect(20, 0, end_width - 20, 35))
 
                 # ANIMATION MAIN BOT TOOLBAR FRAME
                 self.maintoolbarBot_fm = QPropertyAnimation(self.ui.maintoolbarBot_fm, b'geometry')
                 self.maintoolbarBot_fm.setDuration(animation_time)
                 self.maintoolbarBot_fm.setStartValue(QRect(0, end_height - 35, 20, 35))
-                self.maintoolbarBot_fm.setEndValue(QRect(10, end_height - 35, end_width-10, 35))
+                self.maintoolbarBot_fm.setEndValue(QRect(10, end_height - 35, end_width - 10, 35))
 
                 # ANIMATION LOGIN FRAME
                 self.basic_fm_1 = QPropertyAnimation(self.ui.login_fm, b'geometry')
@@ -221,7 +247,7 @@ class LoginWindow(QMainWindow):
                 self.stackedWidget = QPropertyAnimation(self.ui.stackedWidget, b'geometry')
                 self.stackedWidget.setDuration(animation_time)
                 self.stackedWidget.setStartValue(QRect(0, 0, 0, 0))
-                self.stackedWidget.setEndValue(QRect(30, 35, end_width-20, int(end_height - 2 * 35)))
+                self.stackedWidget.setEndValue(QRect(60, 35, end_width - 100, int(end_height - 2 * 35)))
 
                 # GROUP ANIMATIONeco_table_lout
                 self.group = QParallelAnimationGroup()
@@ -234,8 +260,8 @@ class LoginWindow(QMainWindow):
                 # self.group.addAnimation(self.eco_table_lout)
                 self.group.start()
 
-                self.ui.eco_table_lout.setGeometry(QRect(0, -50, int(end_width * 0.92), int(end_height * 0.38)))
-
+                # widgets.eco_page_layout.setGeometry(QRect(0, -50, int(end_width * 0.92), int(end_height * 0.38)))
+                # widgets.eco_page_layout.SetFixedSize
                 widgets.toolBar_fm.show()
 
     def eco_tree_selected(self):
@@ -253,12 +279,14 @@ class LoginWindow(QMainWindow):
         try:
             mhnas = mhnas_int
             etos = items[0].parent().text()
-            print('TreeView selected --> YEAR:', etos, 'MHNAS:', mhnas)
+            print('TreeView selected --> Year:', etos, 'Month:', mhnas)
+            self.year_tree = etos
+            self.month_tree = mhnas
         except Exception as e:  # οταν πατει επικεφαλιδα δεν μπορει να βγαλει το parent().text()
             etos = self.selectedParents()
             print(etos[0])
 
-        self.eco_tree_create_analyt(etos, mhnas)
+        self.eco_tree_create_analyt(self.year_tree, self.month_tree)
 
     def selectedParents(self):
         parents = set()
@@ -270,7 +298,7 @@ class LoginWindow(QMainWindow):
 
     def eco_tree_create_analyt(self, etos, month):
         self.model2 = QStandardItemModel()
-        self.model2.setHorizontalHeaderLabels(['Στοιχεία', 'Κατηγορία', 'Ποσό', 'Pos', 'Id'])
+        self.model2.setHorizontalHeaderLabels(['Στοιχεία', 'Κατηγορία', 'Υπο-κατηγορία', 'Ποσό', 'Περιγραφή', 'Ημερομηνία', 'Pos', 'Id'])
 
         widgets.eco_treeview_analy.header().setDefaultSectionSize(90)
         widgets.eco_treeview_analy.header().setDefaultAlignment(Qt.AlignLeft)
@@ -282,7 +310,6 @@ class LoginWindow(QMainWindow):
             data.append(self.log_in.eco_analytics(etos, month))
 
             self.importData_analyt(data)
-
 
             widgets.eco_treeview_analy.expandAll()
 
@@ -297,7 +324,7 @@ class LoginWindow(QMainWindow):
 
         first_value = data[0][0][0]
         category_row = StandardItem(str(first_value), 10, set_bold=True, color=years_color)
-        str_len = [0, 0, 0, 0, 0]
+        str_len = [0, 0, 0, 0, 0, 0, 0, 0]  #το μεγεθος ειναι οσες και οι κoλoνες στο treeview
         for i in data[0]:
             if i[0] != first_value and first_value != 'ΕΞΟΔΑ':
                 if i[0].strip() == '0':
@@ -314,7 +341,7 @@ class LoginWindow(QMainWindow):
                 else:
                     str_len[0] = 2
             if i[2] != None:
-                if isinstance(i[2], str) :
+                if isinstance(i[2], str):
                     if len(i[2]) > str_len[1]:
                         str_len[1] = len(i[2].strip())
                 else:
@@ -325,32 +352,35 @@ class LoginWindow(QMainWindow):
                         str_len[2] = len(i[3].strip())
                 else:
                     str_len[2] = 2
-            if i[8] != None:
-                if isinstance(i[8], str):
-                    if len(i[8]) > str_len[3]:
-                        str_len[3] = len(i[8].strip())
+            if i[4] != None:
+                if isinstance(i[4], str):
+                    if len(i[4]) > str_len[3]:
+                        str_len[3] = len(i[4].strip())
                 else:
                     str_len[3] = 2
-            if i[9] != None:
-                if isinstance(i[9], str):
-                    if len(i[9]) > str_len[4]:
-                        str_len[4] = len(i[9].strip())
+            if i[5] != None:
+                if isinstance(i[5], str):
+                    if len(i[5]) > str_len[4]:
+                        str_len[4] = len(i[5].strip())
                 else:
                     str_len[4] = 2
-            if i[4].strip() == 'OUTCOME':
-                i[3] = i[3]*-1
+            if i[9].strip() == 'OUTCOME':
+                i[4] = i[4] * -1
                 text_color_spends = QColor(255, 0, 0)
             else:
                 text_color_spends = QColor(255, 255, 255)
             names_rows = [StandardItem(i[1], 9, color=text_color_months, set_Text_Alignment=Qt.AlignLeft),
                           StandardItem(i[2], 9, set_italic=True, color=text_color, set_Text_Alignment=Qt.AlignLeft),
-                          StandardItem(i[3], 9, set_italic=True, color=text_color_spends, set_Text_Alignment=Qt.AlignCenter),
-                          StandardItem(i[8], 8, set_italic=True, color=text_color, set_Text_Alignment=Qt.AlignCenter),
-                          StandardItem(i[9], 8, set_italic=True, color=text_color, set_Text_Alignment=Qt.AlignCenter)]
+                          StandardItem(i[3], 9, set_italic=True, color=text_color_spends, set_Text_Alignment=Qt.AlignLeft),
+                          StandardItem(i[4], 9, set_italic=True, color=text_color_spends,set_Text_Alignment=Qt.AlignCenter),
+                          StandardItem(i[5], 9, set_italic=True, color=text_color_spends,set_Text_Alignment=Qt.AlignLeft),
+                          StandardItem(i[6].strftime("%d/%m/%Y"), 8, set_italic=True, color=text_color, set_Text_Alignment=Qt.AlignCenter),
+                          StandardItem(i[7], 8, set_italic=True, color=text_color, set_Text_Alignment=Qt.AlignCenter),
+                          StandardItem(i[8], 8, set_italic=True, color=text_color, set_Text_Alignment=Qt.AlignCenter)]
             category_row.appendRow(names_rows)
         # bazei se olew tiw kolones platos
         for i in range(self.model2.columnCount()):
-            widgets.eco_treeview_analy.setColumnWidth(i, str_len[i]*10)
+            widgets.eco_treeview_analy.setColumnWidth(i, str_len[i] * 10)
         root.appendRow(category_row)
 
     def eco_tree_create(self):
@@ -437,13 +467,23 @@ class LoginWindow(QMainWindow):
         eco_cat = widgets.eco_gen_cbb.currentText()
         eco_sub = widgets.eco_sub_cbb.currentText()
         amount = widgets.pay_amount_tb.text()
-        exists_or_not = self.log_in.login_eco_check(name, eco_cat, eco_sub, date_str)
-        print(exists_or_not)
-        if exists_or_not == 'not_exist':  # τοτε δεν υπαρχει εγγραφη για την ημερ, κατ, υποκατηγ σε σχεση με το ονομα και θα κανει insert
-            message = self.log_in.login_eco_INSERT(name, descr, amount, in_out, date_str, eco_cat, eco_sub, pos)
-        else:  # update
-            message = self.log_in.login_eco_UPDATE(descr, amount, in_out, pos, name, eco_cat, eco_sub, date_str)
+        if self.add_eco_state == None:
+            exists_or_not = self.log_in.login_eco_check(name, eco_cat, eco_sub, date_str)
+            print(exists_or_not)
+            if exists_or_not == 'not_exist':  # τοτε δεν υπαρχει εγγραφη για την ημερ, κατ, υποκατηγ σε σχεση με το ονομα και θα κανει insert
+                print("Γινεται καταχωρηση για:")
+                message = self.log_in.login_eco_INSERT(name, descr, amount, in_out, date_str, eco_cat, eco_sub, pos)
+            else:  # update
+                print("Γινεται ενημέρωση για(1):")
+                message = self.log_in.login_eco_UPDATE(descr, amount, in_out, pos, name, eco_cat, eco_sub, date_str)
+        elif self.add_eco_state == 'refresh':
+            print("Γινεται ενημέρωση για(2):")
+            message = self.log_in.login_eco_UPDATE_fromTreeview(self.member_eco_id,descr, amount, in_out, pos, eco_cat, eco_sub, date_str)
+            self.add_eco_state = None
+            self.member_eco_id = 0
+            widgets.add_erco_btn.setText("ΚΑΤΑΧΩΡΗΣΗ")
         widgets.add_eco_lb.setText(message)
+        self.eco_tree_create_analyt(self.year_tree, self.month_tree)
         print(name, date_str, eco_cat, eco_sub, amount)
 
     def outcomeChange(self):  # οταν επιλεγετε το εξοδα τοτε ψαχνει το ΑΓΣ ΑΞΙΟΝ ΠΕΙΡΑΙΑ και το επιλέγει
@@ -1077,7 +1117,6 @@ def sport_definition(self):
         sport = "FENCING"
     elif widgets.tkd_rb.isChecked():
         sport = "TAEKWON-DO"
-    print("Radio BTN selected:", sport)
     return sport
 
 
