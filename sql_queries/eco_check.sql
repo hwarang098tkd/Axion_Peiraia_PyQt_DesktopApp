@@ -4,8 +4,9 @@ Set @id = (SELECT id FROM [Axion].[dbo].[economics] where
 					where Concat(LAST_NAME,  ' ' , FIRST_NAME) = '{}') and
 			CATEG_ID = (select id from econo_categ
 					where trim(econ_categ)='{}') and
-			CATEG_SUB_ID = (select ID_CAT from econo_subcatego
-					where trim(econo_subcateg)='{}') and
+			CATEG_SUB_ID = (select  ID_CAT from econo_subcatego
+					where trim(econo_subcateg)='{}' and id = (select id from econo_categ
+					where trim(econ_categ)='{}') ) and
 			DATENEW = '{}')
 if @id is null 
 begin

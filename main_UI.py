@@ -132,6 +132,11 @@ class Ui_MainWindow(object):
         self.title_present_lb.setObjectName("title_present_lb")
         self.horizontalLayout_12.addWidget(self.title_present_lb)
         self.title_members_lb = QtWidgets.QLabel(self.home_page)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Maximum)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.title_members_lb.sizePolicy().hasHeightForWidth())
+        self.title_members_lb.setSizePolicy(sizePolicy)
         font = QtGui.QFont()
         font.setPointSize(12)
         self.title_members_lb.setFont(font)
@@ -543,10 +548,240 @@ class Ui_MainWindow(object):
         self.taekwondo_page.setObjectName("taekwondo_page")
         self.gridLayout_4 = QtWidgets.QGridLayout(self.taekwondo_page)
         self.gridLayout_4.setObjectName("gridLayout_4")
+        self.verticalLayout_5 = QtWidgets.QVBoxLayout()
+        self.verticalLayout_5.setObjectName("verticalLayout_5")
+        self.presenters_layout = QtWidgets.QGridLayout()
+        self.presenters_layout.setObjectName("presenters_layout")
+        self.label = QtWidgets.QLabel(self.taekwondo_page)
+        self.label.setAlignment(QtCore.Qt.AlignCenter)
+        self.label.setObjectName("label")
+        self.presenters_layout.addWidget(self.label, 0, 1, 1, 1)
+        self.verticalLayout_5.addLayout(self.presenters_layout)
+        self.line_8 = QtWidgets.QFrame(self.taekwondo_page)
+        self.line_8.setFrameShape(QtWidgets.QFrame.HLine)
+        self.line_8.setFrameShadow(QtWidgets.QFrame.Sunken)
+        self.line_8.setObjectName("line_8")
+        self.verticalLayout_5.addWidget(self.line_8)
+        self.viber_layout_2 = QtWidgets.QGridLayout()
+        self.viber_layout_2.setObjectName("viber_layout_2")
+        self.tkd_treeView = QtWidgets.QTreeView(self.taekwondo_page)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.tkd_treeView.sizePolicy().hasHeightForWidth())
+        self.tkd_treeView.setSizePolicy(sizePolicy)
+        self.tkd_treeView.setObjectName("tkd_treeView")
+        self.viber_layout_2.addWidget(self.tkd_treeView, 0, 1, 1, 1)
+        self.gridLayout_7 = QtWidgets.QGridLayout()
+        self.gridLayout_7.setObjectName("gridLayout_7")
+        self.horizontalLayout_14 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_14.setSizeConstraint(QtWidgets.QLayout.SetDefaultConstraint)
+        self.horizontalLayout_14.setContentsMargins(6, -1, 6, -1)
+        self.horizontalLayout_14.setSpacing(6)
+        self.horizontalLayout_14.setObjectName("horizontalLayout_14")
+        self.tkd_active_chb = QtWidgets.QCheckBox(self.taekwondo_page)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Maximum, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.tkd_active_chb.sizePolicy().hasHeightForWidth())
+        self.tkd_active_chb.setSizePolicy(sizePolicy)
+        self.tkd_active_chb.setLayoutDirection(QtCore.Qt.RightToLeft)
+        self.tkd_active_chb.setStyleSheet("color: \"#D9B08C\";")
+        self.tkd_active_chb.setObjectName("tkd_active_chb")
+        self.horizontalLayout_14.addWidget(self.tkd_active_chb)
+        self.tkd_owned_btn = QtWidgets.QPushButton(self.taekwondo_page)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Maximum, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.tkd_owned_btn.sizePolicy().hasHeightForWidth())
+        self.tkd_owned_btn.setSizePolicy(sizePolicy)
+        self.tkd_owned_btn.setMinimumSize(QtCore.QSize(200, 0))
+        self.tkd_owned_btn.setStyleSheet("QPushButton:enabled{\n"
+"background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.261364 rgba(44, 53, 50, 255), stop:0.602273 rgba(17, 100, 102, 255), stop:0.98 rgba(217, 176, 140, 255), stop:1 rgba(0, 0, 0, 0));\n"
+"color: rgb(255, 255, 255);\n"
+"border: 2px  #D9B08C;\n"
+"border-radius: 10px;\n"
+"border-style: outset;}\n"
+"QPushButton:disabled{\n"
+"background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.261364 rgba(44, 53, 50, 255), stop:0.602273 rgba(17, 100, 102, 255),\n"
+"stop:0.98 rgba(217, 176, 140, 255),\n"
+"stop:1 rgba(0, 0, 0, 0));\n"
+"color: rgb(109, 109, 109);\n"
+"border: 2px  #D9B08C;\n"
+"border-radius: 10px;\n"
+"border-style: outset;}\n"
+"")
+        self.tkd_owned_btn.setObjectName("tkd_owned_btn")
+        self.horizontalLayout_14.addWidget(self.tkd_owned_btn)
+        self.tkd_checked_btn = QtWidgets.QPushButton(self.taekwondo_page)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Maximum, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.tkd_checked_btn.sizePolicy().hasHeightForWidth())
+        self.tkd_checked_btn.setSizePolicy(sizePolicy)
+        self.tkd_checked_btn.setMinimumSize(QtCore.QSize(200, 0))
+        self.tkd_checked_btn.setStyleSheet("QPushButton:enabled{\n"
+"background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.261364 rgba(44, 53, 50, 255), stop:0.602273 rgba(17, 100, 102, 255), stop:0.98 rgba(217, 176, 140, 255), stop:1 rgba(0, 0, 0, 0));\n"
+"color: rgb(255, 255, 255);\n"
+"border: 2px  #D9B08C;\n"
+"border-radius: 10px;\n"
+"border-style: outset;}\n"
+"QPushButton:disabled{\n"
+"background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.261364 rgba(44, 53, 50, 255), stop:0.602273 rgba(17, 100, 102, 255),\n"
+"stop:0.98 rgba(217, 176, 140, 255),\n"
+"stop:1 rgba(0, 0, 0, 0));\n"
+"color: rgb(109, 109, 109);\n"
+"border: 2px  #D9B08C;\n"
+"border-radius: 10px;\n"
+"border-style: outset;}\n"
+"")
+        self.tkd_checked_btn.setObjectName("tkd_checked_btn")
+        self.horizontalLayout_14.addWidget(self.tkd_checked_btn)
+        self.tkd_all_btn = QtWidgets.QPushButton(self.taekwondo_page)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Maximum, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.tkd_all_btn.sizePolicy().hasHeightForWidth())
+        self.tkd_all_btn.setSizePolicy(sizePolicy)
+        self.tkd_all_btn.setMinimumSize(QtCore.QSize(200, 0))
+        self.tkd_all_btn.setStyleSheet("QPushButton:enabled{\n"
+"background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.261364 rgba(44, 53, 50, 255), stop:0.602273 rgba(17, 100, 102, 255), stop:0.98 rgba(217, 176, 140, 255), stop:1 rgba(0, 0, 0, 0));\n"
+"color: rgb(255, 255, 255);\n"
+"border: 2px  #D9B08C;\n"
+"border-radius: 10px;\n"
+"border-style: outset;}\n"
+"QPushButton:disabled{\n"
+"background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.261364 rgba(44, 53, 50, 255), stop:0.602273 rgba(17, 100, 102, 255),\n"
+"stop:0.98 rgba(217, 176, 140, 255),\n"
+"stop:1 rgba(0, 0, 0, 0));\n"
+"color: rgb(109, 109, 109);\n"
+"border: 2px  #D9B08C;\n"
+"border-radius: 10px;\n"
+"border-style: outset;}\n"
+"")
+        self.tkd_all_btn.setObjectName("tkd_all_btn")
+        self.horizontalLayout_14.addWidget(self.tkd_all_btn)
+        self.gridLayout_7.addLayout(self.horizontalLayout_14, 1, 0, 1, 1)
+        self.horizontalLayout_15 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_15.setObjectName("horizontalLayout_15")
+        spacerItem3 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_15.addItem(spacerItem3)
+        self.tkd_month_cmb = QtWidgets.QComboBox(self.taekwondo_page)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Maximum, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.tkd_month_cmb.sizePolicy().hasHeightForWidth())
+        self.tkd_month_cmb.setSizePolicy(sizePolicy)
+        self.tkd_month_cmb.setMaximumSize(QtCore.QSize(150, 16777215))
+        self.tkd_month_cmb.setLayoutDirection(QtCore.Qt.LeftToRight)
+        self.tkd_month_cmb.setObjectName("tkd_month_cmb")
+        self.horizontalLayout_15.addWidget(self.tkd_month_cmb)
+        self.label_9 = QtWidgets.QLabel(self.taekwondo_page)
+        font = QtGui.QFont()
+        font.setPointSize(11)
+        self.label_9.setFont(font)
+        self.label_9.setStyleSheet("color: \"#D9B08C\";")
+        self.label_9.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
+        self.label_9.setObjectName("label_9")
+        self.horizontalLayout_15.addWidget(self.label_9)
+        spacerItem4 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_15.addItem(spacerItem4)
+        self.tkd_year_cmb = QtWidgets.QComboBox(self.taekwondo_page)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Maximum, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.tkd_year_cmb.sizePolicy().hasHeightForWidth())
+        self.tkd_year_cmb.setSizePolicy(sizePolicy)
+        self.tkd_year_cmb.setMaximumSize(QtCore.QSize(150, 16777215))
+        self.tkd_year_cmb.setLayoutDirection(QtCore.Qt.LeftToRight)
+        self.tkd_year_cmb.setObjectName("tkd_year_cmb")
+        self.horizontalLayout_15.addWidget(self.tkd_year_cmb)
         self.label_2 = QtWidgets.QLabel(self.taekwondo_page)
-        self.label_2.setAlignment(QtCore.Qt.AlignCenter)
+        font = QtGui.QFont()
+        font.setPointSize(11)
+        self.label_2.setFont(font)
+        self.label_2.setStyleSheet("color: \"#D9B08C\";")
+        self.label_2.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
         self.label_2.setObjectName("label_2")
-        self.gridLayout_4.addWidget(self.label_2, 0, 0, 1, 1)
+        self.horizontalLayout_15.addWidget(self.label_2)
+        spacerItem5 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_15.addItem(spacerItem5)
+        self.gridLayout_7.addLayout(self.horizontalLayout_15, 0, 0, 1, 1)
+        self.horizontalLayout_16 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_16.setObjectName("horizontalLayout_16")
+        spacerItem6 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_16.addItem(spacerItem6)
+        self.viber_tkd_send_btn = QtWidgets.QPushButton(self.taekwondo_page)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Maximum, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.viber_tkd_send_btn.sizePolicy().hasHeightForWidth())
+        self.viber_tkd_send_btn.setSizePolicy(sizePolicy)
+        self.viber_tkd_send_btn.setMaximumSize(QtCore.QSize(200, 16777215))
+        self.viber_tkd_send_btn.setStyleSheet("QPushButton:enabled{\n"
+"background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.261364 rgba(44, 53, 50, 255), stop:0.602273 rgba(17, 100, 102, 255), stop:0.98 rgba(217, 176, 140, 255), stop:1 rgba(0, 0, 0, 0));\n"
+"color: rgb(255, 255, 255);\n"
+"border: 2px  #D9B08C;\n"
+"border-radius: 10px;\n"
+"border-style: outset;}\n"
+"QPushButton:disabled{\n"
+"background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.261364 rgba(44, 53, 50, 255), stop:0.602273 rgba(17, 100, 102, 255),\n"
+"stop:0.98 rgba(217, 176, 140, 255),\n"
+"stop:1 rgba(0, 0, 0, 0));\n"
+"color: rgb(109, 109, 109);\n"
+"border: 2px  #D9B08C;\n"
+"border-radius: 10px;\n"
+"border-style: outset;}\n"
+"")
+        self.viber_tkd_send_btn.setObjectName("viber_tkd_send_btn")
+        self.horizontalLayout_16.addWidget(self.viber_tkd_send_btn)
+        spacerItem7 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_16.addItem(spacerItem7)
+        self.gridLayout_7.addLayout(self.horizontalLayout_16, 4, 0, 1, 1)
+        self.viber_layout = QtWidgets.QGridLayout()
+        self.viber_layout.setObjectName("viber_layout")
+        self.tkd_viber_text = QtWidgets.QTextEdit(self.taekwondo_page)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.tkd_viber_text.sizePolicy().hasHeightForWidth())
+        self.tkd_viber_text.setSizePolicy(sizePolicy)
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        font.setBold(True)
+        font.setItalic(True)
+        self.tkd_viber_text.setFont(font)
+        self.tkd_viber_text.setStyleSheet("color: rgb(189, 165, 135);")
+        self.tkd_viber_text.setObjectName("tkd_viber_text")
+        self.viber_layout.addWidget(self.tkd_viber_text, 1, 0, 1, 1)
+        self.gridLayout_7.addLayout(self.viber_layout, 3, 0, 1, 1)
+        self.horizontalLayout_17 = QtWidgets.QHBoxLayout()
+        self.horizontalLayout_17.setObjectName("horizontalLayout_17")
+        self.comboBox = QtWidgets.QComboBox(self.taekwondo_page)
+        self.comboBox.setLayoutDirection(QtCore.Qt.LeftToRight)
+        self.comboBox.setObjectName("comboBox")
+        self.horizontalLayout_17.addWidget(self.comboBox)
+        self.label_10 = QtWidgets.QLabel(self.taekwondo_page)
+        font = QtGui.QFont()
+        font.setPointSize(11)
+        self.label_10.setFont(font)
+        self.label_10.setLayoutDirection(QtCore.Qt.RightToLeft)
+        self.label_10.setStyleSheet("color: \"#D9B08C\";")
+        self.label_10.setAlignment(QtCore.Qt.AlignRight|QtCore.Qt.AlignTrailing|QtCore.Qt.AlignVCenter)
+        self.label_10.setObjectName("label_10")
+        self.horizontalLayout_17.addWidget(self.label_10)
+        self.viber_tittl_lb = QtWidgets.QLabel(self.taekwondo_page)
+        font = QtGui.QFont()
+        font.setPointSize(11)
+        self.viber_tittl_lb.setFont(font)
+        self.viber_tittl_lb.setStyleSheet("color: \"#D9B08C\";")
+        self.viber_tittl_lb.setAlignment(QtCore.Qt.AlignBottom|QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft)
+        self.viber_tittl_lb.setObjectName("viber_tittl_lb")
+        self.horizontalLayout_17.addWidget(self.viber_tittl_lb)
+        self.gridLayout_7.addLayout(self.horizontalLayout_17, 2, 0, 1, 1)
+        self.viber_layout_2.addLayout(self.gridLayout_7, 0, 2, 1, 1)
+        self.verticalLayout_5.addLayout(self.viber_layout_2)
+        self.gridLayout_4.addLayout(self.verticalLayout_5, 0, 0, 1, 1)
         self.stackedWidget.addWidget(self.taekwondo_page)
         self.fencing_page = QtWidgets.QWidget()
         self.fencing_page.setObjectName("fencing_page")
@@ -578,8 +813,8 @@ class Ui_MainWindow(object):
         self.verticalLayout.addWidget(self.chart_all_fm)
         self.horizontalLayout_8 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_8.setObjectName("horizontalLayout_8")
-        spacerItem3 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_8.addItem(spacerItem3)
+        spacerItem8 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_8.addItem(spacerItem8)
         self.chart_years_ccb = QtWidgets.QComboBox(self.econ_page)
         self.chart_years_ccb.setLayoutDirection(QtCore.Qt.LeftToRight)
         self.chart_years_ccb.setEditable(True)
@@ -944,8 +1179,8 @@ class Ui_MainWindow(object):
 "")
         self.add_erco_btn.setObjectName("add_erco_btn")
         self.horizontalLayout_10.addWidget(self.add_erco_btn)
-        spacerItem4 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_10.addItem(spacerItem4)
+        spacerItem9 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_10.addItem(spacerItem9)
         self.add_eco_layout.addLayout(self.horizontalLayout_10)
         self.gridLayout_2.addLayout(self.add_eco_layout, 0, 1, 1, 1)
         self.eco_treeview_analy = QtWidgets.QTreeView(self.econ_page)
@@ -1653,7 +1888,7 @@ class Ui_MainWindow(object):
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
-        self.stackedWidget.setCurrentIndex(0)
+        self.stackedWidget.setCurrentIndex(1)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
         MainWindow.setTabOrder(self.home_bt, self.pass_tb)
         MainWindow.setTabOrder(self.pass_tb, self.login_btn)
@@ -1700,7 +1935,16 @@ class Ui_MainWindow(object):
         self.tkd_eco_title_lb.setText(_translate("MainWindow", "Taekwon-Do:"))
         self.sum_eco_lb.setText(_translate("MainWindow", "0"))
         self.sum_eco_title_lb.setText(_translate("MainWindow", "Σύνολο:"))
-        self.label_2.setText(_translate("MainWindow", "TAEKWON-DO"))
+        self.label.setText(_translate("MainWindow", "PRESENTERS loading ...."))
+        self.tkd_active_chb.setText(_translate("MainWindow", "Ενεργοί"))
+        self.tkd_owned_btn.setText(_translate("MainWindow", "ΟΦΕΙΛΟΝΤΕΣ"))
+        self.tkd_checked_btn.setText(_translate("MainWindow", "ΠΛΗΡΩΣΑΝΤΕΣ"))
+        self.tkd_all_btn.setText(_translate("MainWindow", "ΟΛΟΙ"))
+        self.label_9.setText(_translate("MainWindow", "ΜΗΝΑΣ: "))
+        self.label_2.setText(_translate("MainWindow", "ΕΤΟΣ: "))
+        self.viber_tkd_send_btn.setText(_translate("MainWindow", "ΑΠΟΣΤΟΛΗ"))
+        self.label_10.setText(_translate("MainWindow", "Επιλογή Κειμένου: "))
+        self.viber_tittl_lb.setText(_translate("MainWindow", "Κείμενο αποστολής VIBER BOT"))
         self.label_3.setText(_translate("MainWindow", "FENCING"))
         self.label_4.setText(_translate("MainWindow", "Oplomaxia"))
         self.label_49.setText(_translate("MainWindow", "Έτος:"))

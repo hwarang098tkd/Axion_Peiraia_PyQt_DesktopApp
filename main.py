@@ -85,6 +85,7 @@ class LoginWindow(QMainWindow):
         #self.days_labels_hide()
         ####################################################
         widgets.chart_years_ccb.currentIndexChanged.connect(self.handle_index_changed)
+        widgets.tkd_year_cmb.currentIndexChanged.connect(self.tkd_year_cmb_changed)
         ####################################################
         widgets.eco_gen_cbb.currentIndexChanged.connect(self.eco_gen_cbbChange)
         widgets.eco_sub_cbb.currentIndexChanged.connect(self.eco_sub_cbbChange)
@@ -131,7 +132,7 @@ class LoginWindow(QMainWindow):
         items = []
         for index in indexes: items.append(self.model2.itemFromIndex(index))
         try:
-            member_id = items[6].text()
+            member_id = items[7].text()
             if action.text() == 'Ανανέωση':
                 self.add_eco_state = 'refresh'
                 member_name = items[0].text()
@@ -184,12 +185,16 @@ class LoginWindow(QMainWindow):
             if result == "Connection established":  # succesfull log in
 
                 self.eco_tree_create()
+                #self.tkd_tree_create()
+                years = self.log_in.login_list_ofYears()
+                widgets.tkd_year_cmb.addItems(years)
+
                 sport_list = []
                 # REFRESH STASTS
                 self.refresh_stats()
                 self.chart_all_create()
                 self.build_chart()
-                years = self.log_in.login_list_ofYears()
+
                 widgets.chart_years_ccb.addItems(years)
                 widgets.eco_name_cbb.addItems(self.members_list)
                 #######################################################
@@ -264,6 +269,50 @@ class LoginWindow(QMainWindow):
                 # widgets.eco_page_layout.SetFixedSize
                 widgets.toolBar_fm.show()
 
+                #Taekwon-Do page initialize
+
+    def tkd_tree_create(self):
+        self.model = QStandardItemModel()
+        self.model.setHorizontalHeaderLabels(['Ονοματεπώνυμο', 'Πότε Πληρ.', 'Πληρωμή', 'Ημ. Πληρωμής'])
+        widgets.tkd_treeView.header().setDefaultSectionSize(90)
+        widgets.tkd_treeView.header().setDefaultAlignment(Qt.AlignHCenter)
+
+        widgets.tkd_treeView.setModel(self.model)
+        data = []
+        data.append(self.log_in.tkd_treeView())
+        self.tkd_importData(data)
+        widgets.tkd_treeView.expandAll()
+
+    def tkd_importData(self, data):
+        text_headers = QColor(255, 255, 255)
+        text_names = QColor(255, 255, 255)
+        text_paid_date = QColor(44, 53, 49)
+        text_paid_ok = QColor(129, 0, 0)
+        text_date = QColor(255, 203, 154)
+        self.model.setRowCount(0)
+        root = self.model.invisibleRootItem()
+        years = []
+
+        for i in data[0]:  # create years list
+            if i[0] not in years:
+                years.append(i[0])
+
+        first_value = data[0][0][0]
+        paid_row = StandardItem(str(first_value), 12, set_bold=True, color=text_headers)
+        for i in data[0]:
+            if i[0] != first_value:
+                first_value = i[0]
+                root.appendRow(paid_row)
+                paid_row = StandardItem(str(first_value), 12, set_bold=True, color=text_headers)
+
+            months_rows = [StandardItem(list_greek_months[i[1]], 12, color=text_names),
+                           StandardItem(i[2], 10, set_italic=True, color=text_paid_date),
+                           StandardItem(i[3], 10, set_italic=True, color=text_paid_ok),
+                           StandardItem(i[4], 10, set_italic=True, color=text_date)]
+            paid_row.appendRow(months_rows)
+        root.appendRow(paid_row)
+
+
     def eco_tree_selected(self):
         mhnas = '0'
         etos = '0'
@@ -317,7 +366,7 @@ class LoginWindow(QMainWindow):
 
         text_color = QColor(255, 255, 255)
         text_color_months = QColor(44, 53, 49)
-        text_color_spends = QColor(129, 0, 0)
+        #text_color_spends = QColor(129, 0, 0)
         years_color = QColor(255, 203, 154)
         self.model2.setRowCount(0)
         root = self.model2.invisibleRootItem()
@@ -366,7 +415,7 @@ class LoginWindow(QMainWindow):
                     str_len[4] = 2
             if i[9].strip() == 'OUTCOME':
                 i[4] = i[4] * -1
-                text_color_spends = QColor(255, 0, 0)
+                text_color_spends = QColor(129, 0, 0)
             else:
                 text_color_spends = QColor(255, 255, 255)
             names_rows = [StandardItem(i[1], 9, color=text_color_months, set_Text_Alignment=Qt.AlignLeft),
@@ -473,15 +522,21 @@ class LoginWindow(QMainWindow):
             if exists_or_not == 'not_exist':  # τοτε δεν υπαρχει εγγραφη για την ημερ, κατ, υποκατηγ σε σχεση με το ονομα και θα κανει insert
                 print("Γινεται καταχωρηση για:")
                 message = self.log_in.login_eco_INSERT(name, descr, amount, in_out, date_str, eco_cat, eco_sub, pos)
-            else:  # update
+            elif exists_or_not != 'error':  # update
                 print("Γινεται ενημέρωση για(1):")
                 message = self.log_in.login_eco_UPDATE(descr, amount, in_out, pos, name, eco_cat, eco_sub, date_str)
+            else:
+                message = 'Σφάλμα στον έλεγχο !!!'
         elif self.add_eco_state == 'refresh':
             print("Γινεται ενημέρωση για(2):")
             message = self.log_in.login_eco_UPDATE_fromTreeview(self.member_eco_id,descr, amount, in_out, pos, eco_cat, eco_sub, date_str)
             self.add_eco_state = None
             self.member_eco_id = 0
             widgets.add_erco_btn.setText("ΚΑΤΑΧΩΡΗΣΗ")
+        if 'Επιτυχία' in message:
+            widgets.add_eco_lb.setStyleSheet('color: rgb(255, 255, 255)')
+        else:
+            widgets.add_eco_lb.setStyleSheet('color: rgb(80, 27, 29)')
         widgets.add_eco_lb.setText(message)
         self.eco_tree_create_analyt(self.year_tree, self.month_tree)
         print(name, date_str, eco_cat, eco_sub, amount)
@@ -628,6 +683,15 @@ class LoginWindow(QMainWindow):
         vbox = QGridLayout(widgets.chart_one_fm)
         vbox.setContentsMargins(0, 0, 0, 0)
         vbox.addWidget(self.chartview)
+
+    def tkd_year_cmb_changed(self):
+        months = self.log_in.login_list_ofMonths(widgets.tkd_year_cmb.currentText())
+        widgets.tkd_month_cmb.clear()
+        widgets.tkd_month_cmb.addItems(months)
+
+
+
+
 
     def handle_index_changed(self):  # χειριζζεται την αλλαγει του ετους απο το combbox
         values = []

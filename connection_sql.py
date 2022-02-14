@@ -317,6 +317,22 @@ class Connection:
         print(str(msg))
         return result
 
+    def login_list_ofMonths(self,year):
+        result = []
+        try:
+            query = self.str_query('list_ofMonths.sql').format(year)
+            cursor = self.cnxn.cursor()
+            cursor.execute(query)
+            rows = cursor.fetchall()
+            for i in rows:
+                result.append(str(i[0]))
+            msg = "list_ofMonths: Connection established"
+        except Exception as e:
+            msg = "list_ofMonths: Connection failed"
+            print("Error: list_ofMonths: " + str(e))
+        print(str(msg))
+        return result
+
     def login_economics_categ(self):
         result = []
         gen_cat = []
@@ -372,13 +388,14 @@ class Connection:
     def login_eco_check(self, name, cat_id, catsub_id, datenew):
         result = ''
         try:
-            query = self.str_query('eco_check.sql').format(name, cat_id, catsub_id, datenew)
+            query = self.str_query('eco_check.sql').format(name, cat_id, catsub_id,cat_id, datenew)
             cursor = self.cnxn.cursor()
             cursor.execute(query)
             rows = cursor.fetchall()
             result = rows[0][0]
             msg = "eco_check: Connection established"
         except Exception as e:
+            result = 'error'
             msg = "eco_check: Connection failed"
             print("Error: eco_check: " + str(e))
         print(str(msg))
@@ -387,7 +404,7 @@ class Connection:
     def login_eco_INSERT(self, name, descr, amount, in_out, datenew, cat_id, catsub_id, pos):
         result = ''
         try:
-            query = self.str_query('eco_insert.sql').format(name, descr, amount, in_out, datenew, cat_id, catsub_id,
+            query = self.str_query('eco_insert.sql').format(name, descr, amount, in_out, datenew, cat_id, catsub_id,cat_id,
                                                             pos)
             cursor = self.cnxn.cursor()
             cursor.execute(query)
@@ -404,7 +421,7 @@ class Connection:
     def login_eco_UPDATE(self, descr, amount, in_out, pos, name, cat_id, catsub_id, datenew):
         result = ''
         try:
-            query = self.str_query('eco_update.sql').format(descr, amount, in_out, pos, name, cat_id, catsub_id,
+            query = self.str_query('eco_update.sql').format(descr, amount, in_out, pos, name, cat_id, catsub_id, cat_id,
                                                             datenew)
             cursor = self.cnxn.cursor()
             cursor.execute(query)
@@ -484,6 +501,21 @@ class Connection:
             print("Error: eco_delete: " + str(e))
         print(str(msg))
         return msg
+
+    def tkd_treeView(self, year, month, active, cat_id, subcat_id):
+        result = []
+        try:
+            query = self.str_query('tkd_treeView.sql').format(str(year, month, cat_id, subcat_id, active))
+            cursor = self.cnxn.cursor()
+            cursor.execute(query)
+            rows = cursor.fetchall()
+            result = rows[0][0]
+            msg = "tkd_treeView: Connection established"
+        except Exception as e:
+            msg = "tkd_treeView: Connection failed"
+            print("Error: tkd_treeView: " + str(e))
+        print(str(msg))
+        return result
 
     def str_query(self, query):
         home_dir = os.path.abspath('.')

@@ -4,5 +4,6 @@ INSERT INTO [dbo].[economics]
            ((select id from data where Concat(LAST_NAME,  ' ' , FIRST_NAME) = '{}'),
            '{}',{},'{}','{}',
            (select id from econo_categ where trim(econ_categ)='{}'),
-           (select ID_CAT from econo_subcatego where trim(econo_subcateg)='{}'),
+           (select ID_CAT from econo_subcatego where trim(econo_subcateg)='{}' and id = (select id from econo_categ
+					where trim(econ_categ)='{}')),
            '{}')
