@@ -8,8 +8,8 @@ class Connection:
     def __init__(self, username, password):
         self.username = username
         self.password = password
-        #server = 'diaspeiraia2010.hopto.org'
-        server = '192.168.1.100'
+        server = 'diaspeiraia2010.hopto.org'
+        #server = '192.168.1.100'
         database = 'Axion'
         try:
             self.cnxn = pyodbc.connect(
@@ -502,18 +502,55 @@ class Connection:
         print(str(msg))
         return msg
 
-    def tkd_treeView(self, year, month, active, cat_id, subcat_id):
+    def login_tkd_treeView(self, year, month, cat_id, subcat_id, active):
         result = []
         try:
-            query = self.str_query('tkd_treeView.sql').format(str(year, month, cat_id, subcat_id, active))
+            query = self.str_query('tkd_treevieww.sql').format(year, month, cat_id, subcat_id, active)
             cursor = self.cnxn.cursor()
             cursor.execute(query)
             rows = cursor.fetchall()
-            result = rows[0][0]
+            result = rows
             msg = "tkd_treeView: Connection established"
         except Exception as e:
             msg = "tkd_treeView: Connection failed"
             print("Error: tkd_treeView: " + str(e))
+        print(str(msg))
+        return result
+
+    def login_members_treeView(self, sport):
+        result = []
+        result.append("Επιλέξτε Μέλος")
+        try:
+            if sport != "SPORT":
+                query = "SELECT Active= (select Active from active_members where ID=ID_DATA_active), NAME=Concat([LAST_NAME], ' ',[FIRST_NAME]),id  FROM [Axion].[dbo].[Data] where sport = '" + sport+ "' order by active  desc, name "
+            else:
+                query = "SELECT Active= (select Active from active_members where ID=ID_DATA_active), NAME=Concat([LAST_NAME], ' ',[FIRST_NAME]),id  FROM [Axion].[dbo].[Data] where sport = " + sport+ " order by active  desc, name "
+
+            cursor = self.cnxn.cursor()
+            cursor.execute(query)
+            rows = cursor.fetchall()
+            result = rows
+            msg = "login_members_treeView: Connection established"
+        except Exception as e:
+            msg = "login_members_treeView: Connection failed"
+            print("Error: login_members_treeView: " + str(e))
+        print(str(msg))
+        return result
+
+    def login_members_activate(self, noActi_memb,acti_mebm):
+        result=''
+        try:
+            query = self.str_query('update_activate_members.sql').format(', '.join(noActi_memb),', '.join(acti_mebm))
+            cursor = self.cnxn.cursor()
+            cursor.execute(query)
+
+            msg = "update_activate_members: Connection established"
+            self.cnxn.commit()
+            result = 'Επιτυχής ενημέρωση !'
+        except Exception as e:
+            msg = "update_activate_members: Connection failed"
+            print("Error: update_activate_members: " + str(e))
+            result = 'Ανεπιτυχής ενημέρωση !!!'
         print(str(msg))
         return result
 

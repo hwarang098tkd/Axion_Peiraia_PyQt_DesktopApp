@@ -10,8 +10,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>2241</width>
-    <height>1080</height>
+    <width>2244</width>
+    <height>1056</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -241,8 +241,8 @@
       <rect>
        <x>60</x>
        <y>40</y>
-       <width>1821</width>
-       <height>851</height>
+       <width>1811</width>
+       <height>1001</height>
       </rect>
      </property>
      <property name="sizePolicy">
@@ -1070,22 +1070,170 @@ color: rgb(211, 211, 211);</string>
      </widget>
      <widget class="QWidget" name="taekwondo_page">
       <layout class="QGridLayout" name="gridLayout_4">
-       <item row="0" column="0">
-        <layout class="QVBoxLayout" name="verticalLayout_5">
+       <item row="2" column="1">
+        <layout class="QVBoxLayout" name="verticalLayout_8">
          <item>
-          <layout class="QGridLayout" name="presenters_layout">
-           <item row="0" column="1">
-            <widget class="QLabel" name="label">
-             <property name="text">
-              <string>PRESENTERS loading ....</string>
+          <widget class="Line" name="line_14">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_15">
+           <item>
+            <spacer name="horizontalSpacer_7">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
              </property>
-             <property name="alignment">
-              <set>Qt::AlignCenter</set>
+             <property name="sizeType">
+              <enum>QSizePolicy::Preferred</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QComboBox" name="tkd_month_cmb">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>150</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="layoutDirection">
+              <enum>Qt::LeftToRight</enum>
              </property>
             </widget>
            </item>
+           <item>
+            <widget class="QLabel" name="label_9">
+             <property name="font">
+              <font>
+               <pointsize>11</pointsize>
+              </font>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">color: &quot;#D9B08C&quot;;</string>
+             </property>
+             <property name="text">
+              <string>ΜΗΝΑΣ: </string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="horizontalSpacer_8">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeType">
+              <enum>QSizePolicy::Preferred</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QComboBox" name="tkd_year_cmb">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>150</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="layoutDirection">
+              <enum>Qt::LeftToRight</enum>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="label_2">
+             <property name="font">
+              <font>
+               <pointsize>11</pointsize>
+              </font>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">color: &quot;#D9B08C&quot;;</string>
+             </property>
+             <property name="text">
+              <string>ΕΤΟΣ: </string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="horizontalSpacer_6">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeType">
+              <enum>QSizePolicy::Preferred</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
           </layout>
          </item>
+         <item>
+          <widget class="QTreeView" name="tkd_treeView">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="layoutDirection">
+            <enum>Qt::LeftToRight</enum>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QAbstractItemView QHeaderView {
+    show-decoration-selected: 0;
+    background: transparent;
+}
+QAbstractItemView::section QHeaderView::section {
+    show-decoration-selected: 0;
+    background: transparent;
+	color: rgb(247, 196, 149);
+	font: 700 italic 9pt &quot;Segoe UI&quot;;
+}</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+       <item row="2" column="2">
+        <layout class="QVBoxLayout" name="verticalLayout_5">
          <item>
           <widget class="Line" name="line_8">
            <property name="orientation">
@@ -1095,39 +1243,23 @@ color: rgb(211, 211, 211);</string>
          </item>
          <item>
           <layout class="QGridLayout" name="viber_layout_2">
-           <item row="0" column="1">
-            <widget class="QTreeView" name="tkd_treeView">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="2">
+           <item row="2" column="2">
             <layout class="QGridLayout" name="gridLayout_7">
-             <item row="1" column="0">
-              <layout class="QHBoxLayout" name="horizontalLayout_14">
-               <property name="spacing">
-                <number>6</number>
-               </property>
-               <property name="sizeConstraint">
-                <enum>QLayout::SetDefaultConstraint</enum>
-               </property>
-               <property name="leftMargin">
-                <number>6</number>
-               </property>
-               <property name="rightMargin">
-                <number>6</number>
-               </property>
+             <item row="3" column="0">
+              <layout class="QHBoxLayout" name="horizontalLayout_17">
                <item>
-                <widget class="QCheckBox" name="tkd_active_chb">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
+                <widget class="QComboBox" name="comboBox">
+                 <property name="layoutDirection">
+                  <enum>Qt::LeftToRight</enum>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QLabel" name="label_10">
+                 <property name="font">
+                  <font>
+                   <pointsize>11</pointsize>
+                  </font>
                  </property>
                  <property name="layoutDirection">
                   <enum>Qt::RightToLeft</enum>
@@ -1136,159 +1268,15 @@ color: rgb(211, 211, 211);</string>
                   <string notr="true">color: &quot;#D9B08C&quot;;</string>
                  </property>
                  <property name="text">
-                  <string>Ενεργοί</string>
+                  <string>Επιλογή Κειμένου: </string>
+                 </property>
+                 <property name="alignment">
+                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
                  </property>
                 </widget>
                </item>
                <item>
-                <widget class="QPushButton" name="tkd_owned_btn">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="minimumSize">
-                  <size>
-                   <width>200</width>
-                   <height>0</height>
-                  </size>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true">QPushButton:enabled{
-background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.261364 rgba(44, 53, 50, 255), stop:0.602273 rgba(17, 100, 102, 255), stop:0.98 rgba(217, 176, 140, 255), stop:1 rgba(0, 0, 0, 0));
-color: rgb(255, 255, 255);
-border: 2px  #D9B08C;
-border-radius: 10px;
-border-style: outset;}
-QPushButton:disabled{
-background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.261364 rgba(44, 53, 50, 255), stop:0.602273 rgba(17, 100, 102, 255),
-stop:0.98 rgba(217, 176, 140, 255),
-stop:1 rgba(0, 0, 0, 0));
-color: rgb(109, 109, 109);
-border: 2px  #D9B08C;
-border-radius: 10px;
-border-style: outset;}
-</string>
-                 </property>
-                 <property name="text">
-                  <string>ΟΦΕΙΛΟΝΤΕΣ</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QPushButton" name="tkd_checked_btn">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="minimumSize">
-                  <size>
-                   <width>200</width>
-                   <height>0</height>
-                  </size>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true">QPushButton:enabled{
-background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.261364 rgba(44, 53, 50, 255), stop:0.602273 rgba(17, 100, 102, 255), stop:0.98 rgba(217, 176, 140, 255), stop:1 rgba(0, 0, 0, 0));
-color: rgb(255, 255, 255);
-border: 2px  #D9B08C;
-border-radius: 10px;
-border-style: outset;}
-QPushButton:disabled{
-background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.261364 rgba(44, 53, 50, 255), stop:0.602273 rgba(17, 100, 102, 255),
-stop:0.98 rgba(217, 176, 140, 255),
-stop:1 rgba(0, 0, 0, 0));
-color: rgb(109, 109, 109);
-border: 2px  #D9B08C;
-border-radius: 10px;
-border-style: outset;}
-</string>
-                 </property>
-                 <property name="text">
-                  <string>ΠΛΗΡΩΣΑΝΤΕΣ</string>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QPushButton" name="tkd_all_btn">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="minimumSize">
-                  <size>
-                   <width>200</width>
-                   <height>0</height>
-                  </size>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true">QPushButton:enabled{
-background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.261364 rgba(44, 53, 50, 255), stop:0.602273 rgba(17, 100, 102, 255), stop:0.98 rgba(217, 176, 140, 255), stop:1 rgba(0, 0, 0, 0));
-color: rgb(255, 255, 255);
-border: 2px  #D9B08C;
-border-radius: 10px;
-border-style: outset;}
-QPushButton:disabled{
-background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.261364 rgba(44, 53, 50, 255), stop:0.602273 rgba(17, 100, 102, 255),
-stop:0.98 rgba(217, 176, 140, 255),
-stop:1 rgba(0, 0, 0, 0));
-color: rgb(109, 109, 109);
-border: 2px  #D9B08C;
-border-radius: 10px;
-border-style: outset;}
-</string>
-                 </property>
-                 <property name="text">
-                  <string>ΟΛΟΙ</string>
-                 </property>
-                </widget>
-               </item>
-              </layout>
-             </item>
-             <item row="0" column="0">
-              <layout class="QHBoxLayout" name="horizontalLayout_15">
-               <item>
-                <spacer name="horizontalSpacer_7">
-                 <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
-                 </property>
-                 <property name="sizeType">
-                  <enum>QSizePolicy::Preferred</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>40</width>
-                   <height>20</height>
-                  </size>
-                 </property>
-                </spacer>
-               </item>
-               <item>
-                <widget class="QComboBox" name="tkd_month_cmb">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>150</width>
-                   <height>16777215</height>
-                  </size>
-                 </property>
-                 <property name="layoutDirection">
-                  <enum>Qt::LeftToRight</enum>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QLabel" name="label_9">
+                <widget class="QLabel" name="viber_tittl_lb">
                  <property name="font">
                   <font>
                    <pointsize>11</pointsize>
@@ -1298,85 +1286,16 @@ border-style: outset;}
                   <string notr="true">color: &quot;#D9B08C&quot;;</string>
                  </property>
                  <property name="text">
-                  <string>ΜΗΝΑΣ: </string>
+                  <string>Κείμενο αποστολής VIBER BOT</string>
                  </property>
                  <property name="alignment">
-                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+                  <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
                  </property>
                 </widget>
-               </item>
-               <item>
-                <spacer name="horizontalSpacer_8">
-                 <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
-                 </property>
-                 <property name="sizeType">
-                  <enum>QSizePolicy::Preferred</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>40</width>
-                   <height>20</height>
-                  </size>
-                 </property>
-                </spacer>
-               </item>
-               <item>
-                <widget class="QComboBox" name="tkd_year_cmb">
-                 <property name="sizePolicy">
-                  <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-                   <horstretch>0</horstretch>
-                   <verstretch>0</verstretch>
-                  </sizepolicy>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>150</width>
-                   <height>16777215</height>
-                  </size>
-                 </property>
-                 <property name="layoutDirection">
-                  <enum>Qt::LeftToRight</enum>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QLabel" name="label_2">
-                 <property name="font">
-                  <font>
-                   <pointsize>11</pointsize>
-                  </font>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true">color: &quot;#D9B08C&quot;;</string>
-                 </property>
-                 <property name="text">
-                  <string>ΕΤΟΣ: </string>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <spacer name="horizontalSpacer_6">
-                 <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
-                 </property>
-                 <property name="sizeType">
-                  <enum>QSizePolicy::Preferred</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>40</width>
-                   <height>20</height>
-                  </size>
-                 </property>
-                </spacer>
                </item>
               </layout>
              </item>
-             <item row="4" column="0">
+             <item row="5" column="0">
               <layout class="QHBoxLayout" name="horizontalLayout_16">
                <item>
                 <spacer name="horizontalSpacer_10">
@@ -1448,7 +1367,84 @@ border-style: outset;}
                </item>
               </layout>
              </item>
-             <item row="3" column="0">
+             <item row="2" column="0">
+              <layout class="QHBoxLayout" name="horizontalLayout_14">
+               <property name="spacing">
+                <number>50</number>
+               </property>
+               <property name="sizeConstraint">
+                <enum>QLayout::SetDefaultConstraint</enum>
+               </property>
+               <property name="leftMargin">
+                <number>15</number>
+               </property>
+               <property name="rightMargin">
+                <number>15</number>
+               </property>
+               <item>
+                <widget class="QCheckBox" name="tkd_active_chb">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="layoutDirection">
+                  <enum>Qt::RightToLeft</enum>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">color: &quot;#D9B08C&quot;;</string>
+                 </property>
+                 <property name="text">
+                  <string>Ενεργοί</string>
+                 </property>
+                 <property name="checked">
+                  <bool>true</bool>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QRadioButton" name="tkd_notpaid_rb">
+                 <property name="layoutDirection">
+                  <enum>Qt::LeftToRight</enum>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">color: &quot;#D9B08C&quot;;</string>
+                 </property>
+                 <property name="text">
+                  <string>ΟΦΕΙΛΕΤΕΣ</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QRadioButton" name="tkd_paid_rb">
+                 <property name="layoutDirection">
+                  <enum>Qt::LeftToRight</enum>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">color: &quot;#D9B08C&quot;;</string>
+                 </property>
+                 <property name="text">
+                  <string>ΠΛΗΡΩΣΑΝΤΕΣ</string>
+                 </property>
+                </widget>
+               </item>
+               <item>
+                <widget class="QRadioButton" name="tkd_all_rb">
+                 <property name="layoutDirection">
+                  <enum>Qt::LeftToRight</enum>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">color: &quot;#D9B08C&quot;;</string>
+                 </property>
+                 <property name="text">
+                  <string>ΟΛΟΙ</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </item>
+             <item row="4" column="0">
               <layout class="QGridLayout" name="viber_layout">
                <item row="1" column="0">
                 <widget class="QTextEdit" name="tkd_viber_text">
@@ -1472,61 +1468,47 @@ border-style: outset;}
                </item>
               </layout>
              </item>
-             <item row="2" column="0">
-              <layout class="QHBoxLayout" name="horizontalLayout_17">
-               <item>
-                <widget class="QComboBox" name="comboBox">
-                 <property name="layoutDirection">
-                  <enum>Qt::LeftToRight</enum>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QLabel" name="label_10">
-                 <property name="font">
-                  <font>
-                   <pointsize>11</pointsize>
-                  </font>
-                 </property>
-                 <property name="layoutDirection">
-                  <enum>Qt::RightToLeft</enum>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true">color: &quot;#D9B08C&quot;;</string>
-                 </property>
-                 <property name="text">
-                  <string>Επιλογή Κειμένου: </string>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
-                 </property>
-                </widget>
-               </item>
-               <item>
-                <widget class="QLabel" name="viber_tittl_lb">
-                 <property name="font">
-                  <font>
-                   <pointsize>11</pointsize>
-                  </font>
-                 </property>
-                 <property name="styleSheet">
-                  <string notr="true">color: &quot;#D9B08C&quot;;</string>
-                 </property>
-                 <property name="text">
-                  <string>Κείμενο αποστολής VIBER BOT</string>
-                 </property>
-                 <property name="alignment">
-                  <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
-                 </property>
-                </widget>
-               </item>
-              </layout>
+             <item row="1" column="0">
+              <widget class="QLabel" name="viber_selection_viber">
+               <property name="font">
+                <font>
+                 <pointsize>12</pointsize>
+                 <italic>true</italic>
+                 <bold>true</bold>
+                </font>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">color: &quot;#D9B08C&quot;;</string>
+               </property>
+               <property name="text">
+                <string>Επιλέξτε μέλη για αποστολή</string>
+               </property>
+               <property name="alignment">
+                <set>Qt::AlignCenter</set>
+               </property>
+              </widget>
              </item>
             </layout>
            </item>
           </layout>
          </item>
         </layout>
+       </item>
+       <item row="0" column="2">
+        <widget class="QLabel" name="label">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string>PRESENTERS loading ....</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
        </item>
       </layout>
      </widget>
@@ -2504,1148 +2486,1307 @@ QAbstractItemView::section QHeaderView::section {
       <zorder>eco_treeview</zorder>
      </widget>
      <widget class="QWidget" name="menbers_page">
-      <widget class="QLabel" name="members_title_lb">
-       <property name="geometry">
-        <rect>
-         <x>330</x>
-         <y>20</y>
-         <width>151</width>
-         <height>21</height>
-        </rect>
-       </property>
-       <property name="font">
-        <font>
-         <pointsize>9</pointsize>
-         <bold>true</bold>
-        </font>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">color: &quot;#D9B08C&quot;;</string>
-       </property>
-       <property name="text">
-        <string>ΚΑΤΑΧΩΡΗΣΗ ΣΤΟΙΧΕΙΩΝ</string>
-       </property>
-      </widget>
-      <widget class="QComboBox" name="members_cbb">
-       <property name="geometry">
-        <rect>
-         <x>44</x>
-         <y>90</y>
-         <width>251</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="layoutDirection">
-        <enum>Qt::LeftToRight</enum>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">color: &quot;#D1E8E2&quot;;</string>
-       </property>
-       <property name="editable">
-        <bool>true</bool>
-       </property>
-       <property name="insertPolicy">
-        <enum>QComboBox::NoInsert</enum>
-       </property>
-       <property name="frame">
-        <bool>true</bool>
-       </property>
-      </widget>
-      <widget class="QLabel" name="members_title_lb_2">
-       <property name="geometry">
-        <rect>
-         <x>92</x>
-         <y>20</y>
-         <width>151</width>
-         <height>16</height>
-        </rect>
-       </property>
-       <property name="font">
-        <font>
-         <pointsize>12</pointsize>
-         <bold>true</bold>
-        </font>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">color: &quot;#D9B08C&quot;;</string>
-       </property>
-       <property name="text">
-        <string>Λίστα Μελών</string>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-      </widget>
-      <widget class="QWidget" name="horizontalLayoutWidget">
-       <property name="geometry">
-        <rect>
-         <x>32</x>
-         <y>50</y>
-         <width>285</width>
-         <height>31</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string>color: &quot;#D9B08C&quot;;</string>
-       </property>
-       <layout class="QHBoxLayout" name="radio_btns_layout">
-        <item>
-         <widget class="QRadioButton" name="olpo_rb">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="tabletTracking">
-           <bool>false</bool>
-          </property>
-          <property name="layoutDirection">
-           <enum>Qt::RightToLeft</enum>
-          </property>
-          <property name="text">
-           <string notr="true">Oplomaxia</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QRadioButton" name="fencing_rb">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="tabletTracking">
-           <bool>false</bool>
-          </property>
-          <property name="layoutDirection">
-           <enum>Qt::RightToLeft</enum>
-          </property>
-          <property name="text">
-           <string notr="true">FENCING</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QRadioButton" name="tkd_rb">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="tabletTracking">
-           <bool>false</bool>
-          </property>
-          <property name="layoutDirection">
-           <enum>Qt::RightToLeft</enum>
-          </property>
-          <property name="text">
-           <string notr="true">TKD</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QRadioButton" name="all_rb">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="tabletTracking">
-           <bool>false</bool>
-          </property>
-          <property name="layoutDirection">
-           <enum>Qt::RightToLeft</enum>
-          </property>
-          <property name="text">
-           <string notr="true">Όλοι</string>
-          </property>
-          <property name="checked">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </widget>
-      <widget class="QPushButton" name="new_member_btn">
-       <property name="geometry">
-        <rect>
-         <x>490</x>
-         <y>20</y>
-         <width>75</width>
-         <height>24</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.261364 rgba(44, 53, 50, 255), stop:0.602273 rgba(17, 100, 102, 255), stop:0.98 rgba(217, 176, 140, 255), stop:1 rgba(0, 0, 0, 0));
+      <layout class="QGridLayout" name="gridLayout_6">
+       <item row="0" column="2">
+        <layout class="QVBoxLayout" name="labels_members_layout">
+         <item>
+          <widget class="QLabel" name="members_title_lb_2">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="font">
+            <font>
+             <pointsize>14</pointsize>
+             <italic>true</italic>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="layoutDirection">
+            <enum>Qt::LeftToRight</enum>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">color: &quot;#D9B08C&quot;;</string>
+           </property>
+           <property name="text">
+            <string>Λίστα Μελών</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="radio_btns_layout">
+           <item>
+            <widget class="QRadioButton" name="olpo_rb">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="tabletTracking">
+              <bool>false</bool>
+             </property>
+             <property name="layoutDirection">
+              <enum>Qt::RightToLeft</enum>
+             </property>
+             <property name="text">
+              <string notr="true">Oplomaxia</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QRadioButton" name="fencing_rb">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="tabletTracking">
+              <bool>false</bool>
+             </property>
+             <property name="layoutDirection">
+              <enum>Qt::RightToLeft</enum>
+             </property>
+             <property name="text">
+              <string notr="true">FENCING</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QRadioButton" name="tkd_rb">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="tabletTracking">
+              <bool>false</bool>
+             </property>
+             <property name="layoutDirection">
+              <enum>Qt::RightToLeft</enum>
+             </property>
+             <property name="text">
+              <string notr="true">TKD</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QRadioButton" name="all_rb">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="tabletTracking">
+              <bool>false</bool>
+             </property>
+             <property name="layoutDirection">
+              <enum>Qt::RightToLeft</enum>
+             </property>
+             <property name="text">
+              <string notr="true">Όλοι</string>
+             </property>
+             <property name="checked">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <widget class="QComboBox" name="members_cbb">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>50</height>
+            </size>
+           </property>
+           <property name="font">
+            <font>
+             <pointsize>12</pointsize>
+            </font>
+           </property>
+           <property name="layoutDirection">
+            <enum>Qt::LeftToRight</enum>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">color: &quot;#D1E8E2&quot;;</string>
+           </property>
+           <property name="editable">
+            <bool>true</bool>
+           </property>
+           <property name="insertPolicy">
+            <enum>QComboBox::NoInsert</enum>
+           </property>
+           <property name="frame">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <layout class="QGridLayout" name="gridLayout_5">
+           <item row="1" column="0">
+            <widget class="QLabel" name="members_tkd_lb">
+             <property name="font">
+              <font>
+               <pointsize>20</pointsize>
+               <kerning>true</kerning>
+              </font>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">color: &quot;#D1E8E2&quot;;</string>
+             </property>
+             <property name="text">
+              <string>0</string>
+             </property>
+             <property name="textFormat">
+              <enum>Qt::PlainText</enum>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="0">
+            <widget class="QLabel" name="members_fenc_lb">
+             <property name="font">
+              <font>
+               <pointsize>20</pointsize>
+               <kerning>true</kerning>
+              </font>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">color: &quot;#D1E8E2&quot;;</string>
+             </property>
+             <property name="text">
+              <string>0</string>
+             </property>
+             <property name="textFormat">
+              <enum>Qt::PlainText</enum>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QLabel" name="label_6">
+             <property name="font">
+              <font>
+               <pointsize>12</pointsize>
+              </font>
+             </property>
+             <property name="layoutDirection">
+              <enum>Qt::RightToLeft</enum>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">color: &quot;#D9B08C&quot;;</string>
+             </property>
+             <property name="text">
+              <string>Σύνολο:</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QLabel" name="label_45">
+             <property name="font">
+              <font>
+               <pointsize>12</pointsize>
+              </font>
+             </property>
+             <property name="layoutDirection">
+              <enum>Qt::RightToLeft</enum>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">color: &quot;#D9B08C&quot;;</string>
+             </property>
+             <property name="text">
+              <string>TKD:</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="0">
+            <widget class="QLabel" name="members_sum_lb">
+             <property name="font">
+              <font>
+               <pointsize>20</pointsize>
+               <kerning>true</kerning>
+              </font>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">color: &quot;#D1E8E2&quot;;</string>
+             </property>
+             <property name="text">
+              <string>0</string>
+             </property>
+             <property name="textFormat">
+              <enum>Qt::PlainText</enum>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="1">
+            <widget class="QLabel" name="label_46">
+             <property name="font">
+              <font>
+               <pointsize>12</pointsize>
+              </font>
+             </property>
+             <property name="layoutDirection">
+              <enum>Qt::RightToLeft</enum>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">color: &quot;#D9B08C&quot;;</string>
+             </property>
+             <property name="text">
+              <string>FENCING:</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="1">
+            <widget class="QLabel" name="label_47">
+             <property name="font">
+              <font>
+               <pointsize>12</pointsize>
+              </font>
+             </property>
+             <property name="layoutDirection">
+              <enum>Qt::RightToLeft</enum>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">color: &quot;#D9B08C&quot;;</string>
+             </property>
+             <property name="text">
+              <string>OPLOM:</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="0">
+            <widget class="QLabel" name="members_oplo_lb">
+             <property name="font">
+              <font>
+               <pointsize>20</pointsize>
+               <kerning>true</kerning>
+              </font>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">color: &quot;#D1E8E2&quot;;</string>
+             </property>
+             <property name="text">
+              <string>0</string>
+             </property>
+             <property name="textFormat">
+              <enum>Qt::PlainText</enum>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </item>
+       <item row="0" column="1">
+        <layout class="QVBoxLayout" name="verticalLayout_7">
+         <item>
+          <widget class="QLabel" name="members_title_lb">
+           <property name="font">
+            <font>
+             <pointsize>14</pointsize>
+             <italic>true</italic>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">color: &quot;#D9B08C&quot;;</string>
+           </property>
+           <property name="text">
+            <string>ΚΑΤΑΧΩΡΗΣΗ ΣΤΟΙΧΕΙΩΝ</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="new_member_btn">
+           <property name="styleSheet">
+            <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.261364 rgba(44, 53, 50, 255), stop:0.602273 rgba(17, 100, 102, 255), stop:0.98 rgba(217, 176, 140, 255), stop:1 rgba(0, 0, 0, 0));
 color: rgb(255, 255, 255);
 border: 2px  #D9B08C;
 border-radius: 10px;
 border-style: outset;</string>
-       </property>
-       <property name="text">
-        <string>ΝΕΟ</string>
-       </property>
-      </widget>
-      <widget class="QLabel" name="label_6">
-       <property name="geometry">
-        <rect>
-         <x>32</x>
-         <y>160</y>
-         <width>51</width>
-         <height>41</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">color: &quot;#D9B08C&quot;;</string>
-       </property>
-       <property name="text">
-        <string>Σύνολο:</string>
-       </property>
-      </widget>
-      <widget class="QLabel" name="members_sum_lb">
-       <property name="geometry">
-        <rect>
-         <x>100</x>
-         <y>160</y>
-         <width>51</width>
-         <height>41</height>
-        </rect>
-       </property>
-       <property name="font">
-        <font>
-         <pointsize>20</pointsize>
-         <kerning>true</kerning>
-        </font>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">color: &quot;#D1E8E2&quot;;</string>
-       </property>
-       <property name="text">
-        <string>0</string>
-       </property>
-       <property name="textFormat">
-        <enum>Qt::PlainText</enum>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-      </widget>
-      <widget class="QLabel" name="members_tkd_lb">
-       <property name="geometry">
-        <rect>
-         <x>100</x>
-         <y>220</y>
-         <width>51</width>
-         <height>41</height>
-        </rect>
-       </property>
-       <property name="font">
-        <font>
-         <pointsize>20</pointsize>
-         <kerning>true</kerning>
-        </font>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">color: &quot;#D1E8E2&quot;;</string>
-       </property>
-       <property name="text">
-        <string>0</string>
-       </property>
-       <property name="textFormat">
-        <enum>Qt::PlainText</enum>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-      </widget>
-      <widget class="QLabel" name="label_45">
-       <property name="geometry">
-        <rect>
-         <x>32</x>
-         <y>220</y>
-         <width>51</width>
-         <height>41</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">color: &quot;#D9B08C&quot;;</string>
-       </property>
-       <property name="text">
-        <string>TKD:</string>
-       </property>
-      </widget>
-      <widget class="QLabel" name="members_fenc_lb">
-       <property name="geometry">
-        <rect>
-         <x>100</x>
-         <y>280</y>
-         <width>51</width>
-         <height>41</height>
-        </rect>
-       </property>
-       <property name="font">
-        <font>
-         <pointsize>20</pointsize>
-         <kerning>true</kerning>
-        </font>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">color: &quot;#D1E8E2&quot;;</string>
-       </property>
-       <property name="text">
-        <string>0</string>
-       </property>
-       <property name="textFormat">
-        <enum>Qt::PlainText</enum>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-      </widget>
-      <widget class="QLabel" name="label_46">
-       <property name="geometry">
-        <rect>
-         <x>32</x>
-         <y>280</y>
-         <width>51</width>
-         <height>41</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">color: &quot;#D9B08C&quot;;</string>
-       </property>
-       <property name="text">
-        <string>FENCING:</string>
-       </property>
-      </widget>
-      <widget class="QLabel" name="members_oplo_lb">
-       <property name="geometry">
-        <rect>
-         <x>100</x>
-         <y>340</y>
-         <width>51</width>
-         <height>41</height>
-        </rect>
-       </property>
-       <property name="font">
-        <font>
-         <pointsize>20</pointsize>
-         <kerning>true</kerning>
-        </font>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">color: &quot;#D1E8E2&quot;;</string>
-       </property>
-       <property name="text">
-        <string>0</string>
-       </property>
-       <property name="textFormat">
-        <enum>Qt::PlainText</enum>
-       </property>
-       <property name="alignment">
-        <set>Qt::AlignCenter</set>
-       </property>
-      </widget>
-      <widget class="QLabel" name="label_47">
-       <property name="geometry">
-        <rect>
-         <x>32</x>
-         <y>340</y>
-         <width>51</width>
-         <height>41</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">color: &quot;#D9B08C&quot;;</string>
-       </property>
-       <property name="text">
-        <string>OPLOM:</string>
-       </property>
-      </widget>
-      <widget class="QWidget" name="verticalLayoutWidget">
-       <property name="geometry">
-        <rect>
-         <x>330</x>
-         <y>50</y>
-         <width>244</width>
-         <height>740</height>
-        </rect>
-       </property>
-       <layout class="QVBoxLayout" name="verticalLayout_2">
-        <property name="sizeConstraint">
-         <enum>QLayout::SetDefaultConstraint</enum>
-        </property>
-        <item>
-         <layout class="QFormLayout" name="formLayout_3">
-          <item row="0" column="0">
-           <widget class="QLineEdit" name="LAST_NAME">
-            <property name="minimumSize">
-             <size>
-              <width>133</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>133</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">color: &quot;#D1E8E2&quot;;</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="1">
-           <widget class="QLabel" name="label_21">
-            <property name="styleSheet">
-             <string notr="true">color: &quot;#D9B08C&quot;;</string>
-            </property>
-            <property name="text">
-             <string>Επώνυμο:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0">
-           <widget class="QLineEdit" name="FIRST_NAME">
-            <property name="minimumSize">
-             <size>
-              <width>133</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>133</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">color: &quot;#D1E8E2&quot;;</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1">
-           <widget class="QLabel" name="label_22">
-            <property name="styleSheet">
-             <string notr="true">color: &quot;#D9B08C&quot;;</string>
-            </property>
-            <property name="text">
-             <string>Όνομα:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0">
-           <widget class="QLineEdit" name="FATHER_NAME">
-            <property name="minimumSize">
-             <size>
-              <width>133</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>133</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">color: &quot;#D1E8E2&quot;;</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="1">
-           <widget class="QLabel" name="label_23">
-            <property name="styleSheet">
-             <string notr="true">color: &quot;#D9B08C&quot;;</string>
-            </property>
-            <property name="text">
-             <string>Πατρώνυμο:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="0">
-           <widget class="QLineEdit" name="MOTHER_NAME">
-            <property name="minimumSize">
-             <size>
-              <width>133</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>133</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">color: &quot;#D1E8E2&quot;;</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="1">
-           <widget class="QLabel" name="label_24">
-            <property name="styleSheet">
-             <string notr="true">color: &quot;#D9B08C&quot;;</string>
-            </property>
-            <property name="text">
-             <string>Μητρώνυμο:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="0">
-           <widget class="QLineEdit" name="BIRTHDATE">
-            <property name="minimumSize">
-             <size>
-              <width>133</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>133</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">color: &quot;#D1E8E2&quot;;</string>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="1">
-           <widget class="QLabel" name="label_25">
-            <property name="styleSheet">
-             <string notr="true">color: &quot;#D9B08C&quot;;</string>
-            </property>
-            <property name="text">
-             <string>Ημ. Γέννησης:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="5" column="0">
-           <widget class="QLineEdit" name="BIRTH_PLACE">
-            <property name="minimumSize">
-             <size>
-              <width>133</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>133</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">color: &quot;#D1E8E2&quot;;</string>
-            </property>
-           </widget>
-          </item>
-          <item row="5" column="1">
-           <widget class="QLabel" name="label_27">
-            <property name="styleSheet">
-             <string notr="true">color: &quot;#D9B08C&quot;;</string>
-            </property>
-            <property name="text">
-             <string>Τόπος Γέννησης:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="6" column="0">
-           <widget class="QLineEdit" name="NATIONALITY">
-            <property name="minimumSize">
-             <size>
-              <width>133</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>133</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">color: &quot;#D1E8E2&quot;;</string>
-            </property>
-           </widget>
-          </item>
-          <item row="6" column="1">
-           <widget class="QLabel" name="label_28">
-            <property name="styleSheet">
-             <string notr="true">color: &quot;#D9B08C&quot;;</string>
-            </property>
-            <property name="text">
-             <string>Υπηκοότητα:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="7" column="0">
-           <widget class="QLineEdit" name="PROFESSION">
-            <property name="minimumSize">
-             <size>
-              <width>133</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>133</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">color: &quot;#D1E8E2&quot;;</string>
-            </property>
-           </widget>
-          </item>
-          <item row="7" column="1">
-           <widget class="QLabel" name="label_26">
-            <property name="styleSheet">
-             <string notr="true">color: &quot;#D9B08C&quot;;</string>
-            </property>
-            <property name="text">
-             <string>Επάγγελμα:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="8" column="0">
-           <widget class="QLineEdit" name="ID_NUMBER">
-            <property name="minimumSize">
-             <size>
-              <width>133</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>133</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">color: &quot;#D1E8E2&quot;;</string>
-            </property>
-           </widget>
-          </item>
-          <item row="8" column="1">
-           <widget class="QLabel" name="label_30">
-            <property name="styleSheet">
-             <string notr="true">color: &quot;#D9B08C&quot;;</string>
-            </property>
-            <property name="text">
-             <string>Αρ. Ταυτότητας:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="9" column="0">
-           <widget class="QLineEdit" name="ADDRESS_STREET">
-            <property name="minimumSize">
-             <size>
-              <width>133</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>133</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">color: &quot;#D1E8E2&quot;;</string>
-            </property>
-           </widget>
-          </item>
-          <item row="9" column="1">
-           <widget class="QLabel" name="label_33">
-            <property name="styleSheet">
-             <string notr="true">color: &quot;#D9B08C&quot;;</string>
-            </property>
-            <property name="text">
-             <string>Διεύθυνση:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="10" column="0">
-           <widget class="QLineEdit" name="ADDRESS_NUMBER">
-            <property name="minimumSize">
-             <size>
-              <width>133</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>133</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">color: &quot;#D1E8E2&quot;;</string>
-            </property>
-           </widget>
-          </item>
-          <item row="10" column="1">
-           <widget class="QLabel" name="label_34">
-            <property name="styleSheet">
-             <string notr="true">color: &quot;#D9B08C&quot;;</string>
-            </property>
-            <property name="text">
-             <string>Αριθμός Οδού:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="11" column="0">
-           <widget class="QLineEdit" name="REGION">
-            <property name="minimumSize">
-             <size>
-              <width>133</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>133</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">color: &quot;#D1E8E2&quot;;</string>
-            </property>
-           </widget>
-          </item>
-          <item row="11" column="1">
-           <widget class="QLabel" name="label_35">
-            <property name="styleSheet">
-             <string notr="true">color: &quot;#D9B08C&quot;;</string>
-            </property>
-            <property name="text">
-             <string>Περιοχή:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="12" column="0">
-           <widget class="QLineEdit" name="HOME_PHONE">
-            <property name="minimumSize">
-             <size>
-              <width>133</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>133</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">color: &quot;#D1E8E2&quot;;</string>
-            </property>
-           </widget>
-          </item>
-          <item row="12" column="1">
-           <widget class="QLabel" name="label_31">
-            <property name="styleSheet">
-             <string notr="true">color: &quot;#D9B08C&quot;;</string>
-            </property>
-            <property name="text">
-             <string>Τηλ. Οικείας:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="13" column="0">
-           <widget class="QLineEdit" name="MOTHER_PHONE">
-            <property name="minimumSize">
-             <size>
-              <width>133</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>133</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">color: &quot;#D1E8E2&quot;;</string>
-            </property>
-           </widget>
-          </item>
-          <item row="13" column="1">
-           <widget class="QLabel" name="label_29">
-            <property name="styleSheet">
-             <string notr="true">color: &quot;#D9B08C&quot;;</string>
-            </property>
-            <property name="text">
-             <string>Τηλ. Μητέρας:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="14" column="0">
-           <widget class="QLineEdit" name="FATHER_PHONE">
-            <property name="minimumSize">
-             <size>
-              <width>133</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>133</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">color: &quot;#D1E8E2&quot;;</string>
-            </property>
-           </widget>
-          </item>
-          <item row="14" column="1">
-           <widget class="QLabel" name="label_32">
-            <property name="styleSheet">
-             <string notr="true">color: &quot;#D9B08C&quot;;</string>
-            </property>
-            <property name="text">
-             <string>Τηλ. Πατέρα:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="15" column="0">
-           <widget class="QLineEdit" name="CELL_PHONE">
-            <property name="minimumSize">
-             <size>
-              <width>133</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>133</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">color: &quot;#D1E8E2&quot;;</string>
-            </property>
-           </widget>
-          </item>
-          <item row="15" column="1">
-           <widget class="QLabel" name="label_43">
-            <property name="styleSheet">
-             <string notr="true">color: &quot;#D9B08C&quot;;</string>
-            </property>
-            <property name="text">
-             <string>Κινητό:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="16" column="0">
-           <widget class="QLineEdit" name="EMERG_PHONE">
-            <property name="minimumSize">
-             <size>
-              <width>133</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>133</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">color: &quot;#D1E8E2&quot;;</string>
-            </property>
-           </widget>
-          </item>
-          <item row="16" column="1">
-           <widget class="QLabel" name="label_40">
-            <property name="styleSheet">
-             <string notr="true">color: &quot;#D9B08C&quot;;</string>
-            </property>
-            <property name="text">
-             <string>Τηλ. Ανάγκης:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="17" column="0">
-           <widget class="QLineEdit" name="EMAIL">
-            <property name="minimumSize">
-             <size>
-              <width>133</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>133</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">color: &quot;#D1E8E2&quot;;</string>
-            </property>
-           </widget>
-          </item>
-          <item row="17" column="1">
-           <widget class="QLabel" name="label_36">
-            <property name="styleSheet">
-             <string notr="true">color: &quot;#D9B08C&quot;;</string>
-            </property>
-            <property name="text">
-             <string>Email:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="18" column="0">
-           <widget class="QComboBox" name="SPORT">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>10</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>133</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>133</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="layoutDirection">
-             <enum>Qt::LeftToRight</enum>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">color: &quot;#D1E8E2&quot;;</string>
-            </property>
-           </widget>
-          </item>
-          <item row="18" column="1">
-           <widget class="QLabel" name="label_39">
-            <property name="styleSheet">
-             <string notr="true">color: &quot;#D9B08C&quot;;</string>
-            </property>
-            <property name="text">
-             <string>Άθλημα (1):</string>
-            </property>
-           </widget>
-          </item>
-          <item row="19" column="0">
-           <widget class="QComboBox" name="SPORT_1">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>133</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>133</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="layoutDirection">
-             <enum>Qt::LeftToRight</enum>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">color: &quot;#D1E8E2&quot;;</string>
-            </property>
-            <property name="maxVisibleItems">
-             <number>5</number>
-            </property>
-           </widget>
-          </item>
-          <item row="19" column="1">
-           <widget class="QLabel" name="label_38">
-            <property name="styleSheet">
-             <string notr="true">color: &quot;#D9B08C&quot;;</string>
-            </property>
-            <property name="text">
-             <string>Άθλημα (2):</string>
-            </property>
-           </widget>
-          </item>
-          <item row="20" column="0">
-           <widget class="QLineEdit" name="DATE_SUBSCRIBE">
-            <property name="minimumSize">
-             <size>
-              <width>133</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>133</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">color: &quot;#D1E8E2&quot;;</string>
-            </property>
-           </widget>
-          </item>
-          <item row="20" column="1">
-           <widget class="QLabel" name="label_37">
-            <property name="styleSheet">
-             <string notr="true">color: &quot;#D9B08C&quot;;</string>
-            </property>
-            <property name="text">
-             <string>Ημ. Εγγραφής:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="21" column="0">
-           <widget class="QLineEdit" name="BARCODE">
-            <property name="minimumSize">
-             <size>
-              <width>133</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>133</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">color: &quot;#D1E8E2&quot;;</string>
-            </property>
-           </widget>
-          </item>
-          <item row="21" column="1">
-           <widget class="QLabel" name="label_44">
-            <property name="styleSheet">
-             <string notr="true">color: &quot;#D9B08C&quot;;</string>
-            </property>
-            <property name="text">
-             <string>Barcode (1):</string>
-            </property>
-           </widget>
-          </item>
-          <item row="22" column="0">
-           <widget class="QLineEdit" name="BARCODE_1">
-            <property name="minimumSize">
-             <size>
-              <width>133</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>133</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">color: &quot;#D1E8E2&quot;;</string>
-            </property>
-           </widget>
-          </item>
-          <item row="22" column="1">
-           <widget class="QLabel" name="label_41">
-            <property name="styleSheet">
-             <string notr="true">color: &quot;#D9B08C&quot;;</string>
-            </property>
-            <property name="text">
-             <string>Barcode (2):</string>
-            </property>
-           </widget>
-          </item>
-          <item row="23" column="0">
-           <widget class="QLineEdit" name="PAY_DAY">
-            <property name="minimumSize">
-             <size>
-              <width>133</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>133</width>
-              <height>16777215</height>
-             </size>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">color: &quot;#D1E8E2&quot;;</string>
-            </property>
-           </widget>
-          </item>
-          <item row="23" column="1">
-           <widget class="QLabel" name="label_42">
-            <property name="styleSheet">
-             <string notr="true">color: &quot;#D9B08C&quot;;</string>
-            </property>
-            <property name="text">
-             <string>Ημέρα Πληρωμής:</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </item>
-        <item>
-         <widget class="QLabel" name="add_error_lb">
-          <property name="layoutDirection">
-           <enum>Qt::LeftToRight</enum>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">color: rgb(80, 27, 29);</string>
-          </property>
-          <property name="text">
-           <string/>
-          </property>
-          <property name="wordWrap">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="add_ref_btn">
-          <property name="styleSheet">
-           <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.261364 rgba(44, 53, 50, 255), stop:0.602273 rgba(17, 100, 102, 255), stop:0.98 rgba(217, 176, 140, 255), stop:1 rgba(0, 0, 0, 0));
+           </property>
+           <property name="text">
+            <string>ΝΕΟ</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout_2">
+           <property name="sizeConstraint">
+            <enum>QLayout::SetDefaultConstraint</enum>
+           </property>
+           <item>
+            <layout class="QFormLayout" name="formLayout_3">
+             <item row="0" column="0">
+              <widget class="QLineEdit" name="LAST_NAME">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>133</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>133</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">color: &quot;#D1E8E2&quot;;</string>
+               </property>
+              </widget>
+             </item>
+             <item row="0" column="1">
+              <widget class="QLabel" name="label_21">
+               <property name="styleSheet">
+                <string notr="true">color: &quot;#D9B08C&quot;;</string>
+               </property>
+               <property name="text">
+                <string>Επώνυμο:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="0">
+              <widget class="QLineEdit" name="FIRST_NAME">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>133</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>133</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">color: &quot;#D1E8E2&quot;;</string>
+               </property>
+              </widget>
+             </item>
+             <item row="1" column="1">
+              <widget class="QLabel" name="label_22">
+               <property name="styleSheet">
+                <string notr="true">color: &quot;#D9B08C&quot;;</string>
+               </property>
+               <property name="text">
+                <string>Όνομα:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="0">
+              <widget class="QLineEdit" name="FATHER_NAME">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>133</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>133</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">color: &quot;#D1E8E2&quot;;</string>
+               </property>
+              </widget>
+             </item>
+             <item row="2" column="1">
+              <widget class="QLabel" name="label_23">
+               <property name="styleSheet">
+                <string notr="true">color: &quot;#D9B08C&quot;;</string>
+               </property>
+               <property name="text">
+                <string>Πατρώνυμο:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="0">
+              <widget class="QLineEdit" name="MOTHER_NAME">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>133</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>133</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">color: &quot;#D1E8E2&quot;;</string>
+               </property>
+              </widget>
+             </item>
+             <item row="3" column="1">
+              <widget class="QLabel" name="label_24">
+               <property name="styleSheet">
+                <string notr="true">color: &quot;#D9B08C&quot;;</string>
+               </property>
+               <property name="text">
+                <string>Μητρώνυμο:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="0">
+              <widget class="QLineEdit" name="BIRTHDATE">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>133</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>133</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">color: &quot;#D1E8E2&quot;;</string>
+               </property>
+              </widget>
+             </item>
+             <item row="4" column="1">
+              <widget class="QLabel" name="label_25">
+               <property name="styleSheet">
+                <string notr="true">color: &quot;#D9B08C&quot;;</string>
+               </property>
+               <property name="text">
+                <string>Ημ. Γέννησης:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="5" column="0">
+              <widget class="QLineEdit" name="BIRTH_PLACE">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>133</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>133</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">color: &quot;#D1E8E2&quot;;</string>
+               </property>
+              </widget>
+             </item>
+             <item row="5" column="1">
+              <widget class="QLabel" name="label_27">
+               <property name="styleSheet">
+                <string notr="true">color: &quot;#D9B08C&quot;;</string>
+               </property>
+               <property name="text">
+                <string>Τόπος Γέννησης:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="6" column="0">
+              <widget class="QLineEdit" name="NATIONALITY">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>133</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>133</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">color: &quot;#D1E8E2&quot;;</string>
+               </property>
+              </widget>
+             </item>
+             <item row="6" column="1">
+              <widget class="QLabel" name="label_28">
+               <property name="styleSheet">
+                <string notr="true">color: &quot;#D9B08C&quot;;</string>
+               </property>
+               <property name="text">
+                <string>Υπηκοότητα:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="7" column="0">
+              <widget class="QLineEdit" name="PROFESSION">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>133</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>133</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">color: &quot;#D1E8E2&quot;;</string>
+               </property>
+              </widget>
+             </item>
+             <item row="7" column="1">
+              <widget class="QLabel" name="label_26">
+               <property name="styleSheet">
+                <string notr="true">color: &quot;#D9B08C&quot;;</string>
+               </property>
+               <property name="text">
+                <string>Επάγγελμα:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="8" column="0">
+              <widget class="QLineEdit" name="ID_NUMBER">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>133</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>133</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">color: &quot;#D1E8E2&quot;;</string>
+               </property>
+              </widget>
+             </item>
+             <item row="8" column="1">
+              <widget class="QLabel" name="label_30">
+               <property name="styleSheet">
+                <string notr="true">color: &quot;#D9B08C&quot;;</string>
+               </property>
+               <property name="text">
+                <string>Αρ. Ταυτότητας:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="9" column="0">
+              <widget class="QLineEdit" name="ADDRESS_STREET">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>133</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>133</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">color: &quot;#D1E8E2&quot;;</string>
+               </property>
+              </widget>
+             </item>
+             <item row="9" column="1">
+              <widget class="QLabel" name="label_33">
+               <property name="styleSheet">
+                <string notr="true">color: &quot;#D9B08C&quot;;</string>
+               </property>
+               <property name="text">
+                <string>Διεύθυνση:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="10" column="0">
+              <widget class="QLineEdit" name="ADDRESS_NUMBER">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>133</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>133</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">color: &quot;#D1E8E2&quot;;</string>
+               </property>
+              </widget>
+             </item>
+             <item row="10" column="1">
+              <widget class="QLabel" name="label_34">
+               <property name="styleSheet">
+                <string notr="true">color: &quot;#D9B08C&quot;;</string>
+               </property>
+               <property name="text">
+                <string>Αριθμός Οδού:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="11" column="0">
+              <widget class="QLineEdit" name="REGION">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>133</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>133</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">color: &quot;#D1E8E2&quot;;</string>
+               </property>
+              </widget>
+             </item>
+             <item row="11" column="1">
+              <widget class="QLabel" name="label_35">
+               <property name="styleSheet">
+                <string notr="true">color: &quot;#D9B08C&quot;;</string>
+               </property>
+               <property name="text">
+                <string>Περιοχή:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="12" column="0">
+              <widget class="QLineEdit" name="HOME_PHONE">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>133</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>133</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">color: &quot;#D1E8E2&quot;;</string>
+               </property>
+              </widget>
+             </item>
+             <item row="12" column="1">
+              <widget class="QLabel" name="label_31">
+               <property name="styleSheet">
+                <string notr="true">color: &quot;#D9B08C&quot;;</string>
+               </property>
+               <property name="text">
+                <string>Τηλ. Οικείας:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="13" column="0">
+              <widget class="QLineEdit" name="MOTHER_PHONE">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>133</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>133</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">color: &quot;#D1E8E2&quot;;</string>
+               </property>
+              </widget>
+             </item>
+             <item row="13" column="1">
+              <widget class="QLabel" name="label_29">
+               <property name="styleSheet">
+                <string notr="true">color: &quot;#D9B08C&quot;;</string>
+               </property>
+               <property name="text">
+                <string>Τηλ. Μητέρας:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="14" column="0">
+              <widget class="QLineEdit" name="FATHER_PHONE">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>133</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>133</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">color: &quot;#D1E8E2&quot;;</string>
+               </property>
+              </widget>
+             </item>
+             <item row="14" column="1">
+              <widget class="QLabel" name="label_32">
+               <property name="styleSheet">
+                <string notr="true">color: &quot;#D9B08C&quot;;</string>
+               </property>
+               <property name="text">
+                <string>Τηλ. Πατέρα:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="15" column="0">
+              <widget class="QLineEdit" name="CELL_PHONE">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>133</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>133</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">color: &quot;#D1E8E2&quot;;</string>
+               </property>
+              </widget>
+             </item>
+             <item row="15" column="1">
+              <widget class="QLabel" name="label_43">
+               <property name="styleSheet">
+                <string notr="true">color: &quot;#D9B08C&quot;;</string>
+               </property>
+               <property name="text">
+                <string>Κινητό:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="16" column="0">
+              <widget class="QLineEdit" name="EMERG_PHONE">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>133</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>133</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">color: &quot;#D1E8E2&quot;;</string>
+               </property>
+              </widget>
+             </item>
+             <item row="16" column="1">
+              <widget class="QLabel" name="label_40">
+               <property name="styleSheet">
+                <string notr="true">color: &quot;#D9B08C&quot;;</string>
+               </property>
+               <property name="text">
+                <string>Τηλ. Ανάγκης:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="17" column="0">
+              <widget class="QLineEdit" name="EMAIL">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>133</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>133</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">color: &quot;#D1E8E2&quot;;</string>
+               </property>
+              </widget>
+             </item>
+             <item row="17" column="1">
+              <widget class="QLabel" name="label_36">
+               <property name="styleSheet">
+                <string notr="true">color: &quot;#D9B08C&quot;;</string>
+               </property>
+               <property name="text">
+                <string>Email:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="18" column="0">
+              <widget class="QComboBox" name="SPORT">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>10</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>133</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>133</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="layoutDirection">
+                <enum>Qt::LeftToRight</enum>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">color: &quot;#D1E8E2&quot;;</string>
+               </property>
+              </widget>
+             </item>
+             <item row="18" column="1">
+              <widget class="QLabel" name="label_39">
+               <property name="styleSheet">
+                <string notr="true">color: &quot;#D9B08C&quot;;</string>
+               </property>
+               <property name="text">
+                <string>Άθλημα (1):</string>
+               </property>
+              </widget>
+             </item>
+             <item row="19" column="0">
+              <widget class="QComboBox" name="SPORT_1">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>133</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>133</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="layoutDirection">
+                <enum>Qt::LeftToRight</enum>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">color: &quot;#D1E8E2&quot;;</string>
+               </property>
+               <property name="maxVisibleItems">
+                <number>5</number>
+               </property>
+              </widget>
+             </item>
+             <item row="19" column="1">
+              <widget class="QLabel" name="label_38">
+               <property name="styleSheet">
+                <string notr="true">color: &quot;#D9B08C&quot;;</string>
+               </property>
+               <property name="text">
+                <string>Άθλημα (2):</string>
+               </property>
+              </widget>
+             </item>
+             <item row="20" column="0">
+              <widget class="QLineEdit" name="DATE_SUBSCRIBE">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>133</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>133</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">color: &quot;#D1E8E2&quot;;</string>
+               </property>
+              </widget>
+             </item>
+             <item row="20" column="1">
+              <widget class="QLabel" name="label_37">
+               <property name="styleSheet">
+                <string notr="true">color: &quot;#D9B08C&quot;;</string>
+               </property>
+               <property name="text">
+                <string>Ημ. Εγγραφής:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="21" column="0">
+              <widget class="QLineEdit" name="BARCODE">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>133</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>133</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">color: &quot;#D1E8E2&quot;;</string>
+               </property>
+              </widget>
+             </item>
+             <item row="21" column="1">
+              <widget class="QLabel" name="label_44">
+               <property name="styleSheet">
+                <string notr="true">color: &quot;#D9B08C&quot;;</string>
+               </property>
+               <property name="text">
+                <string>Barcode (1):</string>
+               </property>
+              </widget>
+             </item>
+             <item row="22" column="0">
+              <widget class="QLineEdit" name="BARCODE_1">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>133</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>133</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">color: &quot;#D1E8E2&quot;;</string>
+               </property>
+              </widget>
+             </item>
+             <item row="22" column="1">
+              <widget class="QLabel" name="label_41">
+               <property name="styleSheet">
+                <string notr="true">color: &quot;#D9B08C&quot;;</string>
+               </property>
+               <property name="text">
+                <string>Barcode (2):</string>
+               </property>
+              </widget>
+             </item>
+             <item row="23" column="0">
+              <widget class="QLineEdit" name="PAY_DAY">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>133</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>133</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">color: &quot;#D1E8E2&quot;;</string>
+               </property>
+              </widget>
+             </item>
+             <item row="23" column="1">
+              <widget class="QLabel" name="label_42">
+               <property name="styleSheet">
+                <string notr="true">color: &quot;#D9B08C&quot;;</string>
+               </property>
+               <property name="text">
+                <string>Ημέρα Πληρωμής:</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <widget class="QLabel" name="add_error_lb">
+             <property name="layoutDirection">
+              <enum>Qt::LeftToRight</enum>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">color: rgb(80, 27, 29);</string>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="add_ref_btn">
+             <property name="styleSheet">
+              <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.261364 rgba(44, 53, 50, 255), stop:0.602273 rgba(17, 100, 102, 255), stop:0.98 rgba(217, 176, 140, 255), stop:1 rgba(0, 0, 0, 0));
 color: rgb(255, 255, 255);
 border: 2px  #D9B08C;
 border-radius: 15px;
 border-style: outset;</string>
-          </property>
-          <property name="text">
-           <string>ΚΑΤΑΧΩΡΗΣΗ</string>
-          </property>
-         </widget>
-        </item>
-        <item>
-         <widget class="QPushButton" name="del_ref_btn">
-          <property name="styleSheet">
-           <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.329545 rgba(46, 17, 20, 255), stop:0.738636 rgba(80, 27, 29, 255), stop:1 rgba(217, 176, 140, 255));
+             </property>
+             <property name="text">
+              <string>ΚΑΤΑΧΩΡΗΣΗ</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="del_ref_btn">
+             <property name="styleSheet">
+              <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.329545 rgba(46, 17, 20, 255), stop:0.738636 rgba(80, 27, 29, 255), stop:1 rgba(217, 176, 140, 255));
 color: rgb(255, 255, 255);
 border: 2px  #D9B08C;
 border-radius: 10px;
 border-style: outset;</string>
-          </property>
-          <property name="text">
-           <string>ΔΙΑΓΡΑΦΗ</string>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </widget>
+             </property>
+             <property name="text">
+              <string>ΔΙΑΓΡΑΦΗ</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </item>
+       <item row="0" column="0">
+        <layout class="QGridLayout" name="gridLayout_8">
+         <item row="0" column="0">
+          <widget class="QTreeView" name="memb_acti_tree">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="layoutDirection">
+            <enum>Qt::LeftToRight</enum>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">QAbstractItemView QHeaderView {
+    show-decoration-selected: 0;
+    background: transparent;
+}
+QAbstractItemView::section QHeaderView::section {
+    show-decoration-selected: 0;
+    background: transparent;
+	color: rgb(247, 196, 149);
+	font: 700 italic 9pt &quot;Segoe UI&quot;;
+}</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
+      </layout>
      </widget>
      <widget class="QWidget" name="presenters_page">
       <widget class="QLabel" name="label_7">

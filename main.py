@@ -14,6 +14,14 @@ global list_greek_months
 list_greek_months = ["0", "Ιαν", "Φεβρ", "Μαρτ", "Απρ", "Μαιος",
                      "Ιουν", "Ιουλ", "Αυγ", "Σεπτ", "Οκτ", "Νοε", "Δεκ"]
 
+list_GREEK_months = ["0", "Ιανουάριος", "Φεβρουάριος", "Μάρτιος", "Απρίλιος", "Μάιος",
+                     "Ιούνιος", "Ιούλιος", "Αύγουστος", "Σεπτέμβριος", "Οκτώβριος", "Νοέμβριος", "Δεκέμβριος"]
+
+tkd_viber_list_SEND = []
+fencing_viber_list_SEND = []
+oplo_viber_list_SEND = []
+
+
 
 class LoginWindow(QMainWindow):
 
@@ -82,10 +90,11 @@ class LoginWindow(QMainWindow):
         widgets.del_ref_btn.hide()
         widgets.del_ref_btn.clicked.connect(self.del_refresh_btn)
         ####################################################
-        #self.days_labels_hide()
+        # self.days_labels_hide()
         ####################################################
         widgets.chart_years_ccb.currentIndexChanged.connect(self.handle_index_changed)
         widgets.tkd_year_cmb.currentIndexChanged.connect(self.tkd_year_cmb_changed)
+        widgets.tkd_month_cmb.currentIndexChanged.connect(self.tkd_month_cmb_changed)
         ####################################################
         widgets.eco_gen_cbb.currentIndexChanged.connect(self.eco_gen_cbbChange)
         widgets.eco_sub_cbb.currentIndexChanged.connect(self.eco_sub_cbbChange)
@@ -101,13 +110,54 @@ class LoginWindow(QMainWindow):
         # Connect the contextmenu
         widgets.eco_treeview_analy.setContextMenuPolicy(Qt.CustomContextMenu)
         widgets.eco_treeview_analy.customContextMenuRequested.connect(self.openMenu)
-        # widgets.eco_treeview_analy.clicked.connect(self.eco_tree_selected)
+        #
+        widgets.memb_acti_tree.clicked.connect(self.memb_acti_tree_selected)
+        #tkd_page buttons
+        widgets.tkd_all_rb.clicked.connect(self.radio_tkd_page_refresh)
+        widgets.tkd_paid_rb.clicked.connect(self.radio_tkd_page_refresh)
+        widgets.tkd_notpaid_rb.clicked.connect(self.radio_tkd_page_refresh)
+        widgets.tkd_active_chb.stateChanged.connect(self.tkd_active_chb_change)
 
         self.installEventFilter(self)
         self.displayTime()
         widgets.toolBar_fm.hide()
         widgets.home_bt.setStyleSheet(buttons_style)
         self.show()
+
+    def tkd_month_cmb_changed(self):
+        if widgets.tkd_month_cmb.currentText() != '': #αυτο γιατι στην αρχικοποιηση ενεργοποιειται και δεν εχει ακομα παρει τιμη και μπαγκαρει
+            self.tkd_tree_create()
+
+    def radio_tkd_page_refresh(self):
+        if widgets.tkd_all_rb.isChecked():
+            self.checing_members(2,2)
+        elif widgets.tkd_paid_rb.isChecked():
+            self.checing_members(2,0)
+        elif widgets.tkd_notpaid_rb.isChecked():
+            self.checing_members(0,2)
+        print(tkd_viber_list_SEND)
+
+    def checing_members(self, paid, notpaid):
+        tkd_viber_list_SEND.clear()
+        for i in range(self.model_3.rowCount()):
+            item = self.model_3.item(i)
+            if item.text() == 'ΠΛΗΡΩΜΕΣ':
+                if item is not None:
+                    if item.hasChildren():
+                        for x in range(item.rowCount()):
+                            item.child(x,0).setCheckState(paid)
+                            if paid == 2:
+                                tkd_viber_list_SEND.append(item.child(x,4).text())
+            if item.text() == 'ΑΝΑΜΟΝΕΣ':
+                if item is not None:
+                    if item.hasChildren():
+                        for x in range(item.rowCount()):
+                            item.child(x,0).setCheckState(notpaid)
+                            if notpaid == 2:
+                                tkd_viber_list_SEND.append(item.child(x, 4).text())
+
+    def tkd_active_chb_change(self):
+        self.tkd_tree_create()
 
     def openMenu(self, position):
         indexes = self.ui.eco_treeview_analy.selectedIndexes()
@@ -150,7 +200,7 @@ class LoginWindow(QMainWindow):
         if ret == qm.Yes:
             result_delete = self.log_in.eco_delete(member_id)
 
-        self.eco_tree_create_analyt(self.year_tree, self.month_tree) #refresh the analytic treeview
+        self.eco_tree_create_analyt(self.year_tree, self.month_tree)  # refresh the analytic treeview
 
     def refresh_item_tree_analy(self, member_name):
         widgets.add_erco_btn.setText("ΑΝΑΝΕΩΣΗ")
@@ -159,8 +209,6 @@ class LoginWindow(QMainWindow):
         if index >= 0:
             widgets.eco_name_cbb.setCurrentIndex(index)
             widgets.add_eco_lb.setText('')
-
-
 
     def pressed(self):  # login button CLICKED
 
@@ -179,15 +227,20 @@ class LoginWindow(QMainWindow):
             widgets.info_lb.setStyleSheet("color: white")
             self.log_in = Connection(widgets.user_tb.text(), widgets.pass_tb.text())
             result = self.log_in.login_connection()
-            #self.refresh_calendar()  # refresh calendar
+            # self.refresh_calendar()  # refresh calendar
             widgets.info_lb.setText(result)
 
             if result == "Connection established":  # succesfull log in
 
                 self.eco_tree_create()
-                #self.tkd_tree_create()
+
+                # αρχικοποιηση των ετων στην σελιδα TKD
                 years = self.log_in.login_list_ofYears()
                 widgets.tkd_year_cmb.addItems(years)
+                # -----------------------------
+                widgets.tkd_active_chb.setChecked(True)
+
+                self.tkd_tree_create()
 
                 sport_list = []
                 # REFRESH STASTS
@@ -269,49 +322,157 @@ class LoginWindow(QMainWindow):
                 # widgets.eco_page_layout.SetFixedSize
                 widgets.toolBar_fm.show()
 
-                #Taekwon-Do page initialize
+    def members_tree_create(self, data):
+        self.model_4 = QStandardItemModel()
+        self.model_4.setHorizontalHeaderLabels(['Ονοματεπώνυμο',  'ID'])
+        widgets.memb_acti_tree.header().setDefaultSectionSize(90)
+        widgets.memb_acti_tree.header().setDefaultAlignment(Qt.AlignHCenter)
+        widgets.memb_acti_tree.setModel(self.model_4)
+        self.members_importData(data)
+        widgets.memb_acti_tree.expandAll()
+
+    def members_importData(self, data):
+        text_headers = QColor(255, 203, 154)
+        text_white = QColor(255, 255, 255)
+        text_names = QColor(44, 53, 49)
+        self.model_4.setRowCount(0)
+        root = self.model_4.invisibleRootItem()
+        str_len = [0, 0.5]
+        first_value = data[0][0]
+        if str(first_value) == '1':
+            heater_text = 'ΕΝΕΡΓΟΙ'
+        else:
+            heater_text = 'ΑΝΕΝΕΡΓΟΙ'
+        active_row = StandardItem(str(heater_text), 12, set_bold=True, color=text_headers)
+        for i in data:
+            if str(first_value) != str(i[0]):
+                first_value = str(i[0])
+                if str(first_value) == '1':
+
+                    heater_text = 'ΕΝΕΡΓΟΙ'
+                else:
+                    heater_text = 'ΑΝΕΝΕΡΓΟΙ'
+                root.appendRow(active_row)
+                active_row = StandardItem(str(heater_text), 12, set_bold=True, color=text_headers)
+
+            if i[1] != None:
+                if isinstance(i[1], str):
+                    if len(i[1]) > str_len[0]:
+                        str_len[0] = len(i[1].strip())
+                else:
+                    str_len[0] = 2
+            names = StandardItem(i[1], 11, set_italic=True, color=text_white, set_Text_Alignment=Qt.AlignLeft,
+                                 checkable=True)
+            if str(i[0]) == '1':
+                names.setCheckState(2)  # to 0 ειναι αδειο, το 1 ειναι γεματο τετραγονο και το 2 ειναι το check (tik)
+            members_rows = [names,
+                            StandardItem(i[2], 11, set_italic=True, color=text_white,
+                                         set_Text_Alignment=Qt.AlignCenter)]
+            active_row.appendRow(members_rows)
+            # βαζει σε ολες τις κωλονες πλατος
+            for i in range(self.model_4.columnCount()):
+                widgets.memb_acti_tree.setColumnWidth(i, int(str_len[i] * 10))
+        self.model_4
+        root.appendRow(active_row)
+
+    def memb_acti_tree_selected(self): # memb_acti_tree_selected
+        model = widgets.memb_acti_tree.model()
+
+        id_s_noA = []
+        checked = model.match(model.index(0, 0), Qt.CheckStateRole, Qt.Unchecked, -1,
+                              Qt.MatchExactly | Qt.MatchRecursive)
+        for index in checked: id_s_noA.append(model.data(index.sibling(index.row(), 2)))
+
+        id_s_A = []
+        unchecked = model.match(model.index(0, 0), Qt.CheckStateRole, Qt.Checked, -1,
+                                Qt.MatchExactly | Qt.MatchRecursive)
+        for index in unchecked: id_s_A.append(model.data(index.sibling(index.row(), 2)))
+        result = self.log_in.login_members_activate(id_s_noA, id_s_A)
+        if result == 'Επιτυχής ενημέρωση !':
+            self.members_tree_create(self.log_in.login_members_treeView(sport_definition(self)))
+
+    def selectedParents_members(self):
+        parents = set()
+        for index in widgets.memb_acti_tree.selectedIndexes():
+            while index.parent().isValid():
+                index = index.parent()
+            parents.add(index.sibling(index.row(), 0))
+        return [index.data() for index in sorted(parents)]
+
+
+    def tkd_treeviev_selected(self): # επιλεγμένοι για αποστολη στο viber
+        model = widgets.tkd_treeView.model()
+        checked = model.match(model.index(0, 0), Qt.CheckStateRole, Qt.Unchecked, -1,
+                              Qt.MatchExactly | Qt.MatchRecursive)
+        for index in checked: tkd_viber_list_SEND.append(model.data(index.sibling(index.row(), 2)))
+
 
     def tkd_tree_create(self):
-        self.model = QStandardItemModel()
-        self.model.setHorizontalHeaderLabels(['Ονοματεπώνυμο', 'Πότε Πληρ.', 'Πληρωμή', 'Ημ. Πληρωμής'])
+        self.model_3 = QStandardItemModel()
+        self.model_3.setHorizontalHeaderLabels(['Ονοματεπώνυμο', 'Πότε Πληρ.', 'Πληρωμή', 'Ημ. Πληρωμής', 'ID'])
         widgets.tkd_treeView.header().setDefaultSectionSize(90)
         widgets.tkd_treeView.header().setDefaultAlignment(Qt.AlignHCenter)
 
-        widgets.tkd_treeView.setModel(self.model)
+        widgets.tkd_treeView.setModel(self.model_3)
         data = []
-        data.append(self.log_in.tkd_treeView())
+        if widgets.tkd_active_chb.isChecked():
+            checked_active = '1'
+        else:
+            checked_active = '0'
+        data.append(self.log_in.login_tkd_treeView(widgets.tkd_year_cmb.currentText(),
+                                                   list_GREEK_months.index(widgets.tkd_month_cmb.currentText()),
+                                                   '1',
+                                                   list_GREEK_months.index(widgets.tkd_month_cmb.currentText()),
+                                                   checked_active))
         self.tkd_importData(data)
         widgets.tkd_treeView.expandAll()
 
     def tkd_importData(self, data):
-        text_headers = QColor(255, 255, 255)
-        text_names = QColor(255, 255, 255)
-        text_paid_date = QColor(44, 53, 49)
-        text_paid_ok = QColor(129, 0, 0)
-        text_date = QColor(255, 203, 154)
-        self.model.setRowCount(0)
-        root = self.model.invisibleRootItem()
-        years = []
-
-        for i in data[0]:  # create years list
-            if i[0] not in years:
-                years.append(i[0])
-
+        text_headers = QColor(255, 203, 154)
+        text_white = QColor(255, 255, 255)
+        text_names = QColor(44, 53, 49)
+        self.model_3.setRowCount(0)
+        root = self.model_3.invisibleRootItem()
+        str_len = [0, 10, 10, 10,2]
         first_value = data[0][0][0]
+        if first_value == "PAID":
+            first_value = "ΠΛΗΡΩΜΕΣ"
+        else:
+            first_value = "ΑΝΑΜΟΝΕΣ"
         paid_row = StandardItem(str(first_value), 12, set_bold=True, color=text_headers)
         for i in data[0]:
-            if i[0] != first_value:
-                first_value = i[0]
+            if first_value == "ΠΛΗΡΩΜΕΣ" and i[0] == 'NOT PAID':
+                if i[0] == 'PAID':
+                    first_value = "ΠΛΗΡΩΜΕΣ"
+                else:
+                    first_value = "ΑΝΑΜΟΝΕΣ"
+
                 root.appendRow(paid_row)
                 paid_row = StandardItem(str(first_value), 12, set_bold=True, color=text_headers)
+            if i[1] != None:
+                if isinstance(i[1], str):
+                    if len(i[1]) > str_len[0]:
+                        str_len[0] = len(i[1].strip())
+                else:
+                    str_len[0] = 2
+            if i[4] != None:
+                tkd_date = StandardItem(i[4].strftime("%d/%m/%Y"), 10, set_italic=True, color=text_white)
+            else:
+                tkd_date = StandardItem('---', 10, set_italic=True, color=text_white)
 
-            months_rows = [StandardItem(list_greek_months[i[1]], 12, color=text_names),
-                           StandardItem(i[2], 10, set_italic=True, color=text_paid_date),
-                           StandardItem(i[3], 10, set_italic=True, color=text_paid_ok),
-                           StandardItem(i[4], 10, set_italic=True, color=text_date)]
-            paid_row.appendRow(months_rows)
+            if i[3] == None:
+                i[3] = '---'
+            members_rows = [StandardItem(i[1], 11, color=text_names, set_Text_Alignment=Qt.AlignLeft,checkable=True),
+                            StandardItem(i[2], 11, set_italic=True, color=text_white),
+                            StandardItem(i[3], 10, set_italic=True, color=text_white),
+                            tkd_date,
+                            StandardItem(i[5], 10, set_italic=True, color=text_white),]
+
+            paid_row.appendRow(members_rows)
+        # βαζει σε ολες τις κωλονες πλατος
+        for i in range(self.model_3.columnCount()):
+            widgets.tkd_treeView.setColumnWidth(i, int(str_len[i] * 10))
         root.appendRow(paid_row)
-
 
     def eco_tree_selected(self):
         mhnas = '0'
@@ -347,7 +508,8 @@ class LoginWindow(QMainWindow):
 
     def eco_tree_create_analyt(self, etos, month):
         self.model2 = QStandardItemModel()
-        self.model2.setHorizontalHeaderLabels(['Στοιχεία', 'Κατηγορία', 'Υπο-κατηγορία', 'Ποσό', 'Περιγραφή', 'Ημερομηνία', 'Pos', 'Id'])
+        self.model2.setHorizontalHeaderLabels(
+            ['Στοιχεία', 'Κατηγορία', 'Υπο-κατηγορία', 'Ποσό', 'Περιγραφή', 'Ημερομηνία', 'Pos', 'Id'])
 
         widgets.eco_treeview_analy.header().setDefaultSectionSize(90)
         widgets.eco_treeview_analy.header().setDefaultAlignment(Qt.AlignLeft)
@@ -366,14 +528,14 @@ class LoginWindow(QMainWindow):
 
         text_color = QColor(255, 255, 255)
         text_color_months = QColor(44, 53, 49)
-        #text_color_spends = QColor(129, 0, 0)
+        # text_color_spends = QColor(129, 0, 0)
         years_color = QColor(255, 203, 154)
         self.model2.setRowCount(0)
         root = self.model2.invisibleRootItem()
 
         first_value = data[0][0][0]
         category_row = StandardItem(str(first_value), 10, set_bold=True, color=years_color)
-        str_len = [0, 0, 0, 0, 0, 0, 0, 0]  #το μεγεθος ειναι οσες και οι κoλoνες στο treeview
+        str_len = [0, 0, 0, 0, 0, 0, 0, 0]  # το μεγεθος ειναι οσες και οι κoλoνες στο treeview
         for i in data[0]:
             if i[0] != first_value and first_value != 'ΕΞΟΔΑ':
                 if i[0].strip() == '0':
@@ -420,14 +582,18 @@ class LoginWindow(QMainWindow):
                 text_color_spends = QColor(255, 255, 255)
             names_rows = [StandardItem(i[1], 9, color=text_color_months, set_Text_Alignment=Qt.AlignLeft),
                           StandardItem(i[2], 9, set_italic=True, color=text_color, set_Text_Alignment=Qt.AlignLeft),
-                          StandardItem(i[3], 9, set_italic=True, color=text_color_spends, set_Text_Alignment=Qt.AlignLeft),
-                          StandardItem(i[4], 9, set_italic=True, color=text_color_spends,set_Text_Alignment=Qt.AlignCenter),
-                          StandardItem(i[5], 9, set_italic=True, color=text_color_spends,set_Text_Alignment=Qt.AlignLeft),
-                          StandardItem(i[6].strftime("%d/%m/%Y"), 8, set_italic=True, color=text_color, set_Text_Alignment=Qt.AlignCenter),
+                          StandardItem(i[3], 9, set_italic=True, color=text_color_spends,
+                                       set_Text_Alignment=Qt.AlignLeft),
+                          StandardItem(i[4], 9, set_italic=True, color=text_color_spends,
+                                       set_Text_Alignment=Qt.AlignCenter),
+                          StandardItem(i[5], 9, set_italic=True, color=text_color_spends,
+                                       set_Text_Alignment=Qt.AlignLeft),
+                          StandardItem(i[6].strftime("%d/%m/%Y"), 8, set_italic=True, color=text_color,
+                                       set_Text_Alignment=Qt.AlignCenter),
                           StandardItem(i[7], 8, set_italic=True, color=text_color, set_Text_Alignment=Qt.AlignCenter),
                           StandardItem(i[8], 8, set_italic=True, color=text_color, set_Text_Alignment=Qt.AlignCenter)]
             category_row.appendRow(names_rows)
-        # bazei se olew tiw kolones platos
+        # βαζει σε ολες τις κωλονες πλατος
         for i in range(self.model2.columnCount()):
             widgets.eco_treeview_analy.setColumnWidth(i, str_len[i] * 10)
         root.appendRow(category_row)
@@ -529,7 +695,8 @@ class LoginWindow(QMainWindow):
                 message = 'Σφάλμα στον έλεγχο !!!'
         elif self.add_eco_state == 'refresh':
             print("Γινεται ενημέρωση για(2):")
-            message = self.log_in.login_eco_UPDATE_fromTreeview(self.member_eco_id,descr, amount, in_out, pos, eco_cat, eco_sub, date_str)
+            message = self.log_in.login_eco_UPDATE_fromTreeview(self.member_eco_id, descr, amount, in_out, pos, eco_cat,
+                                                                eco_sub, date_str)
             self.add_eco_state = None
             self.member_eco_id = 0
             widgets.add_erco_btn.setText("ΚΑΤΑΧΩΡΗΣΗ")
@@ -687,11 +854,11 @@ class LoginWindow(QMainWindow):
     def tkd_year_cmb_changed(self):
         months = self.log_in.login_list_ofMonths(widgets.tkd_year_cmb.currentText())
         widgets.tkd_month_cmb.clear()
-        widgets.tkd_month_cmb.addItems(months)
-
-
-
-
+        temp_list = []
+        for month in months:
+            temp_list.append(list_GREEK_months[int(month)])
+        widgets.tkd_month_cmb.addItems(temp_list)
+        self.tkd_tree_create()
 
     def handle_index_changed(self):  # χειριζζεται την αλλαγει του ετους απο το combbox
         values = []
@@ -1078,6 +1245,8 @@ class LoginWindow(QMainWindow):
         widgets.del_ref_btn.hide()
         widgets.add_error_lb.setText("")
         self.reset_edit_lines('color: "#D1E8E2";')
+        # build activemembers tree
+        self.members_tree_create(self.log_in.login_members_treeView(sport_definition(self)))
 
     def new_btn(self):
         self.clear_editlines()
@@ -1192,9 +1361,8 @@ def resetStyle(self, btnName):
 
 class StandardItem(QStandardItem):
     def __init__(self, txt='', font_size=9, set_bold=False, set_italic=False, color=QColor(0, 0, 0),
-                 set_Text_Alignment=Qt.AlignHCenter):
+                 set_Text_Alignment=Qt.AlignHCenter, checkable=False):
         super().__init__()
-
         fnt = QFont('Open Sans', font_size)
         fnt.setBold(set_bold)
         fnt.setItalic(set_italic)
@@ -1203,6 +1371,7 @@ class StandardItem(QStandardItem):
         self.setForeground(color)
         self.setFont(fnt)
         self.setText(str(txt))
+        self.setCheckable(checkable)
 
 
 # Create the application object
