@@ -56,10 +56,11 @@ class LoginWindow(QMainWindow):
         ###
         self.setGeometry(self.rect)
 
-
         # this will hide the title bar
         self.setWindowFlag(Qt.FramelessWindowHint)
-
+        ###################################################
+        widgets.settings_done_btn.clicked.connect(self.settings_done_btn_pressed)
+        ###################################################
         widgets.home_bt.clicked.connect(self.buttonClick)
         widgets.taek_bt.clicked.connect(self.buttonClick)
         widgets.fencing_bt.clicked.connect(self.buttonClick)
@@ -129,6 +130,27 @@ class LoginWindow(QMainWindow):
         widgets.home_bt.setStyleSheet(buttons_style)
         self.show()
 
+    def bot_info(self):
+        bot_name = self.log_in.login_bot_info('bot_name')
+        bot_token = self.log_in.login_bot_info('bot_token')
+        if bot_name != '' and bot_token != '':
+            widgets.bot_name_tb.setText(bot_name)
+            widgets.bot_name_tb.bot_token_tb(bot_token)
+            self.bot_name = widgets.bot_name_tb.text()
+            self.bot_token = widgets.bot_token_tb.text()
+
+    def settings_done_btn_pressed(self):
+        bot_name = widgets.bot_name_tb.text()
+        bot_token = widgets.bot_token_tb.text()
+        if bot_name != '' and bot_token != '':
+            result = self.log_in.login_bot_info_insert('bot_name', bot_name)
+            result1 = self.log_in.login_bot_info_insert('bot_token', bot_token)
+
+        else:
+            widgets.settings_error_lb.setText('Συμπληρώστε και τα δύο πεδία...')
+            widgets.settings_error_lb.setStyleSheet('color:"#550000";')
+
+
     def pressed(self):  # login button CLICKED
         if (widgets.user_tb.text() == "" or widgets.user_tb.text() == "Username") and (
                 widgets.pass_tb.text() == "" or widgets.pass_tb.text() == "Password"):
@@ -149,6 +171,7 @@ class LoginWindow(QMainWindow):
             widgets.info_lb.setText(result)
 
             if result == "Connection established":  # succesfull log in
+                #get the bot info from srver
 
                 self.eco_tree_create()
 
@@ -999,8 +1022,8 @@ class LoginWindow(QMainWindow):
         reply_box = QMessageBox.warning(self, 'Διαγραφή', 'Θέλετε σίγορα να διαγράψετε αυτό το μέλος;',
                                         QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
         if reply_box == QMessageBox.Yes:
-            result_del = Connection.login_name_delete(self, widgets.LAST_NAME.text(),
-                                                      widgets.FIRST_NAME.text())
+            result_del = self.log_in.login_name_delete( widgets.LAST_NAME.text(),
+                                                      widgets.FIRST_NAME.text(), widgets.FATHER_NAME.text())
             widgets.add_error_lb.setText(result_del)
             self.new_btn()
             self.radio_refresh()

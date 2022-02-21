@@ -193,10 +193,10 @@ class Connection:
         print(str(msg))
         return message
 
-    def login_name_delete(self, last_name, first_name):
+    def login_name_delete(self, last_name, first_name,father_name):
         message = ""
         try:
-            query = "DELETE FROM [dbo].[Data] WHERE LAST_NAME= '" + last_name + "' and FIRST_NAME= '" + first_name + "'"
+            query = self.str_query('delete_member.sql').format(last_name, first_name,father_name,last_name, first_name,father_name)
             cursor = self.cnxn.cursor()
             cursor.execute(query)
             self.cnxn.commit()
@@ -554,6 +554,7 @@ class Connection:
         print(str(msg))
         return result
 
+
     def login_viber_msg(self):
         result = []
         try:
@@ -566,6 +567,21 @@ class Connection:
         except Exception as e:
             msg = "login_viber_msg: Connection failed"
             print("Error: login_viber_msg: " + str(e))
+        print(str(msg))
+        return result
+
+    def login_bot_info(self, object):
+        result = []
+        try:
+            query = self.str_query('bot_info.sql').format(object)
+            cursor = self.cnxn.cursor()
+            cursor.execute(query)
+            rows = cursor.fetchall()
+            result = rows
+            msg = "login_bot_info: Connection established"
+        except Exception as e:
+            msg = "login_bot_info: Connection failed"
+            print("Error: login_bot_info: " + str(e))
         print(str(msg))
         return result
 
@@ -590,7 +606,22 @@ class Connection:
         print(str(msg))
         return result
 
+    def login_bot_info_insert(self, object,object_content):
+        result=''
+        try:
+            query = self.str_query('bot_info_send.sql').format(object,object_content)
+            cursor = self.cnxn.cursor()
+            cursor.execute(query)
 
+            msg = "login_bot_info_insert: Connection established"
+            self.cnxn.commit()
+            result = 'Επιτυχής ενημέρωση !'
+        except Exception as e:
+            msg = "login_bot_info_insert: Connection failed"
+            print("Error: login_bot_info_insert: " + str(e))
+            result = 'Ανεπιτυχής ενημέρωση !!!'
+        print(str(msg))
+        return result
 
     def str_query(self, query):
         home_dir = os.path.abspath('.')
