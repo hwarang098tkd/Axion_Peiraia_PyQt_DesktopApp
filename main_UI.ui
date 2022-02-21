@@ -261,7 +261,7 @@
       <enum>QFrame::Sunken</enum>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>5</number>
      </property>
      <widget class="QWidget" name="home_page">
       <layout class="QGridLayout" name="gridLayout_3">
@@ -1329,25 +1329,9 @@ QAbstractItemView::section QHeaderView::section {
                 </widget>
                </item>
                <item>
-                <spacer name="horizontalSpacer_10">
-                 <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
-                 </property>
-                 <property name="sizeType">
-                  <enum>QSizePolicy::Preferred</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>40</width>
-                   <height>20</height>
-                  </size>
-                 </property>
-                </spacer>
-               </item>
-               <item>
                 <widget class="QPushButton" name="viber_tkd_send_btn">
                  <property name="sizePolicy">
-                  <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+                  <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
                    <horstretch>0</horstretch>
                    <verstretch>0</verstretch>
                   </sizepolicy>
@@ -1379,22 +1363,6 @@ border-style: outset;}
                   <string>ΑΠΟΣΤΟΛΗ</string>
                  </property>
                 </widget>
-               </item>
-               <item>
-                <spacer name="horizontalSpacer_9">
-                 <property name="orientation">
-                  <enum>Qt::Horizontal</enum>
-                 </property>
-                 <property name="sizeType">
-                  <enum>QSizePolicy::Preferred</enum>
-                 </property>
-                 <property name="sizeHint" stdset="0">
-                  <size>
-                   <width>40</width>
-                   <height>20</height>
-                  </size>
-                 </property>
-                </spacer>
                </item>
               </layout>
              </item>
@@ -2876,6 +2844,21 @@ QAbstractItemView::section QHeaderView::section {
          </item>
          <item>
           <widget class="QPushButton" name="new_member_btn">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>200</width>
+             <height>16777215</height>
+            </size>
+           </property>
+           <property name="cursor">
+            <cursorShape>OpenHandCursor</cursorShape>
+           </property>
            <property name="styleSheet">
             <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.261364 rgba(44, 53, 50, 255), stop:0.602273 rgba(17, 100, 102, 255), stop:0.98 rgba(217, 176, 140, 255), stop:1 rgba(0, 0, 0, 0));
 color: rgb(255, 255, 255);
@@ -2895,6 +2878,9 @@ border-style: outset;</string>
            </property>
            <item>
             <layout class="QFormLayout" name="formLayout_3">
+             <property name="rowWrapPolicy">
+              <enum>QFormLayout::DontWrapRows</enum>
+             </property>
              <item row="0" column="0">
               <widget class="QLineEdit" name="LAST_NAME">
                <property name="sizePolicy">
@@ -3530,7 +3516,7 @@ border-style: outset;</string>
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                  <horstretch>0</horstretch>
-                 <verstretch>10</verstretch>
+                 <verstretch>0</verstretch>
                 </sizepolicy>
                </property>
                <property name="minimumSize">
@@ -3744,6 +3730,47 @@ border-style: outset;</string>
                </property>
               </widget>
              </item>
+             <item row="24" column="1">
+              <widget class="QLabel" name="label_51">
+               <property name="styleSheet">
+                <string notr="true">color: &quot;#D9B08C&quot;;</string>
+               </property>
+               <property name="text">
+                <string>Ενεργός/ή:</string>
+               </property>
+              </widget>
+             </item>
+             <item row="24" column="0">
+              <widget class="QComboBox" name="ACTIVE_CMB">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>133</width>
+                 <height>0</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>133</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="layoutDirection">
+                <enum>Qt::LeftToRight</enum>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">color: &quot;#D1E8E2&quot;;</string>
+               </property>
+               <property name="frame">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
             </layout>
            </item>
            <item>
@@ -3764,11 +3791,26 @@ border-style: outset;</string>
            </item>
            <item>
             <widget class="QPushButton" name="add_ref_btn">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>200</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="cursor">
+              <cursorShape>OpenHandCursor</cursorShape>
+             </property>
              <property name="styleSheet">
               <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.261364 rgba(44, 53, 50, 255), stop:0.602273 rgba(17, 100, 102, 255), stop:0.98 rgba(217, 176, 140, 255), stop:1 rgba(0, 0, 0, 0));
 color: rgb(255, 255, 255);
 border: 2px  #D9B08C;
-border-radius: 15px;
+border-radius: 10px;
 border-style: outset;</string>
              </property>
              <property name="text">
@@ -3778,6 +3820,21 @@ border-style: outset;</string>
            </item>
            <item>
             <widget class="QPushButton" name="del_ref_btn">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>200</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="cursor">
+              <cursorShape>OpenHandCursor</cursorShape>
+             </property>
              <property name="styleSheet">
               <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.329545 rgba(46, 17, 20, 255), stop:0.738636 rgba(80, 27, 29, 255), stop:1 rgba(217, 176, 140, 255));
 color: rgb(255, 255, 255);
@@ -4495,12 +4552,12 @@ border-color: beige;
      <rect>
       <x>80</x>
       <y>450</y>
-      <width>221</width>
-      <height>341</height>
+      <width>231</width>
+      <height>461</height>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color: &quot;#D1E8E2&quot;;</string>
+     <string notr="true">background-color: &quot;#FFCB9A&quot;</string>
     </property>
     <property name="frameShape">
      <enum>QFrame::StyledPanel</enum>
@@ -4509,22 +4566,91 @@ border-color: beige;
      <enum>QFrame::Raised</enum>
     </property>
     <layout class="QGridLayout" name="gridLayout_9">
-     <item row="0" column="0">
+     <property name="horizontalSpacing">
+      <number>15</number>
+     </property>
+     <property name="verticalSpacing">
+      <number>20</number>
+     </property>
+     <item row="2" column="1">
+      <widget class="QPushButton" name="settings_cancel_btn">
+       <property name="styleSheet">
+        <string notr="true">QPushButton:enabled{
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.261364 rgba(44, 53, 50, 255), stop:0.602273 rgba(17, 100, 102, 255), stop:0.98 rgba(217, 176, 140, 255), stop:1 rgba(0, 0, 0, 0));
+color: rgb(255, 255, 255);
+border: 2px  #D9B08C;
+border-radius: 10px;
+border-style: outset;}
+QPushButton:disabled{
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.261364 rgba(44, 53, 50, 255), stop:0.602273 rgba(17, 100, 102, 255),
+stop:0.98 rgba(217, 176, 140, 255),
+stop:1 rgba(0, 0, 0, 0));
+color: rgb(109, 109, 109);
+border: 2px  #D9B08C;
+border-radius: 10px;
+border-style: outset;}
+</string>
+       </property>
+       <property name="text">
+        <string>ΑΚΥΡΩΣΗ</string>
+       </property>
+      </widget>
+     </item>
+     <item row="2" column="0">
+      <widget class="QPushButton" name="settings_done_btn">
+       <property name="styleSheet">
+        <string notr="true">QPushButton:enabled{
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.261364 rgba(44, 53, 50, 255), stop:0.602273 rgba(17, 100, 102, 255), stop:0.98 rgba(217, 176, 140, 255), stop:1 rgba(0, 0, 0, 0));
+color: rgb(255, 255, 255);
+border: 2px  #D9B08C;
+border-radius: 10px;
+border-style: outset;}
+QPushButton:disabled{
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.261364 rgba(44, 53, 50, 255), stop:0.602273 rgba(17, 100, 102, 255),
+stop:0.98 rgba(217, 176, 140, 255),
+stop:1 rgba(0, 0, 0, 0));
+color: rgb(109, 109, 109);
+border: 2px  #D9B08C;
+border-radius: 10px;
+border-style: outset;}
+</string>
+       </property>
+       <property name="text">
+        <string>ΕΦΑΡΜΟΓΗ</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="0" colspan="2">
       <widget class="QToolBox" name="toolBox">
+       <property name="styleSheet">
+        <string notr="true">QToolBox::tab {	
+    background:#1ba3a5;
+    border-radius: 5px;
+    color: black;
+}</string>
+       </property>
        <property name="currentIndex">
-        <number>1</number>
+        <number>0</number>
+       </property>
+       <property name="tabSpacing">
+        <number>10</number>
        </property>
        <widget class="QWidget" name="general_page">
         <property name="geometry">
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>201</width>
-          <height>261</height>
+          <width>211</width>
+          <height>299</height>
          </rect>
         </property>
         <attribute name="label">
          <string>Γενικές Ρυθμίσεις</string>
+        </attribute>
+       </widget>
+       <widget class="QWidget" name="other_page">
+        <attribute name="label">
+         <string>Άλλες ρυθμίσεις</string>
         </attribute>
        </widget>
        <widget class="QWidget" name="viber_page">
@@ -4532,8 +4658,8 @@ border-color: beige;
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>201</width>
-          <height>261</height>
+          <width>211</width>
+          <height>299</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4542,21 +4668,71 @@ border-color: beige;
         <layout class="QGridLayout" name="gridLayout_10">
          <item row="0" column="0">
           <widget class="QLabel" name="label_11">
+           <property name="font">
+            <font>
+             <pointsize>11</pointsize>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">color: rgb(255, 255, 255);</string>
+           </property>
            <property name="text">
             <string>Bot Name</string>
            </property>
+           <property name="alignment">
+            <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+           </property>
           </widget>
          </item>
-         <item row="0" column="1">
-          <widget class="QLineEdit" name="bot_name_tb"/>
-         </item>
-         <item row="1" column="1">
-          <widget class="QLineEdit" name="bot_token_tb"/>
-         </item>
-         <item row="1" column="0">
+         <item row="2" column="0">
           <widget class="QLabel" name="label_12">
+           <property name="font">
+            <font>
+             <pointsize>11</pointsize>
+             <bold>true</bold>
+            </font>
+           </property>
+           <property name="styleSheet">
+            <string notr="true">color: rgb(255, 255, 255);</string>
+           </property>
            <property name="text">
             <string>Bot Token</string>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+           </property>
+          </widget>
+         </item>
+         <item row="1" column="0">
+          <widget class="QLineEdit" name="bot_name_tb">
+           <property name="styleSheet">
+            <string notr="true">QLineEdit {
+color: gray;
+ border: 2px solid gray;
+background-color: '#ffcb9a';
+border-color: beige;
+ border-radius: 10px;
+}</string>
+           </property>
+          </widget>
+         </item>
+         <item row="3" column="0">
+          <widget class="QLineEdit" name="bot_token_tb">
+           <property name="styleSheet">
+            <string notr="true">QLineEdit {
+color: gray;
+ border: 2px solid gray;
+background-color: '#ffcb9a';
+border-color: beige;
+ border-radius: 10px;
+}</string>
+           </property>
+           <property name="echoMode">
+            <enum>QLineEdit::Password</enum>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignCenter</set>
            </property>
           </widget>
          </item>

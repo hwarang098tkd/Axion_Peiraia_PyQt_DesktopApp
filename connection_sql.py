@@ -15,7 +15,7 @@ class Connection:
             self.cnxn = pyodbc.connect(
                 'DRIVER={ODBC Driver 17 for SQL Server};SERVER=' + server +
                 ';DATABASE=' + database + ';UID=' + username + ';PWD=' + password +
-                ';Trusted_Connection=no', timeout=20)
+                ';Trusted_Connection=no', timeout=5)
 
         except Exception as e:
             msg = "Connection failed"
@@ -375,7 +375,7 @@ class Connection:
             cursor = self.cnxn.cursor()
             cursor.execute(query)
             rows = cursor.fetchall()
-            result.append("Επιλέξτε")
+            result.append("Επιλέξτε...")
             for item in rows:
                 result.append(item[0])
             msg = "get_amount: Connection established"
@@ -568,6 +568,29 @@ class Connection:
             print("Error: login_viber_msg: " + str(e))
         print(str(msg))
         return result
+
+    def login_members_activate_add(self,mode, last_name, first_name, father_name, active):
+        result=''
+        try:
+            if mode == 'insert':
+                query = self.str_query('update_activate_members_insert.sql').format(last_name, first_name, father_name, active)
+            elif mode == 'update':
+                query = self.str_query('update_activate_members_update.sql').format(active,last_name, first_name, father_name)
+
+            cursor = self.cnxn.cursor()
+            cursor.execute(query)
+
+            msg = "login_members_activate_add: Connection established"
+            self.cnxn.commit()
+            result = 'Επιτυχής ενημέρωση !'
+        except Exception as e:
+            msg = "login_members_activate_add: Connection failed"
+            print("Error: login_members_activate_add: " + str(e))
+            result = 'Ανεπιτυχής ενημέρωση !!!'
+        print(str(msg))
+        return result
+
+
 
     def str_query(self, query):
         home_dir = os.path.abspath('.')

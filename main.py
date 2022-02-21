@@ -179,6 +179,8 @@ class LoginWindow(QMainWindow):
                 sport_list = self.log_in.login_sports_list()
                 widgets.SPORT.addItems(sport_list)
                 widgets.SPORT_1.addItems(sport_list)
+
+                widgets.ACTIVE_CMB.addItems(['Επιλέξτε...','Ναι','Οχι'])
                 # widgets.eco_gen_cbb.addItems(gen_cat_eco)
                 # widgets.eco_sub_cbb.addItems(sub_cat_eco)
                 # Re-COLOR MAIN TOOLBAR
@@ -247,24 +249,31 @@ class LoginWindow(QMainWindow):
                 #επανεμφάνιση της μπαρας γιατι στο init γινεται αποκρυψη
                 widgets.toolBar_fm.show()
 
+    def hide_settings_frame(self):
+        animation_time = 250
+        end_width = int((self.screen_width * self.percent_screen) / 100)
+        end_height = int((self.screen_height * self.percent_screen) / 100)
+
+        # ANIMATION STACKEDWIDGET FRAME
+        self.settings_fm = QPropertyAnimation(self.ui.settings_fm, b'geometry')
+        self.settings_fm.setDuration(animation_time)
+        self.settings_fm.setStartValue(QRect(60, 35, 200, int(end_height - 2 * 35)))
+        self.settings_fm.setEndValue(QRect(60, 35, 0, int(end_height - 2 * 35)))
+
+        # GROUP ANIMATION
+        self.group_2 = QParallelAnimationGroup()
+        self.group_2.addAnimation(self.settings_fm)
+        self.group_2.start()
+        # widgets.settings_fm.hide()
+
     def settings_btn_pressed(self):
-        animation_time = 500
+        animation_time = 250
         end_width = int((self.screen_width * self.percent_screen) / 100)
         end_height = int((self.screen_height * self.percent_screen) / 100)
 
         if self.toggle_settings == True:
             self.toggle_settings = False
-            # ANIMATION STACKEDWIDGET FRAME
-            self.settings_fm = QPropertyAnimation(self.ui.settings_fm, b'geometry')
-            self.settings_fm.setDuration(animation_time)
-            self.settings_fm.setStartValue(QRect(60, 35, 150, int(end_height - 2 * 35)))
-            self.settings_fm.setEndValue(QRect(60, 35, 0, int(end_height - 2 * 35)))
-
-            # GROUP ANIMATION
-            self.group_2 = QParallelAnimationGroup()
-            self.group_2.addAnimation(self.settings_fm)
-            self.group_2.start()
-            #widgets.settings_fm.hide()
+            self.hide_settings_frame()
         else:
             self.toggle_settings = True
 
@@ -274,7 +283,7 @@ class LoginWindow(QMainWindow):
             self.settings_fm = QPropertyAnimation(self.ui.settings_fm, b'geometry')
             self.settings_fm.setDuration(animation_time)
             self.settings_fm.setStartValue(QRect(60, 35, 20, int(end_height - 2 * 35)))
-            self.settings_fm.setEndValue(QRect(60, 35, 150, int(end_height - 2 * 35)))
+            self.settings_fm.setEndValue(QRect(60, 35, 200, int(end_height - 2 * 35)))
 
             # GROUP ANIMATION
             self.group_1 = QParallelAnimationGroup()
@@ -425,7 +434,6 @@ class LoginWindow(QMainWindow):
             # βαζει σε ολες τις κωλονες πλατος
             for i in range(self.model_4.columnCount()):
                 widgets.memb_acti_tree.setColumnWidth(i, int(str_len[i] * 10))
-        self.model_4
         root.appendRow(active_row)
 
     def memb_acti_tree_selected(self): # memb_acti_tree_selected
@@ -434,12 +442,14 @@ class LoginWindow(QMainWindow):
         id_s_noA = []
         checked = model.match(model.index(0, 0), Qt.CheckStateRole, Qt.Unchecked, -1,
                               Qt.MatchExactly | Qt.MatchRecursive)
-        for index in checked: id_s_noA.append(model.data(index.sibling(index.row(), 2)))
+        for index in checked: id_s_noA.append(model.data(index.sibling(index.row(), 1)))
 
         id_s_A = []
         unchecked = model.match(model.index(0, 0), Qt.CheckStateRole, Qt.Checked, -1,
                                 Qt.MatchExactly | Qt.MatchRecursive)
-        for index in unchecked: id_s_A.append(model.data(index.sibling(index.row(), 2)))
+        for index in unchecked: id_s_A.append(model.data(index.sibling(index.row(), 1)))
+        print(id_s_noA)
+        print(id_s_A)
         result = self.log_in.login_members_activate(id_s_noA, id_s_A)
         if result == 'Επιτυχής ενημέρωση !':
             self.members_tree_create(self.log_in.login_members_treeView(sport_definition(self)))
@@ -452,13 +462,11 @@ class LoginWindow(QMainWindow):
             parents.add(index.sibling(index.row(), 0))
         return [index.data() for index in sorted(parents)]
 
-
     def tkd_treeviev_selected(self): # επιλεγμένοι για αποστολη στο viber
         model = widgets.tkd_treeView.model()
         checked = model.match(model.index(0, 0), Qt.CheckStateRole, Qt.Unchecked, -1,
                               Qt.MatchExactly | Qt.MatchRecursive)
         for index in checked: tkd_viber_list_SEND.append(model.data(index.sibling(index.row(), 2)))
-
 
     def tkd_tree_create(self):
         self.model_3 = QStandardItemModel()
@@ -735,6 +743,7 @@ class LoginWindow(QMainWindow):
         eco_cat = widgets.eco_gen_cbb.currentText()
         eco_sub = widgets.eco_sub_cbb.currentText()
         amount = widgets.pay_amount_tb.text()
+        message = ''
         if self.add_eco_state == None:
             exists_or_not = self.log_in.login_eco_check(name, eco_cat, eco_sub, date_str)
             print(exists_or_not)
@@ -1007,15 +1016,23 @@ class LoginWindow(QMainWindow):
         first_name = widgets.FIRST_NAME.text()
         father_name = widgets.FATHER_NAME.text()
         sport = widgets.SPORT.currentText()
+
+        active = widgets.ACTIVE_CMB.currentText()
+        if active == 'Ναι':
+            active = '1'
+        elif active == 'Οχι':
+            active = '0'
+
+
         if widgets.add_ref_btn.text() == "ΚΑΤΑΧΩΡΗΣΗ":
             error_msg = "Add_member action: "
-            error_color = 'color: "#D1E8E2";\nborder: 2px solid "#501B1D";'
+            error_color = 'color: "#D1E8E2";\n border: 2px solid "#501B1D";'
             widgets.add_error_lb.setStyleSheet('color: rgb(80, 27, 29);')
             widgets.LAST_NAME.setStyleSheet('color: "#D1E8E2";')
             widgets.FIRST_NAME.setStyleSheet('color: "#D1E8E2";')
             widgets.FATHER_NAME.setStyleSheet('color: "#D1E8E2";')
             widgets.SPORT.setStyleSheet('color: "#D1E8E2";')
-            if last_nanme == "-" or last_nanme == "" or first_name == "-" or first_name == "" or father_name == "-" or father_name == "" or sport == "Επιλέξτε":
+            if last_nanme == "-" or last_nanme == "" or first_name == "-" or first_name == "" or father_name == "-" or father_name == "" or sport == "Επιλέξτε..." or active == "Επιλέξτε...":
                 error_msg = "Καταχωρήστε"
                 if last_nanme == "-" or last_nanme == "":
                     error_msg = error_msg + ", Επώνυμο "
@@ -1026,20 +1043,21 @@ class LoginWindow(QMainWindow):
                 if father_name == "-" or father_name == "":
                     error_msg = error_msg + ", Πατρώνυμο "
                     widgets.FATHER_NAME.setStyleSheet(error_color)
-                if sport == "Επιλέξτε":
+                if sport == "Επιλέξτε...":
                     error_msg = error_msg + ", Άθλημα "
                     widgets.SPORT.setStyleSheet(error_color)
+                if active == "Επιλέξτε...":
+                    error_msg = error_msg + ", Κατάσταση "
+                    widgets.ACTIVE_CMB.setStyleSheet(error_color)
             else:  # παει για ελεγχο διπλογραφης
-                result = Connection.login_name_ifexists(self,
-                                                        widgets.LAST_NAME.text(),
+                result = self.log_in.login_name_ifexists(widgets.LAST_NAME.text(),
                                                         widgets.FIRST_NAME.text(),
                                                         widgets.FATHER_NAME.text())
                 print("Exists result: " + result)
                 if result == "exists":
                     error_msg = "Υπάρχει μέλος με αυτά τα στοιχεία !!!"
                 elif result == "go_to_add":
-                    error_msg = Connection.login_members_add(self,
-                                                             widgets.LAST_NAME.text(),
+                    error_msg = self.log_in.login_members_add(widgets.LAST_NAME.text(),
                                                              widgets.FIRST_NAME.text(),
                                                              widgets.FATHER_NAME.text(),
                                                              widgets.MOTHER_NAME.text(),
@@ -1063,6 +1081,7 @@ class LoginWindow(QMainWindow):
                                                              widgets.BARCODE_1.text(),
                                                              widgets.SPORT_1.currentText(),
                                                              widgets.PAY_DAY.text())
+                    active_result = self.log_in.login_members_activate_add('insert',widgets.LAST_NAME.text(), widgets.FIRST_NAME.text(), widgets.FATHER_NAME.text(), active)
                     if error_msg == "Επιτυχία καταχώρησης !!!":
                         widgets.add_error_lb.setStyleSheet('color: "#D9B08C";')
         elif widgets.add_ref_btn.text() == "ΕΝΗΜΕΡΩΣΗ":
@@ -1074,7 +1093,7 @@ class LoginWindow(QMainWindow):
             widgets.FIRST_NAME.setStyleSheet('color: "#D1E8E2";')
             widgets.FATHER_NAME.setStyleSheet('color: "#D1E8E2";')
             widgets.SPORT.setStyleSheet('color: "#D1E8E2";')
-            if last_nanme == "-" or last_nanme == "" or first_name == "-" or first_name == "" or father_name == "-" or father_name == "" or sport == "Επιλέξτε":
+            if last_nanme == "-" or last_nanme == "" or first_name == "-" or first_name == "" or father_name == "-" or father_name == "" or sport == "Επιλέξτε" or active == "Επιλέξτε...":
                 error_msg = "Καταχωρήστε"
                 if last_nanme == "-" or last_nanme == "":
                     error_msg = error_msg + ", Επώνυμο "
@@ -1088,9 +1107,11 @@ class LoginWindow(QMainWindow):
                 if sport == "Επιλέξτε":
                     error_msg = error_msg + ", Άθλημα "
                     widgets.SPORT.setStyleSheet(error_color)
+                if active == "Επιλέξτε...":
+                    error_msg = error_msg + ", Κατάσταση "
+                    widgets.ACTIVE_CMB.setStyleSheet(error_color)
             else:
-                error_msg = self.log_in.login_members_updare(self,
-                                                             original_lastName,
+                error_msg = self.log_in.login_members_updare(original_lastName,
                                                              original_firstName,
                                                              widgets.LAST_NAME.text(),
                                                              widgets.FIRST_NAME.text(),
@@ -1116,6 +1137,11 @@ class LoginWindow(QMainWindow):
                                                              widgets.BARCODE_1.text(),
                                                              widgets.SPORT_1.currentText(),
                                                              widgets.PAY_DAY.text())
+
+                active_result = self.log_in.login_members_activate_add('update',widgets.LAST_NAME.text(),
+                                                                       widgets.FIRST_NAME.text(),
+                                                                       widgets.FATHER_NAME.text(),
+                                                                       active)
                 if error_msg == "Επιτυχία ανανέωσης !!!":
                     widgets.add_error_lb.setStyleSheet('color: "#D9B08C";')
                     self.list_names_combobox()
@@ -1127,7 +1153,13 @@ class LoginWindow(QMainWindow):
         widgets.title_date.setText(now.toString(Qt.DefaultLocaleLongDate))
 
     def buttonClick(self):
+        #αποκρυψη τως ρυθμισεων οταν παταω αλλο κουμπι
+
+        if self.toggle_settings == True:
+            self.hide_settings_frame()
+            self.toggle_settings=False
         # GET BUTTON CLICKED
+
         btn = self.sender()
         btnName = btn.objectName()
 

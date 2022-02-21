@@ -1,1 +1,1 @@
-SELECT * FROM viber_settings
+SELECT * FROM viber_messages

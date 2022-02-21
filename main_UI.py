@@ -670,10 +670,8 @@ class Ui_MainWindow(object):
         self.clear_viber_btn.setStyleSheet("color: rgb(203, 203, 203);")
         self.clear_viber_btn.setObjectName("clear_viber_btn")
         self.horizontalLayout_16.addWidget(self.clear_viber_btn)
-        spacerItem6 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_16.addItem(spacerItem6)
         self.viber_tkd_send_btn = QtWidgets.QPushButton(self.taekwondo_page)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Maximum, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Maximum, QtWidgets.QSizePolicy.Maximum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.viber_tkd_send_btn.sizePolicy().hasHeightForWidth())
@@ -696,8 +694,6 @@ class Ui_MainWindow(object):
 "")
         self.viber_tkd_send_btn.setObjectName("viber_tkd_send_btn")
         self.horizontalLayout_16.addWidget(self.viber_tkd_send_btn)
-        spacerItem7 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_16.addItem(spacerItem7)
         self.gridLayout_7.addLayout(self.horizontalLayout_16, 5, 0, 1, 1)
         self.horizontalLayout_14 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_14.setSizeConstraint(QtWidgets.QLayout.SetDefaultConstraint)
@@ -803,8 +799,8 @@ class Ui_MainWindow(object):
         self.verticalLayout.addWidget(self.chart_all_fm)
         self.horizontalLayout_8 = QtWidgets.QHBoxLayout()
         self.horizontalLayout_8.setObjectName("horizontalLayout_8")
-        spacerItem8 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_8.addItem(spacerItem8)
+        spacerItem6 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_8.addItem(spacerItem6)
         self.chart_years_ccb = QtWidgets.QComboBox(self.econ_page)
         self.chart_years_ccb.setLayoutDirection(QtCore.Qt.LeftToRight)
         self.chart_years_ccb.setEditable(True)
@@ -1169,8 +1165,8 @@ class Ui_MainWindow(object):
 "")
         self.add_erco_btn.setObjectName("add_erco_btn")
         self.horizontalLayout_10.addWidget(self.add_erco_btn)
-        spacerItem9 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
-        self.horizontalLayout_10.addItem(spacerItem9)
+        spacerItem7 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Minimum)
+        self.horizontalLayout_10.addItem(spacerItem7)
         self.add_eco_layout.addLayout(self.horizontalLayout_10)
         self.gridLayout_2.addLayout(self.add_eco_layout, 0, 1, 1, 1)
         self.eco_treeview_analy = QtWidgets.QTreeView(self.econ_page)
@@ -1375,6 +1371,13 @@ class Ui_MainWindow(object):
         self.members_title_lb.setObjectName("members_title_lb")
         self.verticalLayout_7.addWidget(self.members_title_lb)
         self.new_member_btn = QtWidgets.QPushButton(self.menbers_page)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Maximum, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.new_member_btn.sizePolicy().hasHeightForWidth())
+        self.new_member_btn.setSizePolicy(sizePolicy)
+        self.new_member_btn.setMaximumSize(QtCore.QSize(200, 16777215))
+        self.new_member_btn.setCursor(QtGui.QCursor(QtCore.Qt.OpenHandCursor))
         self.new_member_btn.setStyleSheet("background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.261364 rgba(44, 53, 50, 255), stop:0.602273 rgba(17, 100, 102, 255), stop:0.98 rgba(217, 176, 140, 255), stop:1 rgba(0, 0, 0, 0));\n"
 "color: rgb(255, 255, 255);\n"
 "border: 2px  #D9B08C;\n"
@@ -1386,6 +1389,7 @@ class Ui_MainWindow(object):
         self.verticalLayout_2.setSizeConstraint(QtWidgets.QLayout.SetDefaultConstraint)
         self.verticalLayout_2.setObjectName("verticalLayout_2")
         self.formLayout_3 = QtWidgets.QFormLayout()
+        self.formLayout_3.setRowWrapPolicy(QtWidgets.QFormLayout.DontWrapRows)
         self.formLayout_3.setObjectName("formLayout_3")
         self.LAST_NAME = QtWidgets.QLineEdit(self.menbers_page)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
@@ -1660,7 +1664,7 @@ class Ui_MainWindow(object):
         self.SPORT = QtWidgets.QComboBox(self.menbers_page)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(10)
+        sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.SPORT.sizePolicy().hasHeightForWidth())
         self.SPORT.setSizePolicy(sizePolicy)
         self.SPORT.setMinimumSize(QtCore.QSize(133, 0))
@@ -1750,6 +1754,23 @@ class Ui_MainWindow(object):
         self.label_42.setStyleSheet("color: \"#D9B08C\";")
         self.label_42.setObjectName("label_42")
         self.formLayout_3.setWidget(23, QtWidgets.QFormLayout.FieldRole, self.label_42)
+        self.label_51 = QtWidgets.QLabel(self.menbers_page)
+        self.label_51.setStyleSheet("color: \"#D9B08C\";")
+        self.label_51.setObjectName("label_51")
+        self.formLayout_3.setWidget(24, QtWidgets.QFormLayout.FieldRole, self.label_51)
+        self.ACTIVE_CMB = QtWidgets.QComboBox(self.menbers_page)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.ACTIVE_CMB.sizePolicy().hasHeightForWidth())
+        self.ACTIVE_CMB.setSizePolicy(sizePolicy)
+        self.ACTIVE_CMB.setMinimumSize(QtCore.QSize(133, 0))
+        self.ACTIVE_CMB.setMaximumSize(QtCore.QSize(133, 16777215))
+        self.ACTIVE_CMB.setLayoutDirection(QtCore.Qt.LeftToRight)
+        self.ACTIVE_CMB.setStyleSheet("color: \"#D1E8E2\";")
+        self.ACTIVE_CMB.setFrame(True)
+        self.ACTIVE_CMB.setObjectName("ACTIVE_CMB")
+        self.formLayout_3.setWidget(24, QtWidgets.QFormLayout.LabelRole, self.ACTIVE_CMB)
         self.verticalLayout_2.addLayout(self.formLayout_3)
         self.add_error_lb = QtWidgets.QLabel(self.menbers_page)
         self.add_error_lb.setLayoutDirection(QtCore.Qt.LeftToRight)
@@ -1759,14 +1780,28 @@ class Ui_MainWindow(object):
         self.add_error_lb.setObjectName("add_error_lb")
         self.verticalLayout_2.addWidget(self.add_error_lb)
         self.add_ref_btn = QtWidgets.QPushButton(self.menbers_page)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Maximum, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.add_ref_btn.sizePolicy().hasHeightForWidth())
+        self.add_ref_btn.setSizePolicy(sizePolicy)
+        self.add_ref_btn.setMaximumSize(QtCore.QSize(200, 16777215))
+        self.add_ref_btn.setCursor(QtGui.QCursor(QtCore.Qt.OpenHandCursor))
         self.add_ref_btn.setStyleSheet("background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.261364 rgba(44, 53, 50, 255), stop:0.602273 rgba(17, 100, 102, 255), stop:0.98 rgba(217, 176, 140, 255), stop:1 rgba(0, 0, 0, 0));\n"
 "color: rgb(255, 255, 255);\n"
 "border: 2px  #D9B08C;\n"
-"border-radius: 15px;\n"
+"border-radius: 10px;\n"
 "border-style: outset;")
         self.add_ref_btn.setObjectName("add_ref_btn")
         self.verticalLayout_2.addWidget(self.add_ref_btn)
         self.del_ref_btn = QtWidgets.QPushButton(self.menbers_page)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Maximum, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.del_ref_btn.sizePolicy().hasHeightForWidth())
+        self.del_ref_btn.setSizePolicy(sizePolicy)
+        self.del_ref_btn.setMaximumSize(QtCore.QSize(200, 16777215))
+        self.del_ref_btn.setCursor(QtGui.QCursor(QtCore.Qt.OpenHandCursor))
         self.del_ref_btn.setStyleSheet("background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.329545 rgba(46, 17, 20, 255), stop:0.738636 rgba(80, 27, 29, 255), stop:1 rgba(217, 176, 140, 255));\n"
 "color: rgb(255, 255, 255);\n"
 "border: 2px  #D9B08C;\n"
@@ -2050,43 +2085,118 @@ class Ui_MainWindow(object):
         self.members_bt.setFlat(True)
         self.members_bt.setObjectName("members_bt")
         self.settings_fm = QtWidgets.QFrame(self.centralwidget)
-        self.settings_fm.setGeometry(QtCore.QRect(80, 450, 221, 341))
-        self.settings_fm.setStyleSheet("background-color: \"#D1E8E2\";")
+        self.settings_fm.setGeometry(QtCore.QRect(80, 450, 231, 461))
+        self.settings_fm.setStyleSheet("background-color: \"#FFCB9A\"")
         self.settings_fm.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.settings_fm.setFrameShadow(QtWidgets.QFrame.Raised)
         self.settings_fm.setObjectName("settings_fm")
         self.gridLayout_9 = QtWidgets.QGridLayout(self.settings_fm)
+        self.gridLayout_9.setHorizontalSpacing(15)
+        self.gridLayout_9.setVerticalSpacing(20)
         self.gridLayout_9.setObjectName("gridLayout_9")
+        self.settings_cancel_btn = QtWidgets.QPushButton(self.settings_fm)
+        self.settings_cancel_btn.setStyleSheet("QPushButton:enabled{\n"
+"background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.261364 rgba(44, 53, 50, 255), stop:0.602273 rgba(17, 100, 102, 255), stop:0.98 rgba(217, 176, 140, 255), stop:1 rgba(0, 0, 0, 0));\n"
+"color: rgb(255, 255, 255);\n"
+"border: 2px  #D9B08C;\n"
+"border-radius: 10px;\n"
+"border-style: outset;}\n"
+"QPushButton:disabled{\n"
+"background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.261364 rgba(44, 53, 50, 255), stop:0.602273 rgba(17, 100, 102, 255),\n"
+"stop:0.98 rgba(217, 176, 140, 255),\n"
+"stop:1 rgba(0, 0, 0, 0));\n"
+"color: rgb(109, 109, 109);\n"
+"border: 2px  #D9B08C;\n"
+"border-radius: 10px;\n"
+"border-style: outset;}\n"
+"")
+        self.settings_cancel_btn.setObjectName("settings_cancel_btn")
+        self.gridLayout_9.addWidget(self.settings_cancel_btn, 2, 1, 1, 1)
+        self.settings_done_btn = QtWidgets.QPushButton(self.settings_fm)
+        self.settings_done_btn.setStyleSheet("QPushButton:enabled{\n"
+"background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.261364 rgba(44, 53, 50, 255), stop:0.602273 rgba(17, 100, 102, 255), stop:0.98 rgba(217, 176, 140, 255), stop:1 rgba(0, 0, 0, 0));\n"
+"color: rgb(255, 255, 255);\n"
+"border: 2px  #D9B08C;\n"
+"border-radius: 10px;\n"
+"border-style: outset;}\n"
+"QPushButton:disabled{\n"
+"background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.261364 rgba(44, 53, 50, 255), stop:0.602273 rgba(17, 100, 102, 255),\n"
+"stop:0.98 rgba(217, 176, 140, 255),\n"
+"stop:1 rgba(0, 0, 0, 0));\n"
+"color: rgb(109, 109, 109);\n"
+"border: 2px  #D9B08C;\n"
+"border-radius: 10px;\n"
+"border-style: outset;}\n"
+"")
+        self.settings_done_btn.setObjectName("settings_done_btn")
+        self.gridLayout_9.addWidget(self.settings_done_btn, 2, 0, 1, 1)
         self.toolBox = QtWidgets.QToolBox(self.settings_fm)
+        self.toolBox.setStyleSheet("QToolBox::tab {    \n"
+"    background:#1ba3a5;\n"
+"    border-radius: 5px;\n"
+"    color: black;\n"
+"}")
         self.toolBox.setObjectName("toolBox")
         self.general_page = QtWidgets.QWidget()
-        self.general_page.setGeometry(QtCore.QRect(0, 0, 201, 261))
+        self.general_page.setGeometry(QtCore.QRect(0, 0, 211, 299))
         self.general_page.setObjectName("general_page")
         self.toolBox.addItem(self.general_page, "")
+        self.other_page = QtWidgets.QWidget()
+        self.other_page.setObjectName("other_page")
+        self.toolBox.addItem(self.other_page, "")
         self.viber_page = QtWidgets.QWidget()
-        self.viber_page.setGeometry(QtCore.QRect(0, 0, 201, 261))
+        self.viber_page.setGeometry(QtCore.QRect(0, 0, 211, 299))
         self.viber_page.setObjectName("viber_page")
         self.gridLayout_10 = QtWidgets.QGridLayout(self.viber_page)
         self.gridLayout_10.setObjectName("gridLayout_10")
         self.label_11 = QtWidgets.QLabel(self.viber_page)
+        font = QtGui.QFont()
+        font.setPointSize(11)
+        font.setBold(True)
+        self.label_11.setFont(font)
+        self.label_11.setStyleSheet("color: rgb(255, 255, 255);")
+        self.label_11.setAlignment(QtCore.Qt.AlignBottom|QtCore.Qt.AlignHCenter)
         self.label_11.setObjectName("label_11")
         self.gridLayout_10.addWidget(self.label_11, 0, 0, 1, 1)
-        self.bot_name_tb = QtWidgets.QLineEdit(self.viber_page)
-        self.bot_name_tb.setObjectName("bot_name_tb")
-        self.gridLayout_10.addWidget(self.bot_name_tb, 0, 1, 1, 1)
-        self.bot_token_tb = QtWidgets.QLineEdit(self.viber_page)
-        self.bot_token_tb.setObjectName("bot_token_tb")
-        self.gridLayout_10.addWidget(self.bot_token_tb, 1, 1, 1, 1)
         self.label_12 = QtWidgets.QLabel(self.viber_page)
+        font = QtGui.QFont()
+        font.setPointSize(11)
+        font.setBold(True)
+        self.label_12.setFont(font)
+        self.label_12.setStyleSheet("color: rgb(255, 255, 255);")
+        self.label_12.setAlignment(QtCore.Qt.AlignBottom|QtCore.Qt.AlignHCenter)
         self.label_12.setObjectName("label_12")
-        self.gridLayout_10.addWidget(self.label_12, 1, 0, 1, 1)
+        self.gridLayout_10.addWidget(self.label_12, 2, 0, 1, 1)
+        self.bot_name_tb = QtWidgets.QLineEdit(self.viber_page)
+        self.bot_name_tb.setStyleSheet("QLineEdit {\n"
+"color: gray;\n"
+" border: 2px solid gray;\n"
+"background-color: \'#ffcb9a\';\n"
+"border-color: beige;\n"
+" border-radius: 10px;\n"
+"}")
+        self.bot_name_tb.setObjectName("bot_name_tb")
+        self.gridLayout_10.addWidget(self.bot_name_tb, 1, 0, 1, 1)
+        self.bot_token_tb = QtWidgets.QLineEdit(self.viber_page)
+        self.bot_token_tb.setStyleSheet("QLineEdit {\n"
+"color: gray;\n"
+" border: 2px solid gray;\n"
+"background-color: \'#ffcb9a\';\n"
+"border-color: beige;\n"
+" border-radius: 10px;\n"
+"}")
+        self.bot_token_tb.setEchoMode(QtWidgets.QLineEdit.Password)
+        self.bot_token_tb.setAlignment(QtCore.Qt.AlignCenter)
+        self.bot_token_tb.setObjectName("bot_token_tb")
+        self.gridLayout_10.addWidget(self.bot_token_tb, 3, 0, 1, 1)
         self.toolBox.addItem(self.viber_page, "")
-        self.gridLayout_9.addWidget(self.toolBox, 0, 0, 1, 1)
+        self.gridLayout_9.addWidget(self.toolBox, 0, 0, 1, 2)
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
-        self.stackedWidget.setCurrentIndex(1)
-        self.toolBox.setCurrentIndex(1)
+        self.stackedWidget.setCurrentIndex(5)
+        self.toolBox.setCurrentIndex(0)
+        self.toolBox.layout().setSpacing(10)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
         MainWindow.setTabOrder(self.home_bt, self.pass_tb)
         MainWindow.setTabOrder(self.pass_tb, self.login_btn)
@@ -2191,6 +2301,7 @@ class Ui_MainWindow(object):
         self.label_44.setText(_translate("MainWindow", "Barcode (1):"))
         self.label_41.setText(_translate("MainWindow", "Barcode (2):"))
         self.label_42.setText(_translate("MainWindow", "Ημέρα Πληρωμής:"))
+        self.label_51.setText(_translate("MainWindow", "Ενεργός/ή:"))
         self.add_ref_btn.setText(_translate("MainWindow", "ΚΑΤΑΧΩΡΗΣΗ"))
         self.del_ref_btn.setText(_translate("MainWindow", "ΔΙΑΓΡΑΦΗ"))
         self.label_7.setText(_translate("MainWindow", "Presenters"))
@@ -2204,7 +2315,10 @@ class Ui_MainWindow(object):
         self.eco_bt.setToolTip(_translate("MainWindow", "ΟΙΚΟΝΟΜΙΚΑ"))
         self.prese_bt.setToolTip(_translate("MainWindow", "ΠΑΡΟΥΣΙΕΣ"))
         self.members_bt.setToolTip(_translate("MainWindow", "ΜΕΛΗ"))
+        self.settings_cancel_btn.setText(_translate("MainWindow", "ΑΚΥΡΩΣΗ"))
+        self.settings_done_btn.setText(_translate("MainWindow", "ΕΦΑΡΜΟΓΗ"))
         self.toolBox.setItemText(self.toolBox.indexOf(self.general_page), _translate("MainWindow", "Γενικές Ρυθμίσεις"))
+        self.toolBox.setItemText(self.toolBox.indexOf(self.other_page), _translate("MainWindow", "Άλλες ρυθμίσεις"))
         self.label_11.setText(_translate("MainWindow", "Bot Name"))
         self.label_12.setText(_translate("MainWindow", "Bot Token"))
         self.toolBox.setItemText(self.toolBox.indexOf(self.viber_page), _translate("MainWindow", "Viber"))
