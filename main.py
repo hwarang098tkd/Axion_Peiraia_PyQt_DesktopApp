@@ -10,18 +10,13 @@ import sys
 from connection_sql import Connection
 
 global list_greek_months
-
 list_greek_months = ["0", "Ιαν", "Φεβρ", "Μαρτ", "Απρ", "Μαιος",
                      "Ιουν", "Ιουλ", "Αυγ", "Σεπτ", "Οκτ", "Νοε", "Δεκ"]
-
 list_GREEK_months = ["0", "Ιανουάριος", "Φεβρουάριος", "Μάρτιος", "Απρίλιος", "Μάιος",
                      "Ιούνιος", "Ιούλιος", "Αύγουστος", "Σεπτέμβριος", "Οκτώβριος", "Νοέμβριος", "Δεκέμβριος"]
-
 tkd_viber_list_SEND = []
 fencing_viber_list_SEND = []
 oplo_viber_list_SEND = []
-
-
 
 class LoginWindow(QMainWindow):
 
@@ -29,6 +24,9 @@ class LoginWindow(QMainWindow):
         QMainWindow.__init__(self)
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
+        self.toggle_settings = False
+
+        self.viber_messages = ['empty']
 
         global buttons_style
         buttons_style = "QToolTip { background-color: black } QPushButton { border-left: 5px solid #88b1b2; border-radius: 13px 0px 0px 13px; background-color: #116466} "
@@ -58,10 +56,10 @@ class LoginWindow(QMainWindow):
         ###
         self.setGeometry(self.rect)
 
+
         # this will hide the title bar
         self.setWindowFlag(Qt.FramelessWindowHint)
 
-        widgets.toggle_bt.clicked.connect(self.buttonClick)
         widgets.home_bt.clicked.connect(self.buttonClick)
         widgets.taek_bt.clicked.connect(self.buttonClick)
         widgets.fencing_bt.clicked.connect(self.buttonClick)
@@ -69,6 +67,7 @@ class LoginWindow(QMainWindow):
         widgets.eco_bt.clicked.connect(self.buttonClick)
         widgets.prese_bt.clicked.connect(self.buttonClick)
         widgets.members_bt.clicked.connect(self.buttonClick)
+        widgets.settings_btn.clicked.connect(self.settings_btn_pressed)
         ####################################################
         widgets.login_btn.clicked.connect(self.pressed)
         ####################################################
@@ -82,6 +81,9 @@ class LoginWindow(QMainWindow):
         widgets.all_rb.clicked.connect(self.radio_refresh)
         widgets.fencing_rb.clicked.connect(self.radio_refresh)
         widgets.olpo_rb.clicked.connect(self.radio_refresh)
+        ####################################################
+        widgets.viber_text_cmb.currentIndexChanged.connect(self.viber_text_cmb_changed)
+        widgets.clear_viber_btn.clicked.connect(self.clear_viber_btn_pressed)
         ####################################################
         widgets.members_cbb.currentIndexChanged.connect(self.list_names_combobox)
         widgets.new_member_btn.clicked.connect(self.new_btn)
@@ -120,9 +122,172 @@ class LoginWindow(QMainWindow):
 
         self.installEventFilter(self)
         self.displayTime()
+        #αποκρυψη της μπαρας
         widgets.toolBar_fm.hide()
+        #αποκτυψη του παραθυρου για τις ρυθμισεις
+        widgets.settings_fm.hide()
         widgets.home_bt.setStyleSheet(buttons_style)
         self.show()
+
+    def pressed(self):  # login button CLICKED
+        if (widgets.user_tb.text() == "" or widgets.user_tb.text() == "Username") and (
+                widgets.pass_tb.text() == "" or widgets.pass_tb.text() == "Password"):
+            widgets.info_lb.setText("No username and password")
+            print("No username and password inserted")
+        elif widgets.user_tb.text() == "" or widgets.user_tb.text() == "Username":
+            widgets.info_lb.setText("no username")
+            print("No username inserted")
+        elif widgets.pass_tb.text() == "" or widgets.pass_tb.text() == "Password":
+            print("No password inserted")
+            widgets.info_lb.setText("no password")
+        else:
+            widgets.info_lb.setText("")
+            widgets.info_lb.setStyleSheet("color: white")
+            self.log_in = Connection(widgets.user_tb.text(), widgets.pass_tb.text())
+            result = self.log_in.login_connection()
+            # self.refresh_calendar()  # refresh calendar
+            widgets.info_lb.setText(result)
+
+            if result == "Connection established":  # succesfull log in
+
+                self.eco_tree_create()
+
+                # αρχικοποιηση των ετων στην σελιδα TKD
+                years = self.log_in.login_list_ofYears()
+                widgets.tkd_year_cmb.addItems(years)
+                # -----------------------------
+                widgets.tkd_active_chb.setChecked(True)
+                self.tkd_tree_create()
+                ############################################
+                self.viber_messages.clear()
+                self.viber_messages = self.log_in.login_viber_msg()
+                widgets.viber_text_cmb.addItem('Επιλέξτε Μήνυμα')
+                for item in self.viber_messages:
+                    widgets.viber_text_cmb.addItem(item[3])
+
+                sport_list = []
+                # REFRESH STASTS
+                self.refresh_stats()
+                self.chart_all_create()
+                self.build_chart()
+
+                widgets.chart_years_ccb.addItems(years)
+                widgets.eco_name_cbb.addItems(self.members_list)
+                #######################################################
+                widgets.eco_gen_cbb.addItem('Επιλέξτε κατηγορία')
+                widgets.eco_sub_cbb.addItem('Επιλέξτε κατηγορία')
+                sport_list = self.log_in.login_sports_list()
+                widgets.SPORT.addItems(sport_list)
+                widgets.SPORT_1.addItems(sport_list)
+                # widgets.eco_gen_cbb.addItems(gen_cat_eco)
+                # widgets.eco_sub_cbb.addItems(sub_cat_eco)
+                # Re-COLOR MAIN TOOLBAR
+                widgets.maintoolbar_fm.setStyleSheet("background-color: \'#0d5051\';")
+                # Re-COLOR MAIN BOT TOOLBAR
+                widgets.maintoolbarBot_fm.setStyleSheet("background-color: \'#0d5051\';")
+
+                animation_time = 250
+                end_width = int((self.screen_width * self.percent_screen) / 100)
+                end_height = int((self.screen_height * self.percent_screen) / 100)
+
+                start_pos_xx = int((self.screen_width - end_width) / 2)
+                start_pro_yy = int((self.screen_height - end_height) / 2)
+                print(f"EndH: {end_height}, EndW {end_width}, StartX {start_pos_xx},StartY {start_pro_yy}")
+
+                # ANIMATION WINDOW
+                self.main_window = QPropertyAnimation(self, b'geometry')
+                self.main_window.setDuration(animation_time + 200)
+                self.main_window.setStartValue(QRect(start_pos_xx, start_pro_yy, 320, 369))
+                self.main_window.setEndValue(QRect(start_pos_xx, start_pro_yy, end_width, end_height))
+
+                # ANIMATION MAIN TOOLBAR FRAME
+                self.maintoolbar_fm = QPropertyAnimation(self.ui.maintoolbar_fm, b'geometry')
+                self.maintoolbar_fm.setDuration(animation_time)
+                self.maintoolbar_fm.setStartValue(QRect(0, 0, 20, 35))
+                self.maintoolbar_fm.setEndValue(QRect(20, 0, end_width - 20, 35))
+
+                # ANIMATION MAIN BOT TOOLBAR FRAME
+                self.maintoolbarBot_fm = QPropertyAnimation(self.ui.maintoolbarBot_fm, b'geometry')
+                self.maintoolbarBot_fm.setDuration(animation_time)
+                self.maintoolbarBot_fm.setStartValue(QRect(0, end_height - 35, 20, 35))
+                self.maintoolbarBot_fm.setEndValue(QRect(10, end_height - 35, end_width - 10, 35))
+
+                # ANIMATION LOGIN FRAME
+                self.basic_fm_1 = QPropertyAnimation(self.ui.login_fm, b'geometry')
+                self.basic_fm_1.setDuration(animation_time)
+                self.basic_fm_1.setStartValue(QRect(0, 0, 320, 369))
+                self.basic_fm_1.setEndValue(QRect(0, 0, 60, end_height))
+
+                # ANIMATION MAIN FRAME
+                self.basic_fm_2 = QPropertyAnimation(self.ui.main_fm, b'geometry')
+                self.basic_fm_2.setDuration(animation_time)
+                self.basic_fm_2.setStartValue(QRect(0, 0, 300, 369))
+                self.basic_fm_2.setEndValue(QRect(0, 0, end_width, end_height))
+
+                # ANIMATION STACKEDWIDGET FRAME
+                self.stackedWidget = QPropertyAnimation(self.ui.stackedWidget, b'geometry')
+                self.stackedWidget.setDuration(animation_time)
+                self.stackedWidget.setStartValue(QRect(0, 0, 0, 0))
+                self.stackedWidget.setEndValue(QRect(60, 35, end_width - 100, int(end_height - 2 * 35)))
+
+                # GROUP ANIMATIONeco_table_lout
+                self.group = QParallelAnimationGroup()
+                self.group.addAnimation(self.main_window)
+                self.group.addAnimation(self.maintoolbar_fm)
+                self.group.addAnimation(self.maintoolbarBot_fm)
+                self.group.addAnimation(self.basic_fm_1)
+                self.group.addAnimation(self.basic_fm_2)
+                self.group.addAnimation(self.stackedWidget)
+                # self.group.addAnimation(self.eco_table_lout)
+                self.group.start()
+
+                #widgets.settings_fm.setGeometry(QRect(start_pos_x, start_pro_y, 50, int(end_height - 2 * 35)))
+                # widgets.eco_page_layout.setGeometry(QRect(0, -50, int(end_width * 0.92), int(end_height * 0.38)))
+                # widgets.eco_page_layout.SetFixedSize
+                #επανεμφάνιση της μπαρας γιατι στο init γινεται αποκρυψη
+                widgets.toolBar_fm.show()
+
+    def settings_btn_pressed(self):
+        animation_time = 500
+        end_width = int((self.screen_width * self.percent_screen) / 100)
+        end_height = int((self.screen_height * self.percent_screen) / 100)
+
+        if self.toggle_settings == True:
+            self.toggle_settings = False
+            # ANIMATION STACKEDWIDGET FRAME
+            self.settings_fm = QPropertyAnimation(self.ui.settings_fm, b'geometry')
+            self.settings_fm.setDuration(animation_time)
+            self.settings_fm.setStartValue(QRect(60, 35, 150, int(end_height - 2 * 35)))
+            self.settings_fm.setEndValue(QRect(60, 35, 0, int(end_height - 2 * 35)))
+
+            # GROUP ANIMATION
+            self.group_2 = QParallelAnimationGroup()
+            self.group_2.addAnimation(self.settings_fm)
+            self.group_2.start()
+            #widgets.settings_fm.hide()
+        else:
+            self.toggle_settings = True
+
+            widgets.settings_fm.show()
+
+            # ANIMATION STACKEDWIDGET FRAME
+            self.settings_fm = QPropertyAnimation(self.ui.settings_fm, b'geometry')
+            self.settings_fm.setDuration(animation_time)
+            self.settings_fm.setStartValue(QRect(60, 35, 20, int(end_height - 2 * 35)))
+            self.settings_fm.setEndValue(QRect(60, 35, 150, int(end_height - 2 * 35)))
+
+            # GROUP ANIMATION
+            self.group_1 = QParallelAnimationGroup()
+            self.group_1.addAnimation(self.settings_fm)
+            self.group_1.start()
+
+    def clear_viber_btn_pressed(self):
+        widgets.tkd_viber_text.setText('')
+
+    def viber_text_cmb_changed(self):
+        index = widgets.viber_text_cmb.currentIndex()
+        if index != 0:
+            widgets.tkd_viber_text.setText(self.viber_messages[index-1][2])
 
     def tkd_month_cmb_changed(self):
         if widgets.tkd_month_cmb.currentText() != '': #αυτο γιατι στην αρχικοποιηση ενεργοποιειται και δεν εχει ακομα παρει τιμη και μπαγκαρει
@@ -209,118 +374,6 @@ class LoginWindow(QMainWindow):
         if index >= 0:
             widgets.eco_name_cbb.setCurrentIndex(index)
             widgets.add_eco_lb.setText('')
-
-    def pressed(self):  # login button CLICKED
-
-        if (widgets.user_tb.text() == "" or widgets.user_tb.text() == "Username") and (
-                widgets.pass_tb.text() == "" or widgets.pass_tb.text() == "Password"):
-            widgets.info_lb.setText("No username and password")
-            print("No username and password inserted")
-        elif widgets.user_tb.text() == "" or widgets.user_tb.text() == "Username":
-            widgets.info_lb.setText("no username")
-            print("No username inserted")
-        elif widgets.pass_tb.text() == "" or widgets.pass_tb.text() == "Password":
-            print("No password inserted")
-            widgets.info_lb.setText("no password")
-        else:
-            widgets.info_lb.setText("")
-            widgets.info_lb.setStyleSheet("color: white")
-            self.log_in = Connection(widgets.user_tb.text(), widgets.pass_tb.text())
-            result = self.log_in.login_connection()
-            # self.refresh_calendar()  # refresh calendar
-            widgets.info_lb.setText(result)
-
-            if result == "Connection established":  # succesfull log in
-
-                self.eco_tree_create()
-
-                # αρχικοποιηση των ετων στην σελιδα TKD
-                years = self.log_in.login_list_ofYears()
-                widgets.tkd_year_cmb.addItems(years)
-                # -----------------------------
-                widgets.tkd_active_chb.setChecked(True)
-
-                self.tkd_tree_create()
-
-                sport_list = []
-                # REFRESH STASTS
-                self.refresh_stats()
-                self.chart_all_create()
-                self.build_chart()
-
-                widgets.chart_years_ccb.addItems(years)
-                widgets.eco_name_cbb.addItems(self.members_list)
-                #######################################################
-                widgets.eco_gen_cbb.addItem('Επιλέξτε κατηγορία')
-                widgets.eco_sub_cbb.addItem('Επιλέξτε κατηγορία')
-                sport_list = self.log_in.login_sports_list()
-                widgets.SPORT.addItems(sport_list)
-                widgets.SPORT_1.addItems(sport_list)
-                # widgets.eco_gen_cbb.addItems(gen_cat_eco)
-                # widgets.eco_sub_cbb.addItems(sub_cat_eco)
-                # Re-COLOR MAIN TOOLBAR
-                widgets.maintoolbar_fm.setStyleSheet("background-color: \'#0d5051\';")
-                # Re-COLOR MAIN BOT TOOLBAR
-                widgets.maintoolbarBot_fm.setStyleSheet("background-color: \'#0d5051\';")
-
-                animation_time = 250
-                end_width = int((self.screen_width * self.percent_screen) / 100)
-                end_height = int((self.screen_height * self.percent_screen) / 100)
-
-                start_pos_xx = int((self.screen_width - end_width) / 2)
-                start_pro_yy = int((self.screen_height - end_height) / 2)
-                print(f"EndH: {end_height}, EndW {end_width}, StartX {start_pos_xx},StartY {start_pro_yy}")
-
-                # ANIMATION WINDOW
-                self.main_window = QPropertyAnimation(self, b'geometry')
-                self.main_window.setDuration(animation_time + 200)
-                self.main_window.setStartValue(QRect(start_pos_xx, start_pro_yy, 320, 369))
-                self.main_window.setEndValue(QRect(start_pos_xx, start_pro_yy, end_width, end_height))
-
-                # ANIMATION MAIN TOOLBAR FRAME
-                self.maintoolbar_fm = QPropertyAnimation(self.ui.maintoolbar_fm, b'geometry')
-                self.maintoolbar_fm.setDuration(animation_time)
-                self.maintoolbar_fm.setStartValue(QRect(0, 0, 20, 35))
-                self.maintoolbar_fm.setEndValue(QRect(20, 0, end_width - 20, 35))
-
-                # ANIMATION MAIN BOT TOOLBAR FRAME
-                self.maintoolbarBot_fm = QPropertyAnimation(self.ui.maintoolbarBot_fm, b'geometry')
-                self.maintoolbarBot_fm.setDuration(animation_time)
-                self.maintoolbarBot_fm.setStartValue(QRect(0, end_height - 35, 20, 35))
-                self.maintoolbarBot_fm.setEndValue(QRect(10, end_height - 35, end_width - 10, 35))
-
-                # ANIMATION LOGIN FRAME
-                self.basic_fm_1 = QPropertyAnimation(self.ui.login_fm, b'geometry')
-                self.basic_fm_1.setDuration(animation_time)
-                self.basic_fm_1.setStartValue(QRect(0, 0, 320, 369))
-                self.basic_fm_1.setEndValue(QRect(0, 0, 60, end_height))
-
-                # ANIMATION MAIN FRAME
-                self.basic_fm_2 = QPropertyAnimation(self.ui.main_fm, b'geometry')
-                self.basic_fm_2.setDuration(animation_time)
-                self.basic_fm_2.setStartValue(QRect(0, 0, 300, 369))
-                self.basic_fm_2.setEndValue(QRect(0, 0, end_width, end_height))
-
-                # ANIMATION STACKEDWIDGET FRAME
-                self.stackedWidget = QPropertyAnimation(self.ui.stackedWidget, b'geometry')
-                self.stackedWidget.setDuration(animation_time)
-                self.stackedWidget.setStartValue(QRect(0, 0, 0, 0))
-                self.stackedWidget.setEndValue(QRect(60, 35, end_width - 100, int(end_height - 2 * 35)))
-
-                # GROUP ANIMATIONeco_table_lout
-                self.group = QParallelAnimationGroup()
-                self.group.addAnimation(self.main_window)
-                self.group.addAnimation(self.maintoolbar_fm)
-                self.group.addAnimation(self.maintoolbarBot_fm)
-                self.group.addAnimation(self.basic_fm_1)
-                self.group.addAnimation(self.basic_fm_2)
-                self.group.addAnimation(self.stackedWidget)
-                # self.group.addAnimation(self.eco_table_lout)
-                self.group.start()
-
-                # widgets.eco_page_layout.setGeometry(QRect(0, -50, int(end_width * 0.92), int(end_height * 0.38)))
-                # widgets.eco_page_layout.SetFixedSize
-                widgets.toolBar_fm.show()
 
     def members_tree_create(self, data):
         self.model_4 = QStandardItemModel()

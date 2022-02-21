@@ -1,0 +1,1 @@
+SELECT * FROM viber_settings

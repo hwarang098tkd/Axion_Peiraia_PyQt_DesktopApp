@@ -10,7 +10,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>2244</width>
+    <width>2517</width>
     <height>1056</height>
    </rect>
   </property>
@@ -1114,6 +1114,9 @@ color: rgb(211, 211, 211);</string>
              <property name="layoutDirection">
               <enum>Qt::LeftToRight</enum>
              </property>
+             <property name="styleSheet">
+              <string notr="true">color: rgb(255, 255, 255);</string>
+             </property>
             </widget>
            </item>
            <item>
@@ -1166,6 +1169,9 @@ color: rgb(211, 211, 211);</string>
              </property>
              <property name="layoutDirection">
               <enum>Qt::LeftToRight</enum>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">color: rgb(255, 255, 255);</string>
              </property>
             </widget>
            </item>
@@ -1248,9 +1254,12 @@ QAbstractItemView::section QHeaderView::section {
              <item row="3" column="0">
               <layout class="QHBoxLayout" name="horizontalLayout_17">
                <item>
-                <widget class="QComboBox" name="comboBox">
+                <widget class="QComboBox" name="viber_text_cmb">
                  <property name="layoutDirection">
                   <enum>Qt::LeftToRight</enum>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">color: rgb(255, 255, 255);</string>
                  </property>
                 </widget>
                </item>
@@ -1297,6 +1306,28 @@ QAbstractItemView::section QHeaderView::section {
              </item>
              <item row="5" column="0">
               <layout class="QHBoxLayout" name="horizontalLayout_16">
+               <item>
+                <widget class="QPushButton" name="clear_viber_btn">
+                 <property name="sizePolicy">
+                  <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+                   <horstretch>0</horstretch>
+                   <verstretch>0</verstretch>
+                  </sizepolicy>
+                 </property>
+                 <property name="maximumSize">
+                  <size>
+                   <width>100</width>
+                   <height>16777215</height>
+                  </size>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">color: rgb(203, 203, 203);</string>
+                 </property>
+                 <property name="text">
+                  <string>Καθαρισμός</string>
+                 </property>
+                </widget>
+               </item>
                <item>
                 <spacer name="horizontalSpacer_10">
                  <property name="orientation">
@@ -1457,12 +1488,18 @@ border-style: outset;}
                  <property name="font">
                   <font>
                    <pointsize>12</pointsize>
-                   <italic>true</italic>
+                   <italic>false</italic>
                    <bold>true</bold>
                   </font>
                  </property>
                  <property name="styleSheet">
-                  <string notr="true">color: rgb(189, 165, 135);</string>
+                  <string notr="true">color: rgb(255, 255, 255);</string>
+                 </property>
+                 <property name="frameShape">
+                  <enum>QFrame::WinPanel</enum>
+                 </property>
+                 <property name="frameShadow">
+                  <enum>QFrame::Sunken</enum>
                  </property>
                 </widget>
                </item>
@@ -1503,7 +1540,7 @@ border-style: outset;}
           </sizepolicy>
          </property>
          <property name="text">
-          <string>PRESENTERS loading ....</string>
+          <string>TKD loading ....</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>
@@ -3818,8 +3855,7 @@ QAbstractItemView::section QHeaderView::section {
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color: &quot;#2c3531&quot;;
-background-image: url(:/icons/icon_menu.png);</string>
+     <string notr="true">background-color: &quot;#2c3531&quot;;</string>
     </property>
     <property name="frameShape">
      <enum>QFrame::StyledPanel</enum>
@@ -4020,7 +4056,7 @@ border-color: beige;
      <property name="frameShadow">
       <enum>QFrame::Raised</enum>
      </property>
-     <widget class="QPushButton" name="toggle_bt">
+     <widget class="QPushButton" name="settings_btn">
       <property name="enabled">
        <bool>true</bool>
       </property>
@@ -4454,13 +4490,89 @@ border-color: beige;
      </widget>
     </widget>
    </widget>
+   <widget class="QFrame" name="settings_fm">
+    <property name="geometry">
+     <rect>
+      <x>80</x>
+      <y>450</y>
+      <width>221</width>
+      <height>341</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: &quot;#D1E8E2&quot;;</string>
+    </property>
+    <property name="frameShape">
+     <enum>QFrame::StyledPanel</enum>
+    </property>
+    <property name="frameShadow">
+     <enum>QFrame::Raised</enum>
+    </property>
+    <layout class="QGridLayout" name="gridLayout_9">
+     <item row="0" column="0">
+      <widget class="QToolBox" name="toolBox">
+       <property name="currentIndex">
+        <number>1</number>
+       </property>
+       <widget class="QWidget" name="general_page">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>201</width>
+          <height>261</height>
+         </rect>
+        </property>
+        <attribute name="label">
+         <string>Γενικές Ρυθμίσεις</string>
+        </attribute>
+       </widget>
+       <widget class="QWidget" name="viber_page">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>201</width>
+          <height>261</height>
+         </rect>
+        </property>
+        <attribute name="label">
+         <string>Viber</string>
+        </attribute>
+        <layout class="QGridLayout" name="gridLayout_10">
+         <item row="0" column="0">
+          <widget class="QLabel" name="label_11">
+           <property name="text">
+            <string>Bot Name</string>
+           </property>
+          </widget>
+         </item>
+         <item row="0" column="1">
+          <widget class="QLineEdit" name="bot_name_tb"/>
+         </item>
+         <item row="1" column="1">
+          <widget class="QLineEdit" name="bot_token_tb"/>
+         </item>
+         <item row="1" column="0">
+          <widget class="QLabel" name="label_12">
+           <property name="text">
+            <string>Bot Token</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </widget>
+      </widget>
+     </item>
+    </layout>
+   </widget>
   </widget>
  </widget>
  <tabstops>
   <tabstop>home_bt</tabstop>
   <tabstop>pass_tb</tabstop>
   <tabstop>login_btn</tabstop>
-  <tabstop>toggle_bt</tabstop>
+  <tabstop>settings_btn</tabstop>
   <tabstop>taek_bt</tabstop>
   <tabstop>fencing_bt</tabstop>
   <tabstop>oplo_bt</tabstop>

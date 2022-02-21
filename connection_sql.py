@@ -554,6 +554,21 @@ class Connection:
         print(str(msg))
         return result
 
+    def login_viber_msg(self):
+        result = []
+        try:
+            query = self.str_query('viber_messages.sql')
+            cursor = self.cnxn.cursor()
+            cursor.execute(query)
+            rows = cursor.fetchall()
+            result = rows
+            msg = "login_viber_msg: Connection established"
+        except Exception as e:
+            msg = "login_viber_msg: Connection failed"
+            print("Error: login_viber_msg: " + str(e))
+        print(str(msg))
+        return result
+
     def str_query(self, query):
         home_dir = os.path.abspath('.')
         sql_query = os.path.join(home_dir, 'sql_queries//' + query)
