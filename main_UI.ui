@@ -261,7 +261,7 @@
       <enum>QFrame::Sunken</enum>
      </property>
      <property name="currentIndex">
-      <number>5</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="home_page">
       <layout class="QGridLayout" name="gridLayout_3">
@@ -269,24 +269,6 @@
         <layout class="QVBoxLayout" name="verticalLayout_4">
          <item>
           <layout class="QHBoxLayout" name="horizontalLayout_12">
-           <item>
-            <widget class="QLabel" name="title_present_lb">
-             <property name="font">
-              <font>
-               <pointsize>12</pointsize>
-              </font>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">color: rgb(255, 255, 255);</string>
-             </property>
-             <property name="text">
-              <string>Παρουσίες Σήμερα</string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignCenter</set>
-             </property>
-            </widget>
-           </item>
            <item>
             <widget class="QLabel" name="title_members_lb">
              <property name="sizePolicy">
@@ -305,6 +287,24 @@
              </property>
              <property name="text">
               <string>Μέλη</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignCenter</set>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="title_present_lb">
+             <property name="font">
+              <font>
+               <pointsize>12</pointsize>
+              </font>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">color: rgb(255, 255, 255);</string>
+             </property>
+             <property name="text">
+              <string>Παρουσίες Σήμερα</string>
              </property>
              <property name="alignment">
               <set>Qt::AlignCenter</set>
@@ -1062,6 +1062,19 @@ color: rgb(211, 211, 211);</string>
              </property>
             </widget>
            </item>
+           <item>
+            <widget class="QLabel" name="label_13">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
+           </item>
           </layout>
          </item>
         </layout>
@@ -1220,7 +1233,7 @@ color: rgb(211, 211, 211);</string>
          <item>
           <widget class="QTreeView" name="tkd_treeView">
            <property name="enabled">
-            <bool>false</bool>
+            <bool>true</bool>
            </property>
            <property name="sizePolicy">
             <sizepolicy hsizetype="Maximum" vsizetype="Expanding">
@@ -1313,7 +1326,7 @@ QAbstractItemView::section QHeaderView::section {
                   <string notr="true">color: &quot;#D9B08C&quot;;</string>
                  </property>
                  <property name="text">
-                  <string>Κείμενο αποστολής VIBER BOT</string>
+                  <string>Κείμενο αποστολής στο VIBER </string>
                  </property>
                  <property name="alignment">
                   <set>Qt::AlignBottom|Qt::AlignLeading|Qt::AlignLeft</set>
@@ -1492,6 +1505,15 @@ border-style: outset;}
                  </property>
                  <property name="frameShadow">
                   <enum>QFrame::Sunken</enum>
+                 </property>
+                 <property name="documentTitle">
+                  <string/>
+                 </property>
+                 <property name="markdown">
+                  <string/>
+                 </property>
+                 <property name="placeholderText">
+                  <string/>
                  </property>
                 </widget>
                </item>
@@ -2470,11 +2492,11 @@ border-style: outset;}
               <enum>Qt::Horizontal</enum>
              </property>
              <property name="sizeType">
-              <enum>QSizePolicy::Minimum</enum>
+              <enum>QSizePolicy::Fixed</enum>
              </property>
              <property name="sizeHint" stdset="0">
               <size>
-               <width>40</width>
+               <width>500</width>
                <height>20</height>
               </size>
              </property>
@@ -2885,33 +2907,63 @@ QAbstractItemView::section QHeaderView::section {
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="new_member_btn">
-           <property name="sizePolicy">
-            <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-             <horstretch>0</horstretch>
-             <verstretch>0</verstretch>
-            </sizepolicy>
-           </property>
-           <property name="maximumSize">
-            <size>
-             <width>200</width>
-             <height>16777215</height>
-            </size>
-           </property>
-           <property name="cursor">
-            <cursorShape>OpenHandCursor</cursorShape>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.261364 rgba(44, 53, 50, 255), stop:0.602273 rgba(17, 100, 102, 255), stop:0.98 rgba(217, 176, 140, 255), stop:1 rgba(0, 0, 0, 0));
+          <layout class="QHBoxLayout" name="horizontalLayout_20">
+           <item>
+            <widget class="QPushButton" name="new_member_btn">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="cursor">
+              <cursorShape>OpenHandCursor</cursorShape>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">QPushButton:enabled{
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.261364 rgba(44, 53, 50, 255), stop:0.602273 rgba(17, 100, 102, 255), stop:0.98 rgba(217, 176, 140, 255), stop:1 rgba(0, 0, 0, 0));
 color: rgb(255, 255, 255);
 border: 2px  #D9B08C;
 border-radius: 10px;
-border-style: outset;</string>
-           </property>
-           <property name="text">
-            <string>ΝΕΟ</string>
-           </property>
-          </widget>
+border-style: outset;}
+QPushButton:disabled{
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.261364 rgba(44, 53, 50, 255), stop:0.602273 rgba(17, 100, 102, 255),
+stop:0.98 rgba(217, 176, 140, 255),
+stop:1 rgba(0, 0, 0, 0));
+color: rgb(109, 109, 109);
+border: 2px  #D9B08C;
+border-radius: 10px;
+border-style: outset;}
+</string>
+             </property>
+             <property name="text">
+              <string>ΝΕΟ</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="horizontalSpacer_11">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeType">
+              <enum>QSizePolicy::Preferred</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>400</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
          </item>
          <item>
           <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -2923,7 +2975,7 @@ border-style: outset;</string>
              <property name="rowWrapPolicy">
               <enum>QFormLayout::DontWrapRows</enum>
              </property>
-             <item row="0" column="0">
+             <item row="1" column="0">
               <widget class="QLineEdit" name="LAST_NAME">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -2953,7 +3005,7 @@ border-style: outset;</string>
                </property>
               </widget>
              </item>
-             <item row="0" column="1">
+             <item row="1" column="1">
               <widget class="QLabel" name="label_21">
                <property name="font">
                 <font>
@@ -2968,7 +3020,7 @@ border-style: outset;</string>
                </property>
               </widget>
              </item>
-             <item row="1" column="0">
+             <item row="2" column="0">
               <widget class="QLineEdit" name="FIRST_NAME">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -2998,7 +3050,7 @@ border-style: outset;</string>
                </property>
               </widget>
              </item>
-             <item row="1" column="1">
+             <item row="2" column="1">
               <widget class="QLabel" name="label_22">
                <property name="font">
                 <font>
@@ -3013,7 +3065,7 @@ border-style: outset;</string>
                </property>
               </widget>
              </item>
-             <item row="2" column="0">
+             <item row="3" column="0">
               <widget class="QLineEdit" name="FATHER_NAME">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -3043,7 +3095,7 @@ border-style: outset;</string>
                </property>
               </widget>
              </item>
-             <item row="2" column="1">
+             <item row="3" column="1">
               <widget class="QLabel" name="label_23">
                <property name="font">
                 <font>
@@ -3058,7 +3110,7 @@ border-style: outset;</string>
                </property>
               </widget>
              </item>
-             <item row="3" column="0">
+             <item row="4" column="0">
               <widget class="QLineEdit" name="MOTHER_NAME">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -3088,7 +3140,7 @@ border-style: outset;</string>
                </property>
               </widget>
              </item>
-             <item row="3" column="1">
+             <item row="4" column="1">
               <widget class="QLabel" name="label_24">
                <property name="font">
                 <font>
@@ -3103,7 +3155,7 @@ border-style: outset;</string>
                </property>
               </widget>
              </item>
-             <item row="4" column="0">
+             <item row="5" column="0">
               <widget class="QLineEdit" name="BIRTHDATE">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -3133,7 +3185,7 @@ border-style: outset;</string>
                </property>
               </widget>
              </item>
-             <item row="4" column="1">
+             <item row="5" column="1">
               <widget class="QLabel" name="label_25">
                <property name="font">
                 <font>
@@ -3148,7 +3200,7 @@ border-style: outset;</string>
                </property>
               </widget>
              </item>
-             <item row="5" column="0">
+             <item row="6" column="0">
               <widget class="QLineEdit" name="BIRTH_PLACE">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -3178,7 +3230,7 @@ border-style: outset;</string>
                </property>
               </widget>
              </item>
-             <item row="5" column="1">
+             <item row="6" column="1">
               <widget class="QLabel" name="label_27">
                <property name="font">
                 <font>
@@ -3193,7 +3245,7 @@ border-style: outset;</string>
                </property>
               </widget>
              </item>
-             <item row="6" column="0">
+             <item row="7" column="0">
               <widget class="QLineEdit" name="NATIONALITY">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -3223,7 +3275,7 @@ border-style: outset;</string>
                </property>
               </widget>
              </item>
-             <item row="6" column="1">
+             <item row="7" column="1">
               <widget class="QLabel" name="label_28">
                <property name="font">
                 <font>
@@ -3238,7 +3290,7 @@ border-style: outset;</string>
                </property>
               </widget>
              </item>
-             <item row="7" column="0">
+             <item row="8" column="0">
               <widget class="QLineEdit" name="PROFESSION">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -3268,7 +3320,7 @@ border-style: outset;</string>
                </property>
               </widget>
              </item>
-             <item row="7" column="1">
+             <item row="8" column="1">
               <widget class="QLabel" name="label_26">
                <property name="font">
                 <font>
@@ -3283,7 +3335,7 @@ border-style: outset;</string>
                </property>
               </widget>
              </item>
-             <item row="8" column="0">
+             <item row="9" column="0">
               <widget class="QLineEdit" name="ID_NUMBER">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -3313,7 +3365,7 @@ border-style: outset;</string>
                </property>
               </widget>
              </item>
-             <item row="8" column="1">
+             <item row="9" column="1">
               <widget class="QLabel" name="label_30">
                <property name="font">
                 <font>
@@ -3328,7 +3380,7 @@ border-style: outset;</string>
                </property>
               </widget>
              </item>
-             <item row="9" column="0">
+             <item row="10" column="0">
               <widget class="QLineEdit" name="ADDRESS_STREET">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -3358,7 +3410,7 @@ border-style: outset;</string>
                </property>
               </widget>
              </item>
-             <item row="9" column="1">
+             <item row="10" column="1">
               <widget class="QLabel" name="label_33">
                <property name="font">
                 <font>
@@ -3373,7 +3425,7 @@ border-style: outset;</string>
                </property>
               </widget>
              </item>
-             <item row="10" column="0">
+             <item row="11" column="0">
               <widget class="QLineEdit" name="ADDRESS_NUMBER">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -3403,7 +3455,7 @@ border-style: outset;</string>
                </property>
               </widget>
              </item>
-             <item row="10" column="1">
+             <item row="11" column="1">
               <widget class="QLabel" name="label_34">
                <property name="font">
                 <font>
@@ -3418,7 +3470,7 @@ border-style: outset;</string>
                </property>
               </widget>
              </item>
-             <item row="11" column="0">
+             <item row="12" column="0">
               <widget class="QLineEdit" name="REGION">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -3448,7 +3500,7 @@ border-style: outset;</string>
                </property>
               </widget>
              </item>
-             <item row="11" column="1">
+             <item row="12" column="1">
               <widget class="QLabel" name="label_35">
                <property name="font">
                 <font>
@@ -3463,7 +3515,7 @@ border-style: outset;</string>
                </property>
               </widget>
              </item>
-             <item row="12" column="0">
+             <item row="13" column="0">
               <widget class="QLineEdit" name="HOME_PHONE">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -3493,7 +3545,7 @@ border-style: outset;</string>
                </property>
               </widget>
              </item>
-             <item row="12" column="1">
+             <item row="13" column="1">
               <widget class="QLabel" name="label_31">
                <property name="font">
                 <font>
@@ -3508,7 +3560,7 @@ border-style: outset;</string>
                </property>
               </widget>
              </item>
-             <item row="13" column="0">
+             <item row="14" column="0">
               <widget class="QLineEdit" name="MOTHER_PHONE">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -3538,7 +3590,7 @@ border-style: outset;</string>
                </property>
               </widget>
              </item>
-             <item row="13" column="1">
+             <item row="14" column="1">
               <widget class="QLabel" name="label_29">
                <property name="font">
                 <font>
@@ -3553,7 +3605,7 @@ border-style: outset;</string>
                </property>
               </widget>
              </item>
-             <item row="14" column="0">
+             <item row="15" column="0">
               <widget class="QLineEdit" name="FATHER_PHONE">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -3583,7 +3635,7 @@ border-style: outset;</string>
                </property>
               </widget>
              </item>
-             <item row="14" column="1">
+             <item row="15" column="1">
               <widget class="QLabel" name="label_32">
                <property name="font">
                 <font>
@@ -3598,7 +3650,7 @@ border-style: outset;</string>
                </property>
               </widget>
              </item>
-             <item row="15" column="0">
+             <item row="16" column="0">
               <widget class="QLineEdit" name="CELL_PHONE">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -3628,7 +3680,7 @@ border-style: outset;</string>
                </property>
               </widget>
              </item>
-             <item row="15" column="1">
+             <item row="16" column="1">
               <widget class="QLabel" name="label_43">
                <property name="font">
                 <font>
@@ -3643,7 +3695,7 @@ border-style: outset;</string>
                </property>
               </widget>
              </item>
-             <item row="16" column="0">
+             <item row="17" column="0">
               <widget class="QLineEdit" name="EMERG_PHONE">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -3673,7 +3725,7 @@ border-style: outset;</string>
                </property>
               </widget>
              </item>
-             <item row="16" column="1">
+             <item row="17" column="1">
               <widget class="QLabel" name="label_40">
                <property name="font">
                 <font>
@@ -3688,7 +3740,7 @@ border-style: outset;</string>
                </property>
               </widget>
              </item>
-             <item row="17" column="0">
+             <item row="18" column="0">
               <widget class="QLineEdit" name="EMAIL">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -3718,7 +3770,7 @@ border-style: outset;</string>
                </property>
               </widget>
              </item>
-             <item row="17" column="1">
+             <item row="18" column="1">
               <widget class="QLabel" name="label_36">
                <property name="font">
                 <font>
@@ -3733,7 +3785,7 @@ border-style: outset;</string>
                </property>
               </widget>
              </item>
-             <item row="18" column="0">
+             <item row="19" column="0">
               <widget class="QComboBox" name="SPORT">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -3766,7 +3818,7 @@ border-style: outset;</string>
                </property>
               </widget>
              </item>
-             <item row="18" column="1">
+             <item row="19" column="1">
               <widget class="QLabel" name="label_39">
                <property name="font">
                 <font>
@@ -3781,7 +3833,7 @@ border-style: outset;</string>
                </property>
               </widget>
              </item>
-             <item row="19" column="0">
+             <item row="20" column="0">
               <widget class="QComboBox" name="SPORT_1">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -3817,7 +3869,7 @@ border-style: outset;</string>
                </property>
               </widget>
              </item>
-             <item row="19" column="1">
+             <item row="20" column="1">
               <widget class="QLabel" name="label_38">
                <property name="font">
                 <font>
@@ -3832,7 +3884,7 @@ border-style: outset;</string>
                </property>
               </widget>
              </item>
-             <item row="20" column="0">
+             <item row="21" column="0">
               <widget class="QLineEdit" name="DATE_SUBSCRIBE">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -3862,7 +3914,7 @@ border-style: outset;</string>
                </property>
               </widget>
              </item>
-             <item row="20" column="1">
+             <item row="21" column="1">
               <widget class="QLabel" name="label_37">
                <property name="font">
                 <font>
@@ -3877,7 +3929,7 @@ border-style: outset;</string>
                </property>
               </widget>
              </item>
-             <item row="21" column="0">
+             <item row="22" column="0">
               <widget class="QLineEdit" name="BARCODE">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -3907,7 +3959,7 @@ border-style: outset;</string>
                </property>
               </widget>
              </item>
-             <item row="21" column="1">
+             <item row="22" column="1">
               <widget class="QLabel" name="label_44">
                <property name="font">
                 <font>
@@ -3922,7 +3974,7 @@ border-style: outset;</string>
                </property>
               </widget>
              </item>
-             <item row="22" column="0">
+             <item row="23" column="0">
               <widget class="QLineEdit" name="BARCODE_1">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -3952,7 +4004,7 @@ border-style: outset;</string>
                </property>
               </widget>
              </item>
-             <item row="22" column="1">
+             <item row="23" column="1">
               <widget class="QLabel" name="label_41">
                <property name="font">
                 <font>
@@ -3967,7 +4019,7 @@ border-style: outset;</string>
                </property>
               </widget>
              </item>
-             <item row="23" column="0">
+             <item row="24" column="0">
               <widget class="QLineEdit" name="PAY_DAY">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -3997,7 +4049,7 @@ border-style: outset;</string>
                </property>
               </widget>
              </item>
-             <item row="23" column="1">
+             <item row="24" column="1">
               <widget class="QLabel" name="label_42">
                <property name="font">
                 <font>
@@ -4012,7 +4064,7 @@ border-style: outset;</string>
                </property>
               </widget>
              </item>
-             <item row="24" column="1">
+             <item row="25" column="1">
               <widget class="QLabel" name="label_51">
                <property name="font">
                 <font>
@@ -4027,7 +4079,7 @@ border-style: outset;</string>
                </property>
               </widget>
              </item>
-             <item row="24" column="0">
+             <item row="25" column="0">
               <widget class="QComboBox" name="ACTIVE_CMB">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -4082,62 +4134,112 @@ border-style: outset;</string>
             </widget>
            </item>
            <item>
-            <widget class="QPushButton" name="add_ref_btn">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="maximumSize">
-              <size>
-               <width>200</width>
-               <height>16777215</height>
-              </size>
-             </property>
-             <property name="cursor">
-              <cursorShape>OpenHandCursor</cursorShape>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.261364 rgba(44, 53, 50, 255), stop:0.602273 rgba(17, 100, 102, 255), stop:0.98 rgba(217, 176, 140, 255), stop:1 rgba(0, 0, 0, 0));
+            <layout class="QHBoxLayout" name="horizontalLayout_18">
+             <item>
+              <widget class="QPushButton" name="add_ref_btn">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="cursor">
+                <cursorShape>OpenHandCursor</cursorShape>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">QPushButton:enabled{
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.261364 rgba(44, 53, 50, 255), stop:0.602273 rgba(17, 100, 102, 255), stop:0.98 rgba(217, 176, 140, 255), stop:1 rgba(0, 0, 0, 0));
 color: rgb(255, 255, 255);
 border: 2px  #D9B08C;
 border-radius: 10px;
-border-style: outset;</string>
-             </property>
-             <property name="text">
-              <string>ΚΑΤΑΧΩΡΗΣΗ</string>
-             </property>
-            </widget>
+border-style: outset;}
+QPushButton:disabled{
+background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.261364 rgba(44, 53, 50, 255), stop:0.602273 rgba(17, 100, 102, 255),
+stop:0.98 rgba(217, 176, 140, 255),
+stop:1 rgba(0, 0, 0, 0));
+color: rgb(109, 109, 109);
+border: 2px  #D9B08C;
+border-radius: 10px;
+border-style: outset;}
+</string>
+               </property>
+               <property name="text">
+                <string>ΚΑΤΑΧΩΡΗΣΗ</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer name="horizontalSpacer_9">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeType">
+                <enum>QSizePolicy::Preferred</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>400</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+            </layout>
            </item>
            <item>
-            <widget class="QPushButton" name="del_ref_btn">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="maximumSize">
-              <size>
-               <width>200</width>
-               <height>16777215</height>
-              </size>
-             </property>
-             <property name="cursor">
-              <cursorShape>OpenHandCursor</cursorShape>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.329545 rgba(46, 17, 20, 255), stop:0.738636 rgba(80, 27, 29, 255), stop:1 rgba(217, 176, 140, 255));
+            <layout class="QHBoxLayout" name="horizontalLayout_19">
+             <item>
+              <widget class="QPushButton" name="del_ref_btn">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="cursor">
+                <cursorShape>OpenHandCursor</cursorShape>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.329545 rgba(46, 17, 20, 255), stop:0.738636 rgba(80, 27, 29, 255), stop:1 rgba(217, 176, 140, 255));
 color: rgb(255, 255, 255);
 border: 2px  #D9B08C;
 border-radius: 10px;
 border-style: outset;</string>
-             </property>
-             <property name="text">
-              <string>ΔΙΑΓΡΑΦΗ</string>
-             </property>
-            </widget>
+               </property>
+               <property name="text">
+                <string>ΔΙΑΓΡΑΦΗ</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer name="horizontalSpacer_10">
+               <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+               </property>
+               <property name="sizeType">
+                <enum>QSizePolicy::Preferred</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>400</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+            </layout>
            </item>
           </layout>
          </item>
@@ -4884,8 +4986,8 @@ border-color: beige;
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>211</width>
-          <height>303</height>
+          <width>206</width>
+          <height>301</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4893,6 +4995,14 @@ border-color: beige;
         </attribute>
        </widget>
        <widget class="QWidget" name="other_page">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>206</width>
+          <height>301</height>
+         </rect>
+        </property>
         <attribute name="label">
          <string>Άλλες ρυθμίσεις</string>
         </attribute>
@@ -4903,7 +5013,7 @@ border-color: beige;
           <x>0</x>
           <y>0</y>
           <width>206</width>
-          <height>299</height>
+          <height>301</height>
          </rect>
         </property>
         <attribute name="label">
@@ -4959,6 +5069,9 @@ border-color: beige;
  border-radius: 10px;
 }</string>
            </property>
+           <property name="frame">
+            <bool>true</bool>
+           </property>
           </widget>
          </item>
          <item row="3" column="0">
@@ -4971,6 +5084,9 @@ background-color: '#ffcb9a';
 border-color: beige;
  border-radius: 10px;
 }</string>
+           </property>
+           <property name="frame">
+            <bool>true</bool>
            </property>
            <property name="echoMode">
             <enum>QLineEdit::Password</enum>
@@ -4998,11 +5114,9 @@ border-color: beige;
       </widget>
      </item>
      <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_18">
-       <item>
-        <widget class="QPushButton" name="settings_done_btn">
-         <property name="styleSheet">
-          <string notr="true">QPushButton:enabled{
+      <widget class="QPushButton" name="settings_done_btn">
+       <property name="styleSheet">
+        <string notr="true">QPushButton:enabled{
 background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.261364 rgba(44, 53, 50, 255), stop:0.602273 rgba(17, 100, 102, 255), stop:0.98 rgba(217, 176, 140, 255), stop:1 rgba(0, 0, 0, 0));
 color: rgb(255, 255, 255);
 border: 2px  #D9B08C;
@@ -5017,37 +5131,11 @@ border: 2px  #D9B08C;
 border-radius: 10px;
 border-style: outset;}
 </string>
-         </property>
-         <property name="text">
-          <string>ΕΦΑΡΜΟΓΗ</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="settings_cancel_btn">
-         <property name="styleSheet">
-          <string notr="true">QPushButton:enabled{
-background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.261364 rgba(44, 53, 50, 255), stop:0.602273 rgba(17, 100, 102, 255), stop:0.98 rgba(217, 176, 140, 255), stop:1 rgba(0, 0, 0, 0));
-color: rgb(255, 255, 255);
-border: 2px  #D9B08C;
-border-radius: 10px;
-border-style: outset;}
-QPushButton:disabled{
-background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.261364 rgba(44, 53, 50, 255), stop:0.602273 rgba(17, 100, 102, 255),
-stop:0.98 rgba(217, 176, 140, 255),
-stop:1 rgba(0, 0, 0, 0));
-color: rgb(109, 109, 109);
-border: 2px  #D9B08C;
-border-radius: 10px;
-border-style: outset;}
-</string>
-         </property>
-         <property name="text">
-          <string>ΑΚΥΡΩΣΗ</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
+       </property>
+       <property name="text">
+        <string>ΕΦΑΡΜΟΓΗ</string>
+       </property>
+      </widget>
      </item>
     </layout>
    </widget>

@@ -577,7 +577,7 @@ class Connection:
             cursor = self.cnxn.cursor()
             cursor.execute(query)
             rows = cursor.fetchall()
-            result = rows
+            result = rows[0]
             msg = "login_bot_info: Connection established"
         except Exception as e:
             msg = "login_bot_info: Connection failed"
@@ -609,7 +609,7 @@ class Connection:
     def login_bot_info_insert(self, object,object_content):
         result=''
         try:
-            query = self.str_query('bot_info_send.sql').format(object,object_content)
+            query = self.str_query('bot_info_send.sql').format(object_content,object)
             cursor = self.cnxn.cursor()
             cursor.execute(query)
 
@@ -620,6 +620,21 @@ class Connection:
             msg = "login_bot_info_insert: Connection failed"
             print("Error: login_bot_info_insert: " + str(e))
             result = 'Ανεπιτυχής ενημέρωση !!!'
+        print(str(msg))
+        return result
+
+    def login_viber_ids(self, list_Id_data):
+        result = []
+        try:
+            query = self.str_query('viber_ids.sql').format(', '.join(list_Id_data))
+            cursor = self.cnxn.cursor()
+            cursor.execute(query)
+            rows = cursor.fetchall()
+            result = rows
+            msg = "login_viber_ids: Connection established"
+        except Exception as e:
+            msg = "login_viber_ids: Connection failed"
+            print("Error: login_viber_ids: " + str(e))
         print(str(msg))
         return result
 

@@ -8,6 +8,7 @@ from main_UI import Ui_MainWindow
 import google_calendar
 import sys
 from connection_sql import Connection
+from viberbot_sender import vibersender
 
 global list_greek_months
 list_greek_months = ["0", "Ιαν", "Φεβρ", "Μαρτ", "Απρ", "Μαιος",
@@ -18,6 +19,7 @@ tkd_viber_list_SEND = []
 fencing_viber_list_SEND = []
 oplo_viber_list_SEND = []
 
+
 class LoginWindow(QMainWindow):
 
     def __init__(self):
@@ -25,13 +27,18 @@ class LoginWindow(QMainWindow):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
         self.toggle_settings = False
+        global widgets
+        widgets = self.ui
 
         self.viber_messages = ['empty']
+        self.bot_name = 'Δεν βρέθηκε'
+        self.bot_token = 'Δεν βρέθηκε'
+        self.viber_text_init = 'Επιλέξτε κείμενο ...'
+        widgets.tkd_viber_text.setText(self.viber_text_init)
 
         global buttons_style
         buttons_style = "QToolTip { background-color: black } QPushButton { border-left: 5px solid #88b1b2; border-radius: 13px 0px 0px 13px; background-color: #116466} "
-        global widgets
-        widgets = self.ui
+
         self.percent_screen = 90
         self.screen_width, self.screen_height = pyautogui.size()
         print(f" Primary Display Resolution: W ( {self.screen_width} ),H ( {self.screen_height} )")
@@ -99,6 +106,8 @@ class LoginWindow(QMainWindow):
         widgets.tkd_year_cmb.currentIndexChanged.connect(self.tkd_year_cmb_changed)
         widgets.tkd_month_cmb.currentIndexChanged.connect(self.tkd_month_cmb_changed)
         ####################################################
+        widgets.viber_tkd_send_btn.clicked.connect(self.viber_tkd_send_btn_pressed)
+        ####################################################
         widgets.eco_gen_cbb.currentIndexChanged.connect(self.eco_gen_cbbChange)
         widgets.eco_sub_cbb.currentIndexChanged.connect(self.eco_sub_cbbChange)
         widgets.eco_name_cbb.currentIndexChanged.connect(self.eco_name_cbbChange)
@@ -110,34 +119,61 @@ class LoginWindow(QMainWindow):
         widgets.pay_amount_tb.setValidator(QIntValidator())  # just to accept only numbers
         ####################################################
         widgets.eco_treeview.clicked.connect(self.eco_tree_selected)
-        # Connect the contextmenu
+        # Connect the Treeview Econo
         widgets.eco_treeview_analy.setContextMenuPolicy(Qt.CustomContextMenu)
         widgets.eco_treeview_analy.customContextMenuRequested.connect(self.openMenu)
-        #
+        # Connect the Viber text Box
+        widgets.tkd_viber_text.setContextMenuPolicy(Qt.CustomContextMenu)
+        widgets.tkd_viber_text.customContextMenuRequested.connect(self.openMenu_viberText)
+        ####################################################
         widgets.memb_acti_tree.clicked.connect(self.memb_acti_tree_selected)
-        #tkd_page buttons
+        # tkd_page buttons
         widgets.tkd_all_rb.clicked.connect(self.radio_tkd_page_refresh)
         widgets.tkd_paid_rb.clicked.connect(self.radio_tkd_page_refresh)
         widgets.tkd_notpaid_rb.clicked.connect(self.radio_tkd_page_refresh)
         widgets.tkd_active_chb.stateChanged.connect(self.tkd_active_chb_change)
+        widgets.tkd_treeView.clicked.connect(self.tkd_treeview_selected)
 
         self.installEventFilter(self)
         self.displayTime()
-        #αποκρυψη της μπαρας
+        # αποκρυψη της μπαρας
         widgets.toolBar_fm.hide()
-        #αποκτυψη του παραθυρου για τις ρυθμισεις
+        # αποκτυψη του παραθυρου για τις ρυθμισεις
         widgets.settings_fm.hide()
         widgets.home_bt.setStyleSheet(buttons_style)
         self.show()
+
+    def viber_tkd_send_btn_pressed(self):
+        # check if the lists are empty
+        qm = QMessageBox
+        msg = ''
+        viber_text = widgets.tkd_viber_text.toPlainText()
+        len_list = len(tkd_viber_list_SEND)
+        if len_list != 0 and viber_text != '' and viber_text != self.viber_text_init:
+            msg = "θα αποστείλετε μήνυμα σε " + str(len_list) + " μέλη."
+            ret = qm.question(self, 'Επιβεβαίωση Αποστολής', msg, qm.Yes | qm.No)
+            if ret == qm.Yes:
+                self.viber_sender_gui.message_sender(tkd_viber_list_SEND, viber_text)
+        else:
+            if len_list == 0 and (viber_text == '' or viber_text == self.viber_text_init):
+                msg = "Δεν έχετε επιλέξει μέλη και κείμενο αποστολής. \n Επιλέξτε ομάδες μελών και κείμενο"
+            elif len_list == 0 and viber_text != self.viber_text_init and viber_text != '':
+                msg = "Δεν έχετε επιλέξει μέλη. \n Επιλέξτε ομάδες μελών "
+            elif viber_text == '' or viber_text == self.viber_text_init:
+                msg = "Δεν έχετε επιλέξει κείμενο αποστολής. \n Επιλέξτε κείμενο. "
+            qm.information(self, 'Επιβεβαίωση Αποστολής',
+                           msg, qm.Ok)
+        print(msg)
 
     def bot_info(self):
         bot_name = self.log_in.login_bot_info('bot_name')
         bot_token = self.log_in.login_bot_info('bot_token')
         if bot_name != '' and bot_token != '':
-            widgets.bot_name_tb.setText(bot_name)
-            widgets.bot_name_tb.bot_token_tb(bot_token)
-            self.bot_name = widgets.bot_name_tb.text()
-            self.bot_token = widgets.bot_token_tb.text()
+            widgets.bot_name_tb.setText(bot_name[0])
+            widgets.bot_token_tb.setText(bot_token[0])
+            self.bot_name = bot_name
+            self.bot_token = bot_token
+            self.viber_sender_gui = vibersender(self.bot_name[0], self.bot_token[0], widgets.user_tb.text(), widgets.pass_tb.text())
 
     def settings_done_btn_pressed(self):
         bot_name = widgets.bot_name_tb.text()
@@ -145,11 +181,9 @@ class LoginWindow(QMainWindow):
         if bot_name != '' and bot_token != '':
             result = self.log_in.login_bot_info_insert('bot_name', bot_name)
             result1 = self.log_in.login_bot_info_insert('bot_token', bot_token)
-
         else:
             widgets.settings_error_lb.setText('Συμπληρώστε και τα δύο πεδία...')
             widgets.settings_error_lb.setStyleSheet('color:"#550000";')
-
 
     def pressed(self):  # login button CLICKED
         if (widgets.user_tb.text() == "" or widgets.user_tb.text() == "Username") and (
@@ -171,7 +205,8 @@ class LoginWindow(QMainWindow):
             widgets.info_lb.setText(result)
 
             if result == "Connection established":  # succesfull log in
-                #get the bot info from srver
+                # get the bot info from srver
+                self.bot_info()
 
                 self.eco_tree_create()
 
@@ -203,7 +238,7 @@ class LoginWindow(QMainWindow):
                 widgets.SPORT.addItems(sport_list)
                 widgets.SPORT_1.addItems(sport_list)
 
-                widgets.ACTIVE_CMB.addItems(['Επιλέξτε...','Ναι','Οχι'])
+                widgets.ACTIVE_CMB.addItems(['Επιλέξτε...', 'Ναι', 'Οχι'])
                 # widgets.eco_gen_cbb.addItems(gen_cat_eco)
                 # widgets.eco_sub_cbb.addItems(sub_cat_eco)
                 # Re-COLOR MAIN TOOLBAR
@@ -266,10 +301,10 @@ class LoginWindow(QMainWindow):
                 # self.group.addAnimation(self.eco_table_lout)
                 self.group.start()
 
-                #widgets.settings_fm.setGeometry(QRect(start_pos_x, start_pro_y, 50, int(end_height - 2 * 35)))
+                # widgets.settings_fm.setGeometry(QRect(start_pos_x, start_pro_y, 50, int(end_height - 2 * 35)))
                 # widgets.eco_page_layout.setGeometry(QRect(0, -50, int(end_width * 0.92), int(end_height * 0.38)))
                 # widgets.eco_page_layout.SetFixedSize
-                #επανεμφάνιση της μπαρας γιατι στο init γινεται αποκρυψη
+                # επανεμφάνιση της μπαρας γιατι στο init γινεται αποκρυψη
                 widgets.toolBar_fm.show()
 
     def hide_settings_frame(self):
@@ -319,19 +354,19 @@ class LoginWindow(QMainWindow):
     def viber_text_cmb_changed(self):
         index = widgets.viber_text_cmb.currentIndex()
         if index != 0:
-            widgets.tkd_viber_text.setText(self.viber_messages[index-1][2])
+            widgets.tkd_viber_text.setText(self.viber_messages[index - 1][2])
 
     def tkd_month_cmb_changed(self):
-        if widgets.tkd_month_cmb.currentText() != '': #αυτο γιατι στην αρχικοποιηση ενεργοποιειται και δεν εχει ακομα παρει τιμη και μπαγκαρει
+        if widgets.tkd_month_cmb.currentText() != '':  # αυτο γιατι στην αρχικοποιηση ενεργοποιειται και δεν εχει ακομα παρει τιμη και μπαγκαρει
             self.tkd_tree_create()
 
     def radio_tkd_page_refresh(self):
         if widgets.tkd_all_rb.isChecked():
-            self.checing_members(2,2)
+            self.checing_members(2, 2)
         elif widgets.tkd_paid_rb.isChecked():
-            self.checing_members(2,0)
+            self.checing_members(2, 0)
         elif widgets.tkd_notpaid_rb.isChecked():
-            self.checing_members(0,2)
+            self.checing_members(0, 2)
         print(tkd_viber_list_SEND)
 
     def checing_members(self, paid, notpaid):
@@ -342,22 +377,32 @@ class LoginWindow(QMainWindow):
                 if item is not None:
                     if item.hasChildren():
                         for x in range(item.rowCount()):
-                            item.child(x,0).setCheckState(paid)
+                            item.child(x, 0).setCheckState(paid)
                             if paid == 2:
-                                tkd_viber_list_SEND.append(item.child(x,4).text())
+                                tkd_viber_list_SEND.append(item.child(x, 4).text())
             if item.text() == 'ΑΝΑΜΟΝΕΣ':
                 if item is not None:
                     if item.hasChildren():
                         for x in range(item.rowCount()):
-                            item.child(x,0).setCheckState(notpaid)
+                            item.child(x, 0).setCheckState(notpaid)
                             if notpaid == 2:
                                 tkd_viber_list_SEND.append(item.child(x, 4).text())
 
     def tkd_active_chb_change(self):
         self.tkd_tree_create()
 
+    def openMenu_viberText(self, position): #καθαριζει το πεδιο με το κειμενο στο δεξι κλικ βγαζει επιλογη
+        menu = QMenu()
+
+        menu.addAction(self.tr("Καθαρισμός"))
+
+        action = menu.exec_(self.ui.tkd_viber_text.viewport().mapToGlobal(position))
+        if action.text() == 'Καθαρισμός':
+            widgets.tkd_viber_text.setText('')
+
     def openMenu(self, position):
         indexes = self.ui.eco_treeview_analy.selectedIndexes()
+        level = ''
         if len(indexes) > 0:
             level = 0
             index = indexes[0]
@@ -409,7 +454,7 @@ class LoginWindow(QMainWindow):
 
     def members_tree_create(self, data):
         self.model_4 = QStandardItemModel()
-        self.model_4.setHorizontalHeaderLabels(['Ονοματεπώνυμο',  'ID'])
+        self.model_4.setHorizontalHeaderLabels(['Ονοματεπώνυμο', 'ID'])
         widgets.memb_acti_tree.header().setDefaultSectionSize(90)
         widgets.memb_acti_tree.header().setDefaultAlignment(Qt.AlignHCenter)
         widgets.memb_acti_tree.setModel(self.model_4)
@@ -459,7 +504,7 @@ class LoginWindow(QMainWindow):
                 widgets.memb_acti_tree.setColumnWidth(i, int(str_len[i] * 10))
         root.appendRow(active_row)
 
-    def memb_acti_tree_selected(self): # memb_acti_tree_selected
+    def memb_acti_tree_selected(self):  # memb_acti_tree_selected
         model = widgets.memb_acti_tree.model()
 
         id_s_noA = []
@@ -485,11 +530,13 @@ class LoginWindow(QMainWindow):
             parents.add(index.sibling(index.row(), 0))
         return [index.data() for index in sorted(parents)]
 
-    def tkd_treeviev_selected(self): # επιλεγμένοι για αποστολη στο viber
+    def tkd_treeview_selected(self):  # επιλεγμένοι για αποστολη στο viber
         model = widgets.tkd_treeView.model()
-        checked = model.match(model.index(0, 0), Qt.CheckStateRole, Qt.Unchecked, -1,
+        tkd_viber_list_SEND.clear()
+        checked = model.match(model.index(0, 0), Qt.CheckStateRole, Qt.Checked, -1,
                               Qt.MatchExactly | Qt.MatchRecursive)
-        for index in checked: tkd_viber_list_SEND.append(model.data(index.sibling(index.row(), 2)))
+        for index in checked: tkd_viber_list_SEND.append(model.data(index.sibling(index.row(), 4)))
+        print(tkd_viber_list_SEND)
 
     def tkd_tree_create(self):
         self.model_3 = QStandardItemModel()
@@ -517,7 +564,7 @@ class LoginWindow(QMainWindow):
         text_names = QColor(44, 53, 49)
         self.model_3.setRowCount(0)
         root = self.model_3.invisibleRootItem()
-        str_len = [0, 10, 10, 10,2]
+        str_len = [0, 10, 10, 10, 2]
         first_value = data[0][0][0]
         if first_value == "PAID":
             first_value = "ΠΛΗΡΩΜΕΣ"
@@ -546,11 +593,11 @@ class LoginWindow(QMainWindow):
 
             if i[3] == None:
                 i[3] = '---'
-            members_rows = [StandardItem(i[1], 11, color=text_names, set_Text_Alignment=Qt.AlignLeft,checkable=True),
+            members_rows = [StandardItem(i[1], 11, color=text_names, set_Text_Alignment=Qt.AlignLeft, checkable=True),
                             StandardItem(i[2], 11, set_italic=True, color=text_white),
                             StandardItem(i[3], 10, set_italic=True, color=text_white),
                             tkd_date,
-                            StandardItem(i[5], 10, set_italic=True, color=text_white),]
+                            StandardItem(i[5], 10, set_italic=True, color=text_white), ]
 
             paid_row.appendRow(members_rows)
         # βαζει σε ολες τις κωλονες πλατος
@@ -1022,8 +1069,8 @@ class LoginWindow(QMainWindow):
         reply_box = QMessageBox.warning(self, 'Διαγραφή', 'Θέλετε σίγορα να διαγράψετε αυτό το μέλος;',
                                         QMessageBox.Yes | QMessageBox.No, QMessageBox.No)
         if reply_box == QMessageBox.Yes:
-            result_del = self.log_in.login_name_delete( widgets.LAST_NAME.text(),
-                                                      widgets.FIRST_NAME.text(), widgets.FATHER_NAME.text())
+            result_del = self.log_in.login_name_delete(widgets.LAST_NAME.text(),
+                                                       widgets.FIRST_NAME.text(), widgets.FATHER_NAME.text())
             widgets.add_error_lb.setText(result_del)
             self.new_btn()
             self.radio_refresh()
@@ -1045,7 +1092,6 @@ class LoginWindow(QMainWindow):
             active = '1'
         elif active == 'Οχι':
             active = '0'
-
 
         if widgets.add_ref_btn.text() == "ΚΑΤΑΧΩΡΗΣΗ":
             error_msg = "Add_member action: "
@@ -1074,37 +1120,39 @@ class LoginWindow(QMainWindow):
                     widgets.ACTIVE_CMB.setStyleSheet(error_color)
             else:  # παει για ελεγχο διπλογραφης
                 result = self.log_in.login_name_ifexists(widgets.LAST_NAME.text(),
-                                                        widgets.FIRST_NAME.text(),
-                                                        widgets.FATHER_NAME.text())
+                                                         widgets.FIRST_NAME.text(),
+                                                         widgets.FATHER_NAME.text())
                 print("Exists result: " + result)
                 if result == "exists":
                     error_msg = "Υπάρχει μέλος με αυτά τα στοιχεία !!!"
                 elif result == "go_to_add":
                     error_msg = self.log_in.login_members_add(widgets.LAST_NAME.text(),
-                                                             widgets.FIRST_NAME.text(),
-                                                             widgets.FATHER_NAME.text(),
-                                                             widgets.MOTHER_NAME.text(),
-                                                             widgets.BIRTHDATE.text(),
-                                                             widgets.BIRTH_PLACE.text(),
-                                                             widgets.NATIONALITY.text(),
-                                                             widgets.PROFESSION.text(),
-                                                             widgets.ID_NUMBER.text(),
-                                                             widgets.ADDRESS_STREET.text(),
-                                                             widgets.ADDRESS_NUMBER.text(),
-                                                             widgets.REGION.text(),
-                                                             widgets.HOME_PHONE.text(),
-                                                             widgets.MOTHER_PHONE.text(),
-                                                             widgets.FATHER_PHONE.text(),
-                                                             widgets.EMAIL.text(),
-                                                             widgets.SPORT.currentText(),
-                                                             widgets.DATE_SUBSCRIBE.text(),
-                                                             widgets.EMERG_PHONE.text(),
-                                                             widgets.BARCODE.text(),
-                                                             widgets.CELL_PHONE.text(),
-                                                             widgets.BARCODE_1.text(),
-                                                             widgets.SPORT_1.currentText(),
-                                                             widgets.PAY_DAY.text())
-                    active_result = self.log_in.login_members_activate_add('insert',widgets.LAST_NAME.text(), widgets.FIRST_NAME.text(), widgets.FATHER_NAME.text(), active)
+                                                              widgets.FIRST_NAME.text(),
+                                                              widgets.FATHER_NAME.text(),
+                                                              widgets.MOTHER_NAME.text(),
+                                                              widgets.BIRTHDATE.text(),
+                                                              widgets.BIRTH_PLACE.text(),
+                                                              widgets.NATIONALITY.text(),
+                                                              widgets.PROFESSION.text(),
+                                                              widgets.ID_NUMBER.text(),
+                                                              widgets.ADDRESS_STREET.text(),
+                                                              widgets.ADDRESS_NUMBER.text(),
+                                                              widgets.REGION.text(),
+                                                              widgets.HOME_PHONE.text(),
+                                                              widgets.MOTHER_PHONE.text(),
+                                                              widgets.FATHER_PHONE.text(),
+                                                              widgets.EMAIL.text(),
+                                                              widgets.SPORT.currentText(),
+                                                              widgets.DATE_SUBSCRIBE.text(),
+                                                              widgets.EMERG_PHONE.text(),
+                                                              widgets.BARCODE.text(),
+                                                              widgets.CELL_PHONE.text(),
+                                                              widgets.BARCODE_1.text(),
+                                                              widgets.SPORT_1.currentText(),
+                                                              widgets.PAY_DAY.text())
+                    active_result = self.log_in.login_members_activate_add('insert', widgets.LAST_NAME.text(),
+                                                                           widgets.FIRST_NAME.text(),
+                                                                           widgets.FATHER_NAME.text(), active)
                     if error_msg == "Επιτυχία καταχώρησης !!!":
                         widgets.add_error_lb.setStyleSheet('color: "#D9B08C";')
         elif widgets.add_ref_btn.text() == "ΕΝΗΜΕΡΩΣΗ":
@@ -1161,7 +1209,7 @@ class LoginWindow(QMainWindow):
                                                              widgets.SPORT_1.currentText(),
                                                              widgets.PAY_DAY.text())
 
-                active_result = self.log_in.login_members_activate_add('update',widgets.LAST_NAME.text(),
+                active_result = self.log_in.login_members_activate_add('update', widgets.LAST_NAME.text(),
                                                                        widgets.FIRST_NAME.text(),
                                                                        widgets.FATHER_NAME.text(),
                                                                        active)
@@ -1176,11 +1224,11 @@ class LoginWindow(QMainWindow):
         widgets.title_date.setText(now.toString(Qt.DefaultLocaleLongDate))
 
     def buttonClick(self):
-        #αποκρυψη τως ρυθμισεων οταν παταω αλλο κουμπι
+        # αποκρυψη τως ρυθμισεων οταν παταω αλλο κουμπι
 
         if self.toggle_settings == True:
             self.hide_settings_frame()
-            self.toggle_settings=False
+            self.toggle_settings = False
         # GET BUTTON CLICKED
 
         btn = self.sender()
