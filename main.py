@@ -432,6 +432,7 @@ class LoginWindow(QMainWindow):
                 self.refresh_item_tree_analy(member_name)
             elif action.text() == 'Διαγραφή':
                 self.delete_item_tree_analy(member_id)
+
         except Exception as e:
             print(e)
 
@@ -443,6 +444,7 @@ class LoginWindow(QMainWindow):
             result_delete = self.log_in.eco_delete(member_id)
 
         self.eco_tree_create_analyt(self.year_tree, self.month_tree)  # refresh the analytic treeview
+        self.eco_tree_create()
 
     def refresh_item_tree_analy(self, member_name):
         widgets.add_erco_btn.setText("ΑΝΑΝΕΩΣΗ")
@@ -451,6 +453,7 @@ class LoginWindow(QMainWindow):
         if index >= 0:
             widgets.eco_name_cbb.setCurrentIndex(index)
             widgets.add_eco_lb.setText('')
+        self.eco_tree_create()
 
     def members_tree_create(self, data):
         self.model_4 = QStandardItemModel()
@@ -838,7 +841,9 @@ class LoginWindow(QMainWindow):
             widgets.add_eco_lb.setStyleSheet('color: rgb(80, 27, 29)')
         widgets.add_eco_lb.setText(message)
         self.eco_tree_create_analyt(self.year_tree, self.month_tree)
+        self.eco_tree_create()
         print(name, date_str, eco_cat, eco_sub, amount)
+
 
     def outcomeChange(self):  # οταν επιλεγετε το εξοδα τοτε ψαχνει το ΑΓΣ ΑΞΙΟΝ ΠΕΙΡΑΙΑ και το επιλέγει
         index = widgets.eco_name_cbb.findText('ΑΓΣ ΑΞΙΟΝ', Qt.MatchContains)

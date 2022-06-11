@@ -2353,6 +2353,7 @@ class Ui_MainWindow(object):
 " border-radius: 10px;\n"
 "}")
         self.bot_name_tb.setFrame(True)
+        self.bot_name_tb.setAlignment(QtCore.Qt.AlignCenter)
         self.bot_name_tb.setObjectName("bot_name_tb")
         self.gridLayout_10.addWidget(self.bot_name_tb, 1, 0, 1, 1)
         self.bot_token_tb = QtWidgets.QLineEdit(self.viber_page)
@@ -2397,7 +2398,7 @@ class Ui_MainWindow(object):
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
-        self.stackedWidget.setCurrentIndex(1)
+        self.stackedWidget.setCurrentIndex(4)
         self.toolBox.setCurrentIndex(2)
         self.toolBox.layout().setSpacing(10)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
@@ -2449,7 +2450,7 @@ class Ui_MainWindow(object):
         self.label_9.setText(_translate("MainWindow", "ΜΗΝΑΣ: "))
         self.label_2.setText(_translate("MainWindow", "ΕΤΟΣ: "))
         self.label_10.setText(_translate("MainWindow", "Επιλογή Κειμένου: "))
-        self.viber_tittl_lb.setText(_translate("MainWindow", "Κείμενο αποστολής VIBER BOT"))
+        self.viber_tittl_lb.setText(_translate("MainWindow", "Κείμενο αποστολής στο VIBER "))
         self.clear_viber_btn.setText(_translate("MainWindow", "Καθαρισμός"))
         self.viber_tkd_send_btn.setText(_translate("MainWindow", "ΑΠΟΣΤΟΛΗ"))
         self.tkd_active_chb.setText(_translate("MainWindow", "Ενεργοί"))
